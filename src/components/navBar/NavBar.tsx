@@ -1,24 +1,61 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import Line from '../../assets/common/line.png'
+import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+// Navigation Items
 
+
+const NavItems=[
+  {
+    id:1,
+    name:"#home",
+    link:"/"
+  },
+  {
+    id:2,
+    name:"#works",
+    link:"/"
+  },
+  {
+    id:3,
+    name:"#about-me",
+    link:"/"
+  },
+  {
+    id:4,
+    name:"#contacts",
+    link:"/"
+  }
+]
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(0);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="bg-gray-900 text-white p-4 fixed top-0 w-full z-50">
+    <nav className="bg-primary text-white p-4 top-0 w-full z-50 fixed ">
+      <div className='flex flex-col absolute top-0 md:left-5 left-0 items-center gap-1 bg-transparent'>
+        <img src={Line} alt=""  className='md:w-[2px]  w-[2px]'/>
+        <Link to='https://www.linkedin.com/in/ashishchanchal/'  target='_blank' className='text-brandWhite font-semibold bg-transparent'><FaLinkedinIn className='text-brandWhite w-5 h-5'/></Link>
+        <Link to='https://github.com/ashish-chanchal'  target='_blank'className='text-brandWhite font-semibold'> <FaGithub className='text-brandWhite w-5 h-5'/></Link>
+        <Link to='https://www.instagram.com/ashish._chanchal/' target='_blank' className='text-brandWhite font-semibold'><FaInstagram className='text-brandWhite w-5 h-5'/></Link>
+        
+       
+        
+      </div>
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         {/* Logo */}
-        <motion.div
-          whileHover={{ scale: 1.1 }}
+        <div
+         
           className="flex items-center cursor-pointer"
         >
-          <img src="/logo.png" alt="Logo" className="w-8 h-8 mr-2" />
-          <span className="font-bold">Elias</span>
-        </motion.div>
+          <img src="/Logo.png" alt="Logo" className="w-1/4 mr-2" />
+        
+        </div>
 
         {/* Hamburger Menu Icon for Mobile */}
         <div className="lg:hidden">
@@ -63,34 +100,15 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Links */}
         <div className="hidden lg:flex space-x-8">
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#home"
-            className="hover:text-purple-300 cursor-pointer"
-          >
-            #home
-          </motion.a>
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#works"
-            className="hover:text-purple-300 cursor-pointer"
-          >
-            #works
-          </motion.a>
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#about-me"
-            className="hover:text-purple-300 cursor-pointer"
-          >
-            #about-me
-          </motion.a>
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#contacts"
-            className="hover:text-purple-300 cursor-pointer"
-          >
-            #contacts
-          </motion.a>
+          {NavItems.map((item)=>(
+           <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
+            
+            {item.name}
+         
+           </Link>
+          ))}
+          
+          
         </div>
 
         {/* Language Selector for Desktop */}
@@ -125,37 +143,14 @@ const Navbar: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="lg:hidden bg-gray-900 text-white p-4 space-y-2"
         >
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#home"
-            className="block hover:text-purple-300 cursor-pointer"
-          >
-            #home
-          </motion.a>
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#works"
-            className="block hover:text-purple-300 cursor-pointer"
-          >
-            #works
-          </motion.a>
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#about-me"
-            className="block hover:text-purple-300 cursor-pointer"
-          >
-            #about-me
-          </motion.a>
-          <motion.a
-            whileHover={{ color: '#A78BFA', scale: 1.1 }}
-            href="#contacts"
-            className="block hover:text-purple-300 cursor-pointer"
-          >
-            #contacts
-          </motion.a>
-          <motion.div whileHover={{ scale: 1.1 }} className="cursor-pointer">
-            <span>EN</span>
-          </motion.div>
+           {NavItems.map((item)=>(
+           <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`block hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
+            
+            {item.name}
+         
+           </Link>
+          ))}
+         
         </motion.div>
       )}
     </nav>

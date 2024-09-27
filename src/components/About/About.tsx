@@ -29,7 +29,9 @@ const About = () => {
             establish their presence online. I always strive to learn about the
             newest technologies and frameworks.
           </p>
+          <div>
           <Button text="Read more ~~>" />
+          </div>
         </div>
         <div className="relative">
 <img src={dots} alt="Ashish img" className=" absolute top-0 "/>

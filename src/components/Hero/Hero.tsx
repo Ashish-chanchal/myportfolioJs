@@ -32,7 +32,7 @@ const Hero = () => {
           {/* hero image */}
           <div >
             <img src={heroimg} alt="heroimg" className="md:w-[150px] bg-transparent  absolute left-0"/>
-            <div className=" w-3/4">
+            <div className=" w-2/3">
             <img src={heromain} alt="heroimg" className="z-10 relative bg-transparent  "/>
             <div className="md:text-sm text-xs flex items-center ml-2 gap-5 p-2 border border-white ">
                 <div className="w-3 h-3 bg-secondary "></div>

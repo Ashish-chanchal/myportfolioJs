@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import p1 from "../../assets/projects/p1.png";
+
 import Button from "./Button";
 
 interface CardProps {
@@ -18,7 +18,7 @@ const cardVariants = {
 
 
 
-const ProjectCard = ({ img = p1, title = "Project Name", description = "Project Description", link = "/" }: CardProps) => {
+const ProjectCard = ({ img , title = "Project Name", description = "Project Description", link = "/" }: CardProps) => {
   return (
     <motion.div
       className="flex flex-col border border-gray-500 w-fit h-fit "
@@ -28,9 +28,9 @@ const ProjectCard = ({ img = p1, title = "Project Name", description = "Project 
       whileHover="hover"
     >
       {/* Image Section */}
-      <div className="md:w-[380px] w-[280px] overflow-hidden">
+      {img&&<div className="md:w-[380px] w-[280px] overflow-hidden">
         <img src={img} alt="Project" className="md:w-[380px] w-[280px] " />
-      </div>
+      </div>}
 
       {/* Text Section */}
       <div className="">

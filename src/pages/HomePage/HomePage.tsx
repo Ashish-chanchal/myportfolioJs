@@ -7,6 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import Hero from "../../components/Hero/Hero";
 import Projects from "../../components/Projects/Projects";
 import Skills from "../../components/Skills/Skills";
+import Experience from "../../components/Experience/Experience";
 
 // Define variants for animation
 const sectionVariants = {
@@ -46,6 +47,9 @@ function HomePage() {
       {/* Apply scroll reveal to each section */}
       <ScrollReveal>
         <Hero />
+      </ScrollReveal>
+      <ScrollReveal>
+        <Experience />
       </ScrollReveal>
       <ScrollReveal>
         <Projects />

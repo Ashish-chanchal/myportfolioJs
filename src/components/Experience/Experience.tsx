@@ -1,7 +1,7 @@
 
 import rectangle from '../../assets/common/rectangle.png'
 import dots from '../../assets/common/dots.png'
-import p1 from "../../assets/projects/p1.png";
+
 import ProjectCard from '../shared/Card'
 import Heading from '../shared/Heading'
 
@@ -30,7 +30,7 @@ const backgroundVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 1 } },
 };
 
-const Projects = () => {
+const Experience = () => {
   return (
     <motion.div
       className="text-4xl md:py-20 py-16 relative"
@@ -39,21 +39,24 @@ const Projects = () => {
       variants={containerVariants}
     >
       <div className="max-w-7xl mx-auto p-4">
-        <Heading text="Projects" btnText="View All ~~>" />
+        <Heading text="Experience" btnText="View All ~~>" />
         
         {/* Project Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5 mt-10 text-white"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5 mt-10 text-white items-start"
           variants={containerVariants} // Apply staggered animation to the grid
         >
           <motion.div variants={cardVariants} whileHover="hover">
-            <ProjectCard img={p1}/>
+            <ProjectCard />
           </motion.div>
           <motion.div variants={cardVariants} whileHover="hover">
-            <ProjectCard img={p1} />
+            <ProjectCard />
           </motion.div>
           <motion.div variants={cardVariants} whileHover="hover">
-            <ProjectCard img={p1} />
+            <ProjectCard />
+          </motion.div>
+          <motion.div variants={cardVariants} whileHover="hover">
+            <ProjectCard />
           </motion.div>
         </motion.div>
       </div>
@@ -75,7 +78,7 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Experience;
 
 
 

@@ -9,22 +9,22 @@ import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 const NavItems=[
   {
     id:1,
-    name:"#home",
+    name:"home",
     link:"/"
   },
   {
     id:2,
-    name:"#works",
+    name:"works",
     link:"/"
   },
   {
     id:3,
-    name:"#about-me",
+    name:"about-me",
     link:"/"
   },
   {
     id:4,
-    name:"#contacts",
+    name:"contacts",
     link:"/"
   }
 ]
@@ -102,7 +102,7 @@ const Navbar: React.FC = () => {
         <div className="hidden lg:flex space-x-8">
           {NavItems.map((item)=>(
            <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
-            
+            <span className='text-secondary'>#</span>
             {item.name}
          
            </Link>
@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
         >
            {NavItems.map((item)=>(
            <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`block hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
-            
+            <span className='text-secondary'>#</span>
             {item.name}
          
            </Link>

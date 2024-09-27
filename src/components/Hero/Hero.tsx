@@ -1,6 +1,6 @@
 import Button from "../shared/Button";
 import heroimg from '../../assets/hero/heroimg.png'
-import heromain from '../../assets/hero/heromain.png'
+import heromain from '../../assets/hero/heromain.jpg'
 import dots from '../../assets/common/dots.png'
 import commas from '../../assets/common/commas.png'
 import rectangle from '../../assets/common/rectangle.png'
@@ -15,16 +15,13 @@ const Hero = () => {
           <div>
             <h2 className="font-semibold text-white">
               Ashish Chanchal is a{" "}
-              <span className="text-secondary">web designer</span> and{" "}
-              <span className="text-secondary">front-end developer</span>
+              <span className="text-secondary">Software Developer</span> and{" "}
+              <span className="text-secondary">Community Manager</span>
             </h2>
           </div>
           <div>
-            <p className="text-xs text-white">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas
-              veniam amet voluptate dolorum earum tempore quis, esse consequatur
-              facilis ex sint eos, reiciendis numquam perspiciatis vitae quod?
-              At, sit? Mollitia.
+            <p className="text-sm text-white">
+            I am a passionate Software Engineer with a strong focus on Frontend Development, Full-stack Development, Machine Learning, and Open Source. I love engaging with the community and have had the privilege to work on diverse projects and internships in the tech industry.
             </p>
           </div>
           <div>
@@ -35,14 +32,15 @@ const Hero = () => {
           {/* hero image */}
           <div >
             <img src={heroimg} alt="heroimg" className="md:w-[150px] bg-transparent  absolute left-0"/>
-            <div className=" w-fit">
-            <img src={heromain} alt="heroimg" className="z-10 relative bg-transparent "/>
-            <img src={dots} alt="" className="absolute  right-0 md:right-20 z-20 top-20 bg-transparent"/>
-            </div>
-            <div className="md:text-sm text-xs flex items-center ml-2 gap-5 p-2 border border-white w-fit">
+            <div className=" w-3/4">
+            <img src={heromain} alt="heroimg" className="z-10 relative bg-transparent  "/>
+            <div className="md:text-sm text-xs flex items-center ml-2 gap-5 p-2 border border-white ">
                 <div className="w-3 h-3 bg-secondary "></div>
                 <h2 className="text-white">Currently  working on Portfolio</h2>
             </div>
+            <img src={dots} alt="" className="absolute  right-0 md:right-20 z-20 top-20 bg-transparent"/>
+            </div>
+           
           </div>
           <div>
 

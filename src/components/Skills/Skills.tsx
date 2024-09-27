@@ -9,37 +9,45 @@ import Box from "../shared/Box";
 export const techData = [
   {
     id: 1,
-    category: "Languages",
-    technologies: ["TypeScript", "Lua", "Python", "JavaScript"],
+    category: "Frontend Development",
+    technologies: ["HTML", "CSS","Tailwind CSS", "Javascript", "Typescript"],
   },
   {
     id: 2,
-    category: "Databases",
-    technologies: ["SQLite", "PostgreSQL", "Mongo"],
+    category: "Backend Development",
+    technologies: ["NodeJS", "ExpressJS"],
   },
   {
     id: 3,
-    category: "Tools & Environments",
-    technologies: [
-      "VSCode",
-      "Neovim",
-      "Linux",
-      "Figma",
-      "XFCE",
-      "Arch",
-      "Git",
-      "Font Awesome",
-    ],
+    category: "Databases",
+    technologies: ["Firbase", "Mongo"],
   },
   {
     id: 4,
-    category: "Frontend",
-    technologies: ["HTML", "CSS", "EJS", "SCSS", "REST", "Jinja"],
+    category: "App Development",
+    technologies: ["Dart", "Flutter"],
   },
   {
     id: 5,
+    category: "Data Structures & Algorithms",
+    technologies: ["C & C++"],
+  },
+  {
+    id: 6,
+    category: "Tools & Environments",
+    technologies: [
+      "VSCode",
+      "Git",
+      "GitHub",
+      "Canva",
+      "Font Awesome",
+    ],
+  },
+
+  {
+    id: 7,
     category: "Frameworks & Libraries",
-    technologies: ["React", "Vue", "Disnake", "Discord.js", "Flask", "Express.js"],
+    technologies: ["React",  "Next JS", "Zod", "ShadCN UI", "BootStrap"],
   },
 ];
 

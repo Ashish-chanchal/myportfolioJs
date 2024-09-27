@@ -24,7 +24,7 @@ const ExperienceData = [
     tech: "Company Name: Kloudidev",
     title: "Designation: React Engineer Intern",
     description: [
-      "Kloudidev Digital Solution Oct 2023 – Jun 2024 •Acquired advanced proficiency in Tailwind CSS and Shadcnui frameworks , immediately implementing techniques to elevate a company website's design and functionality",
+      "Kloudidev Digital Solution Oct 2023 – Jun 2024 Acquired advanced proficiency in Tailwind CSS and Shadcnui frameworks , immediately implementing techniques to elevate a company website's design and functionality",
       "Recognized as the top-performing intern within the first month of tenure. Executed frontend enhancements for Teckshila AI, optimizing user interfaces with innovative solutions and streamlined experiences; Websites built by me are below",
     ],
     link: "https://www.kloudidev.com/",
@@ -32,7 +32,7 @@ const ExperienceData = [
   {
     id: 3,
 
-    tech: "Company Name: Inteleccess",
+    tech: "Company Name: Institute of Nuclear Medicine & Allied Sciences (INMAS), DRDO",
     title: "Designation Research Internship",
     description: [
       "Completed a 10-week internship at INMAS, DRDO under G Scientist mentorship.",
@@ -92,7 +92,7 @@ const Experience = () => {
 
         {/* Project Cards Grid */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5 mt-10 text-white items-start"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-10 mt-10 text-white items-start"
           variants={containerVariants} // Apply staggered animation to the grid
         >
           {ExperienceData.map((data) => (

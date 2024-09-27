@@ -8,22 +8,22 @@ import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const NavItems=[
   {
-    id:1,
+    id:0,
     name:"home",
     link:"/"
   },
   {
-    id:2,
+    id:1,
     name:"works",
     link:"/"
   },
   {
-    id:3,
+    id:2,
     name:"about-me",
     link:"/"
   },
   {
-    id:4,
+    id:3,
     name:"contacts",
     link:"/"
   }

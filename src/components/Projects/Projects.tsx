@@ -5,46 +5,17 @@ import ProjectCard from "../shared/Card";
 import Heading from "../shared/Heading";
 
 import { motion } from "framer-motion";
+import Button from "../shared/Button";
+interface ProjectDataProps {
+  id: number;
+  title: string;
+  image: string;
+  tech: string;
+  description: string[];
+  link?: string;
+  livelink?: string;
+}[];
 
-const ProjectsData = [
-  {
-    id: 1,
-    title: "CareLink",
-    image:
-      "https://private-user-images.githubusercontent.com/86229520/327551502-6deaf936-3c8c-4319-8c2d-c8a1430e0275.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mjc0MzUyNjEsIm5iZiI6MTcyNzQzNDk2MSwicGF0aCI6Ii84NjIyOTUyMC8zMjc1NTE1MDItNmRlYWY5MzYtM2M4Yy00MzE5LThjMmQtYzhhMTQzMGUwMjc1LmpwZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA5MjclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwOTI3VDExMDI0MVomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTZmNmJhODg4Yzk4YzU2MGRiNDlhNmQ4MDJlMGE1ZDFhYmQzY2IzODQ1NWYwYTcyOWRlNzRiYzA4MmQzYmI4NGQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.36T4C5nIwGHVvDkvlaO5xcyZ6j-FJE4B0CXk4-17E_k",
-    tech: "Dart Flutter Firebase GetX Firebase Auth FireStore",
-    description: [
-      "Constructed an innovative patient-doctor connection app utilizing Dart, Flutter, and Firebase technologies, enabling seamless appointment booking and prescription viewing functionalities",
-      "Implemented user-friendly interfaces, enhancing navigation pathways and optimizing user experience. Leveraged heat mapping tools to refine user flow and content accessibility",
-    ],
-    link: "https://github.com/Ashish-chanchal/pdms_college",
-  },
-  {
-    id: 2,
-    image:
-      "https://user-images.githubusercontent.com/86229520/191169870-a28f527b-2e61-49ae-b8af-a5c3a2c3527a.png",
-    title: "E-Learners",
-    tech: "HTML CSS JavaScript",
-    description: [
-      "Built Vibrant website functionalities by leveraging PHP and MySQL databases",
-      "Created user-centric interfaces by streamlining navigation pathways. Employed visualization tools to optimize user navigation and ensure the reachability of content",
-    ],
-    link: "https://github.com/Ashish-chanchal/E-learners",
-  },
-  {
-    id: 3,
-    title: "Movie Tickiter",
-    tech: "HTML CSS JavaScript",
-    image:
-      "https://private-user-images.githubusercontent.com/86229520/371506576-cd00474b-837c-401f-88d4-329d9fe3d56e.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Mjc0MzU0MTAsIm5iZiI6MTcyNzQzNTExMCwicGF0aCI6Ii84NjIyOTUyMC8zNzE1MDY1NzYtY2QwMDQ3NGItODM3Yy00MDFmLTg4ZDQtMzI5ZDlmZTNkNTZlLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA5MjclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwOTI3VDExMDUxMFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTU4NDJmODc1MTU0OGZkZTMzMGJjZDM2YmVkYjJkYzlkMWQ3ZWQ1ZmU3MTdjM2IyYzc5NGIwNjg1YjM4NjllNTAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.8tQrdn2LdHxjr3XjF19XOQBTYB5cNaFX9oixsLp1my8",
-    description: [
-      "Engineered an innovative React.js web application, 'Movie Tickiter, optimizing movie ticket booking and data storage capabilities",
-      "It has enhanced user experience by seamlessly merging booking functionality with active content from the Movies Data API",
-    ],
-
-    livelink: "https://movieshowticket.netlify.app/",
-  },
-];
 
 // Animation variants
 const containerVariants = {
@@ -73,7 +44,7 @@ const backgroundVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 1 } },
 };
 
-const Projects = () => {
+const Projects = ({ProjectsData,heading,setSelectedItem}:{ProjectsData:ProjectDataProps[],heading:string,setSelectedItem?: React.Dispatch<React.SetStateAction<number>>}) => {
   return (
     <motion.div
       className="text-4xl md:py-20 py-16 relative"
@@ -82,7 +53,10 @@ const Projects = () => {
       variants={containerVariants}
     >
       <div className="max-w-7xl mx-auto p-4">
-        <Heading text="Projects" btnText="View All ~~>" />
+        <div className="flex justify-between">
+        <Heading text={heading}  />
+        {setSelectedItem&&<Button text="View All ~~>" link="/works" setSelectedItem={setSelectedItem} id={1}/>}
+        </div>
 
         {/* Project Cards Grid */}
         <motion.div

@@ -6,52 +6,15 @@ import Heading from "../shared/Heading";
 
 import { motion } from "framer-motion";
 
-const ExperienceData = [
-  {
-    id: 1,
+interface ExperienceDataProps {
+  id: number;
+  tech: string;
+  title: string;
+  description: string[];
+  link?: string;
+}
 
-    tech: "Company Name: Inteleccess",
-    title: "Designation: Frontend Developer",
-    description: [
-      "Spearheaded the complete redesign of Intelecess's website, leveraging cutting-edge technologies like React with Vite, TypeScript,Tailwind CSS, ShadCN UI, and Framer Motion",
-      "Implemented modern UI designs that significantly improved the site's aesthetics and user experience. I build the whole website Check the link below",
-    ],
-    link: "https://www.inteleccess.com/",
-  },
-  {
-    id: 2,
 
-    tech: "Company Name: Kloudidev",
-    title: "Designation: React Engineer Intern",
-    description: [
-      "Kloudidev Digital Solution Oct 2023 – Jun 2024 Acquired advanced proficiency in Tailwind CSS and Shadcnui frameworks , immediately implementing techniques to elevate a company website's design and functionality",
-      "Recognized as the top-performing intern within the first month of tenure. Executed frontend enhancements for Teckshila AI, optimizing user interfaces with innovative solutions and streamlined experiences; Websites built by me are below",
-    ],
-    link: "https://www.kloudidev.com/",
-  },
-  {
-    id: 3,
-
-    tech: "Company Name: Institute of Nuclear Medicine & Allied Sciences (INMAS), DRDO",
-    title: "Designation Research Internship",
-    description: [
-      "Completed a 10-week internship at INMAS, DRDO under G Scientist mentorship.",
-      "Spearheaded a comprehensive analysis of EEG data to uncover key patterns in brain activity, resulting in the development of sophisticated predictive models for Parkinson's disease",
-      "Developed and implemented sophisticated algorithms, including KNN, Random Forest, and Decision Tree, utilizing Python's MNElibrary to significantly enhance disease prediction accuracy based on EEG data",
-    ],
-  },
-  {
-    id: 4,
-
-    tech: "Company Name: Robust Results PVT LTD",
-    title: "Designation: Full-stack Developer Intern",
-    description: [
-      "Finished a 6-week internship as a Full Stack Developer at Robust Results Pvt Ltd, an IITK incubated company.",
-      "Gained hands-on experience in HTML5, CSS3, JavaScript, Bootstrap, PHP, and MySQL during the internship",
-      "Directed a cross-functional team to create an innovative web platform for E-Learners Technology, harnessing HTML, CSS, JavaScript, PHP, and MySQL",
-    ],
-  },
-];
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -79,7 +42,7 @@ const backgroundVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 1 } },
 };
 
-const Experience = () => {
+const Experience = ({ExperienceData}:{ExperienceData:ExperienceDataProps[]}) => {
   return (
     <motion.div
       className="text-4xl md:py-20 py-16 relative"
@@ -88,7 +51,7 @@ const Experience = () => {
       variants={containerVariants}
     >
       <div className="max-w-7xl mx-auto p-4">
-        <Heading text="Experience" btnText="View All ~~>" />
+        <Heading text="Experience"  />
 
         {/* Project Cards Grid */}
         <motion.div

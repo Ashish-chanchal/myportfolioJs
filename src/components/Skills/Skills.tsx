@@ -61,7 +61,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const Skills = () => {
+const Skills = ( {showimg}:{showimg?:boolean}) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const animation = useAnimation();
 
@@ -78,9 +78,9 @@ const Skills = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto p-4">
         {/* Image Section */}
-        <div className="md:block hidden">
+       {showimg&& <div className="md:block hidden">
           <img src={skillgroup} alt="" />
-        </div>
+        </div>}
 
         {/* Skills Boxes */}
         <motion.div
@@ -96,6 +96,9 @@ const Skills = () => {
             </motion.div>
           ))}
         </motion.div>
+        {!showimg&& <div className="md:block hidden">
+          <img src={skillgroup} alt="" />
+        </div>}
       </div>
     </div>
   );

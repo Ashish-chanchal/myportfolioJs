@@ -32,7 +32,7 @@ const ProjectCard = ({ img , title = "Project Name",tech, description = ["Projec
     >
       {/* Image Section */}
       {img&&<div className=" overflow-hidden">
-        <img src={img} alt="Project" className="md:w-fit w-[280px] " />
+        <img src={img} alt="Project" className="md:w-fit  " />
       </div>}
 
       {/* Text Section */}

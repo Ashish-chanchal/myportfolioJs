@@ -3,34 +3,26 @@ import aboutimg from "../../assets/common/aboutimg.png";
 import rectangle from "../../assets/common/rectangle.png";
 import dots from "../../assets/common/dots.png";
 import Button from "../shared/Button";
-
-const About = () => {
+interface AboutProps {
+  id: number;
+  description: string;
+}
+const About = ({setSelectedItem,description}:{setSelectedItem?: React.Dispatch<React.SetStateAction<number>>,description:AboutProps[]}) => {
   return (
     <div className="text-4xl md:py-20 py-16 relative">
-      <div className="max-w-7xl mx-auto p-4">
+      {setSelectedItem?"":<div className="max-w-7xl mx-auto p-4">
         <Heading text="AboutMe" />
-      </div>
+      </div>}
       <div className="max-w-7xl mx-auto p-4 flex md:flex-row flex-col-reverse md:items-center gap-5">
         
         <div className="space-y-10  text-white  md:w-2/3">
           <h2 className="text-xl">
             Hello, i’m <span className="text-secondary">Ashish Chanchal</span>
           </h2>
-
-          <p className="text-sm">
-            I’m a self-taught Software developer based in Noida, Uttar Pradesh,
-            India. I can develop responsive websites from scratch and raise them
-            into modern user-friendly web experiences.{" "}
-          </p>
-
-          <p className="text-sm">
-            Transforming my creativity and knowledge into a websites has been my
-            passion for over a year. I have been helping various clients to
-            establish their presence online. I always strive to learn about the
-            newest technologies and frameworks.
-          </p>
+{description.map((desc)=><p key={desc.id} className="text-sm">{desc.description}</p>)}
+      
           <div>
-          <Button text="Read more ~~>" />
+          {setSelectedItem?"": <Button text="Read more ~~>" setSelectedItem={setSelectedItem} id={2}/>}
           </div>
         </div>
         <div className="relative">

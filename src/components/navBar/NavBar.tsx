@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Line from '../../assets/common/line.png'
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { useLocation } from 'react-router-dom';
 // Navigation Items
 
 
@@ -15,22 +16,29 @@ const NavItems=[
   {
     id:1,
     name:"works",
-    link:"/"
+    link:"/works"
   },
   {
     id:2,
     name:"about-me",
-    link:"/"
+    link:"/about-me"
   },
   {
     id:3,
     name:"contacts",
-    link:"/"
+    link:"/contact-me"
   }
 ]
-const Navbar: React.FC = () => {
+const Navbar = ({setSelectedItem,selectedItem}:{setSelectedItem: React.Dispatch<React.SetStateAction<number>>,selectedItem:number}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(0);
+  const location = useLocation();
+  useEffect(() => {
+    const path = location.pathname;
+    const item = NavItems.find((item) => item.link === path);
+    if (item) {
+      setSelectedItem(item.id);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -101,7 +109,7 @@ const Navbar: React.FC = () => {
         {/* Desktop Links */}
         <div className="hidden lg:flex space-x-8">
           {NavItems.map((item)=>(
-           <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
+           <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`hover:text-white cursor-pointer font-semibold  ${selectedItem === item.id ? 'text-white' : 'text-gray-600'}`}>
             <span className='text-secondary'>#</span>
             {item.name}
          

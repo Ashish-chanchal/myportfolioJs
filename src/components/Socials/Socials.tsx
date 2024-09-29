@@ -13,25 +13,25 @@ const SocialsData=[
     {
         id:1,
         name:"Github",
-        link:"",
+        link:"https://github.com/Ashish-chanchal",
         icon : <FaGithub className="w-4 h-4 "/> 
     },
     {
         id:2,
         name:"Instagram",
-        link:"",
+        link:"https://www.instagram.com/ashish._chanchal/",
         icon : <FaInstagram className="w-4 h-4 "/>
     },
     {
         id:3,
         name:"Twitter",
-        link:"",
+        link:"https://x.com/_ashishchanchal",
         icon : <FaTwitter className="w-4 h-4 "/>
     },
     {
         id:3,
         name:"Email",
-        link:"",
+        link:"mailto:akchanchal2002@gmail.com",
         icon : <FaEnvelope className="w-4 h-4 "/>
     },
     

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Button from "../shared/Button";
 import heroimg from "../../assets/hero/heroimg.png";
-import heromain from "../../assets/hero/heromain.jpg";
+import heromain from "../../assets/hero/heromain.png";
 import dots from "../../assets/common/dots.png";
 import commas from "../../assets/common/commas.png";
 import rectangle from "../../assets/common/rectangle.png";
@@ -40,7 +40,7 @@ const buttonVariants = {
 const Hero = () => {
   return (
     <motion.div
-      className="text-4xl md:pt-24 py-16"
+      className="md:text-4xl text-2xl md:pt-24 py-16"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -56,7 +56,7 @@ const Hero = () => {
           <div>
             <h2 className="font-semibold text-white">
               Ashish Chanchal is a{" "}
-              <span className="text-secondary">Software Developer</span> and{" "}
+              <span className="text-secondary">Software Developer</span>and{" "}
               <span className="text-secondary">Community Manager</span>
             </h2>
           </div>

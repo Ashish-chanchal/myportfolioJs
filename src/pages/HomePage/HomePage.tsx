@@ -38,7 +38,7 @@ const ProjectsData = [
     title: "Movie Tickiter",
     tech: "HTML CSS JavaScript",
     image:
-      "https://github-production-user-asset-6210df.s3.amazonaws.com/86229520/371506576-cd00474b-837c-401f-88d4-329d9fe3d56e.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240928%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240928T093220Z&X-Amz-Expires=300&X-Amz-Signature=8d66060a1a6f38045c186a270193b268b970c8edcbfd51241ea68d89fe092525&X-Amz-SignedHeaders=host",
+      "https://github-production-user-asset-6210df.s3.amazonaws.com/86229520/371506576-cd00474b-837c-401f-88d4-329d9fe3d56e.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240929%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240929T125252Z&X-Amz-Expires=300&X-Amz-Signature=c9b2f8e036c517461e4db047fafaecbcc8a7aefc8d3b289e500d054d52099f0a&X-Amz-SignedHeaders=host",
     description: [
       "Engineered an innovative React.js web application, 'Movie Tickiter, optimizing movie ticket booking and data storage capabilities",
       "It has enhanced user experience by seamlessly merging booking functionality with active content from the Movies Data API",

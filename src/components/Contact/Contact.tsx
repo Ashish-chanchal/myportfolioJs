@@ -3,7 +3,7 @@ import React from "react";
 import Heading from "../shared/Heading";
 import dots from '../../assets/common/dots.png'
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const Contact = () => {
   const location = useLocation();
   const [showHeading, setShowHeading] = React.useState(true);
@@ -30,8 +30,8 @@ const Contact = () => {
             Message me Here
           </h2>
           <ul className="space-y-2">
-            <li className="flex gap-2"><FaLinkedin/> AshishChanchal</li>
-            <li className="flex gap-2"><FaGithub/> Github</li>
+            <li ><Link to="https://www.linkedin.com/in/ashishchanchal/" className="flex gap-2"><FaLinkedin/> AshishChanchal</Link></li>
+            <li ><Link to="https://github.com/Ashish-chanchal" className="flex gap-2"><FaGithub/> Github</Link></li>
           </ul>
           </div>
         </div>

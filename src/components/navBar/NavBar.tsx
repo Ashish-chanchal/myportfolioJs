@@ -152,7 +152,9 @@ const Navbar = ({setSelectedItem,selectedItem}:{setSelectedItem: React.Dispatch<
           className="lg:hidden bg-gray-900 text-white p-4 space-y-2"
         >
            {NavItems.map((item)=>(
-           <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`block hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
+           <Link key={item.id} onClick={() => {setSelectedItem(item.id)
+            toggleMenu()
+           }} to={item.link} className={`block hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
             <span className='text-secondary'>#</span>
             {item.name}
          

@@ -145,7 +145,7 @@ const ProjectsCMPdata = [
     title: "Rent-Up",
     tech: "React Material UI",
     image:
-      "https://github-production-user-asset-6210df.s3.amazonaws.com/86229520/371856411-cd972e1d-816f-4140-9a19-00a154eb16bc.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240929%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240929T151720Z&X-Amz-Expires=300&X-Amz-Signature=5ef2ff795b8c1f2e86d3a2896d02eea0bd79ac93fc1e48dbb65caa654cdd415c&X-Amz-SignedHeaders=host",
+      "https://github.com/user-attachments/assets/cd972e1d-816f-4140-9a19-00a154eb16bc",
     description: [
       "Home Page: Search for properties by city, street, or property type.",
       "About Page: Information about the company and mission.",

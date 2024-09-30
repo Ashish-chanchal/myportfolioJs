@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-
+import { Helmet } from 'react-helmet-async';
 import HeadingSec from "../../components/shared/HeadingSec";
 import Projects from "../../components/Projects/Projects";
 
@@ -195,6 +195,10 @@ const ScrollReveal = ({ children }: { children: React.ReactNode }) => {
 const WorksPage = () => {
   return (
     <div>
+      <Helmet>
+        <title>Works - Ashish Chanchal</title>
+        <meta name="description" content="Explore a portfolio of innovative projects, including web and mobile apps built with Dart, Flutter, React, Firebase, HTML, CSS, JavaScript, and more. Discover cutting-edge applications like CareLink, E-Learners, Movie Tickiter, and Rent-Up, each showcasing advanced development in user experience, seamless functionality, and modern design principles. View live projects featuring e-commerce platforms, weather apps, music players, and chatbots." />
+      </Helmet>
       <ScrollReveal>
         <HeadingSec title="projects" description="List of my projects" />
       </ScrollReveal>

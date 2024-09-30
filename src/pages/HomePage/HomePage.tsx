@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import About from "../../components/About/About";
 import Contact from "../../components/Contact/Contact";
-
+import { Helmet } from 'react-helmet-async';
 import Hero from "../../components/Hero/Hero";
 import Projects from "../../components/Projects/Projects";
 import Skills from "../../components/Skills/Skills";
@@ -140,6 +140,10 @@ const ScrollReveal = ({ children }: { children: React.ReactNode }) => {
 function HomePage({ setSelectedItem }: { setSelectedItem?: React.Dispatch<React.SetStateAction<number>> }) {
   return (
     <div>
+      <Helmet>
+        <title>Ashish Chanchal</title>
+        <meta name="description" content="Ashish Chanchal is a Software Developer and Community Manager based in Noida, Uttar Pradesh, India. He specializes in Frontend Development, Full-stack Development, Machine Learning, and Open Source. Explore Ashish Chanchal's portfolio of innovative projects, including web and mobile apps built with Dart, Flutter, React, Firebase, HTML, CSS, JavaScript, and more. Discover cutting-edge applications like CareLink, E-Learners, Movie Tickiter, and Rent-Up, each showcasing advanced development in user experience, seamless functionality, and modern design principles. Connect with Ashish Chanchal for software development, web design, and community management services. Reach out to Ashish Chanchal for collaborations, projects, and more." />
+        </Helmet>
       {/* Apply scroll reveal to each section */}
       <ScrollReveal>
         <Hero />

@@ -3,6 +3,7 @@ import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import HeadingSec from '../../components/shared/HeadingSec';
+import { Helmet } from 'react-helmet-async';
 import About from '../../components/About/About';
 import Skills from '../../components/Skills/Skills';
 import FunFacts from '../../components/Funfacts/FunFacts';
@@ -71,6 +72,13 @@ const sectionVariants = {
 const AboutPage = ({setSelectedItem}:{setSelectedItem: React.Dispatch<React.SetStateAction<number>>}) => {
   return (
     <div>
+      <Helmet>
+        <title>About - Ashish Chanchal</title>
+       <meta name='description' content='Hello, i’m Ashish Chanchal
+I’m a self-taught Software developer based in Noida, Uttar Pradesh,India. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.
+
+Transforming my creativity and knowledge into a websites has been my passion for over a year. I have been helping various clients to establish their presence online. I always strive to learn about the newest technologies and frameworks.'/>
+      </Helmet>
       <ScrollReveal>
         <HeadingSec title="about-me" description="Who i am"/>
       </ScrollReveal>

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import HeadingSec from '../../components/shared/HeadingSec';
 import Contact from '../../components/Contact/Contact';
 import Socials from '../../components/Socials/Socials';
-
+import { Helmet } from 'react-helmet-async';
 
 
 const sectionVariants = {
@@ -43,6 +43,10 @@ const sectionVariants = {
 const ContactPage = () => {
   return (
     <div>
+      <Helmet>
+        <title>Contact - Ashish Chanchal</title>
+        <meta name="description" content="Contact Ashish Chanchal for software development, web design, and community management services. Connect with Ashish Chanchal on social media platforms like LinkedIn, Twitter, GitHub, and Instagram. Reach out to Ashish Chanchal for collaborations, projects, and more." />
+      </Helmet>
       <ScrollReveal>
         <HeadingSec title="Contact" description="Let's Connect"/>
       </ScrollReveal>

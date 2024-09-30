@@ -9,7 +9,7 @@ import Button from "../shared/Button";
 interface ProjectDataProps {
   id: number;
   title: string;
-  image: string;
+  image?: string;
   tech: string;
   description: string[];
   link?: string;

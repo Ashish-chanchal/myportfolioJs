@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Button from "../shared/Button";
 import heroimg from "../../assets/hero/heroimg.png";
-import heromain from "../../assets/hero/heromain.png";
+import heromain from "../../assets/hero/heromain.webp";
 import dots from "../../assets/common/dots.png";
 import commas from "../../assets/common/commas.png";
 import rectangle from "../../assets/common/rectangle.png";
@@ -91,13 +91,13 @@ const Hero = () => {
             <motion.img
               src={heroimg}
               alt="heroimg"
-              className="md:w-[150px] bg-transparent absolute left-0"
+              className="md:w-[150px] bg-transparent absolute left-0 "
             />
             <div className="md:w-2/3">
               <motion.img
                 src={heromain}
                 alt="heroimg"
-                className="z-10 relative bg-transparent"
+                className="z-10 relative bg-transparent rounded-full"
               />
               <motion.div
                 className="md:text-sm text-xs flex items-center ml-2 gap-5 p-2 border border-white"

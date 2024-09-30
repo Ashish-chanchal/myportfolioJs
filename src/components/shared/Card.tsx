@@ -48,12 +48,14 @@ const ProjectCard = ({ img , title = "Project Name",tech, description = ["Projec
       </div>
 
       {/* Button Section */}
-     {link&& <div className="p-2">
+   <div className="flex "> 
+   {link&& <div className="p-2">
         <Button text="View Project" link={link} />
       </div>} 
      {liveLink&& <div className="p-2">
         <Button text="Live Link" link={liveLink} />
       </div>}
+   </div>
     </motion.div>
   );
 };

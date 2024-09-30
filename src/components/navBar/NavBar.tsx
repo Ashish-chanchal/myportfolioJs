@@ -57,13 +57,13 @@ const Navbar = ({setSelectedItem,selectedItem}:{setSelectedItem: React.Dispatch<
       </div>
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         {/* Logo */}
-        <div
-         
+        <Link
+          to={"/"}
           className="flex items-center cursor-pointer"
         >
           <img src="/Logo.png" alt="Logo" className="w-1/4 mr-2" />
         
-        </div>
+        </Link>
 
         {/* Hamburger Menu Icon for Mobile */}
         <div className="lg:hidden">

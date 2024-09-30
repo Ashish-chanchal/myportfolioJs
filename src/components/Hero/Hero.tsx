@@ -56,7 +56,7 @@ const Hero = () => {
           <div>
             <h2 className="font-semibold text-white">
               Ashish Chanchal is a{" "}
-              <span className="text-secondary">Software Developer</span>and{" "}
+              <span className="text-secondary">Software Developer </span>and{" "}
               <span className="text-secondary">Community Manager</span>
             </h2>
           </div>

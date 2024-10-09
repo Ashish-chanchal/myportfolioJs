@@ -37,7 +37,7 @@ const buttonVariants = {
   hover: { scale: 1.1, transition: { duration: 0.2, yoyo: Infinity } },
 };
 
-const Hero = () => {
+const Hero = ({}) => {
   return (
     <motion.div
       className="md:text-4xl text-2xl md:pt-24 py-16"

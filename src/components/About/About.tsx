@@ -28,7 +28,7 @@ const About = ({setSelectedItem,description}:{setSelectedItem?: React.Dispatch<R
 {description.map((desc)=><p key={desc.id} className="text-sm">{desc.description}</p>)}
       
           <div>
-          {setSelectedItem?"": <Button text="Read more ~~>" setSelectedItem={setSelectedItem} id={2}/>}
+          {setSelectedItem?"": <Button text="Read more ~~>" setSelectedItem={setSelectedItem} id={2}  link="/about-me"/>}
           </div>
         </div>
         <div className="relative">

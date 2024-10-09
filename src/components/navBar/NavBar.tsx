@@ -59,6 +59,7 @@ const Navbar = ({setSelectedItem,selectedItem}:{setSelectedItem: React.Dispatch<
         {/* Logo */}
         <Link
           to={"/"}
+          onClick={() => setSelectedItem(0)}
           className="flex items-center cursor-pointer"
         >
           <img src="/Logo.png" alt="Logo" className="w-1/4 mr-2" />

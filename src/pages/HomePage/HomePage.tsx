@@ -58,7 +58,7 @@ const ExperienceData = [
       "Frontend Development: Improved ReactJS skills with focus on state management, optimization, and integration of Material UI",
       "Problem Solving & Collaboration: Enhanced problem-solving in JS/NestJS, contributed to team projects, and collaborated on building responsive, scalable applications."
     ],
-    link: "https://www.alphadroid.io/",
+    
   },
   {
     id: 2,

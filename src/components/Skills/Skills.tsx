@@ -15,12 +15,12 @@ export const techData = [
   {
     id: 2,
     category: "Backend Development",
-    technologies: ["NodeJS", "ExpressJS"],
+    technologies: ["NodeJS", "ExpressJS","NestJS"],
   },
   {
     id: 3,
     category: "Databases",
-    technologies: ["Firbase", "Mongo"],
+    technologies: ["Firbase", "MongoDB"],
   },
   {
     id: 4,

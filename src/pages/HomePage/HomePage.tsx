@@ -51,13 +51,14 @@ const ExperienceData = [
   {
     id: 1,
 
-    tech: "Company Name: Inteleccess",
-    title: "Designation: Frontend Developer",
+    tech: "Company Name: AlphaDroid",
+    title: "Designation: Software Engineer",
     description: [
-      "Spearheaded the complete redesign of Intelecess's website, leveraging cutting-edge technologies like React with Vite, TypeScript,Tailwind CSS, ShadCN UI, and Framer Motion",
-      "Implemented modern UI designs that significantly improved the site's aesthetics and user experience. I build the whole website Check the link below",
+      "Backend Development: Upskilled in NestJS, MongoDB, and authentication, implementing features like MultiModel Function Calling with OpenAI Assistant API and socket security",
+      "Frontend Development: Improved ReactJS skills with focus on state management, optimization, and integration of Material UI",
+      "Problem Solving & Collaboration: Enhanced problem-solving in JS/NestJS, contributed to team projects, and collaborated on building responsive, scalable applications."
     ],
-    link: "https://www.inteleccess.com/",
+    link: "https://www.alphadroid.io/",
   },
   {
     id: 2,

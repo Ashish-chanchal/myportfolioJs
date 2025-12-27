@@ -51,17 +51,32 @@ const ExperienceData = [
   {
     id: 1,
 
-    tech: "Company Name: AlphaDroid",
+    tech: "Company Name: Studio Sonrai PVT LTD",
     title: "Designation: Software Engineer",
     description: [
-      "Backend Development: Upskilled in NestJS, MongoDB, and authentication, implementing features like MultiModel Function Calling with OpenAI Assistant API and socket security",
-      "Frontend Development: Improved ReactJS skills with focus on state management, optimization, and integration of Material UI",
-      "Problem Solving & Collaboration: Enhanced problem-solving in JS/NestJS, contributed to team projects, and collaborated on building responsive, scalable applications."
+      "Backend Development: Upskilled in NestJS, MongoDB, and authentication, implementing features like MultiModel Function Calling with OpenAI Assistant API, real-time conversation, and reducing the response time of voice conversation from 10 - 15 seconds to 3 - 4 Sec",
+      "Frontend Development: Improved ReactJS focusing on state management using Redux Toolkit, optimization, and integration of Material UI for Hotel Services System - AI, React Native for services visualization app for hotel staff with role-based UI rendering, reminder notifications using Notifee and Firebase Cloud Messaging  and Three.js and WebGL for 3D Character rendering on browser it includes humanoid and animated characters, Voice based system with Agentic ai Integration",
+      "Problem Solving & Collaboration: Enhanced problem-solving in JS/NestJS, contributed to team projects, and collaborated on building responsive, scalable applications. Solved a Major problem for them in IOS Safari in Voice to Voice Conversation and was able to build/deliver 10+ demos for clients' visits,  also provided major contribution in the company's product."
     ],
     
   },
-  {
-    id: 2,
+   {
+    id:2,
+
+    tech: "Company Name: AlphaDroid",
+    title: "Designation: Software Engineer",
+      description: [
+      "Backend Development: Upskilled in NestJS, MongoDB, and authentication, implementing features like MultiModel Function Calling with OpenAI Assistant API, real-time conversation, and reducing the response time of voice conversation from 10 - 15 seconds to 3 - 4 Sec",
+      "Frontend Development: Improved ReactJS focusing on state management using Redux Toolkit, optimization, and integration of Material UI for Hotel Services System - AI, React Native for services visualization app for hotel staff with role-based UI rendering, reminder notifications using Notifee and Firebase Cloud Messaging  and Three.js and WebGL for 3D Character rendering on browser it includes humanoid and animated characters, Voice based system with Agentic ai Integration",
+      "Problem Solving & Collaboration: Enhanced problem-solving in JS/NestJS, contributed to team projects, and collaborated on building responsive, scalable applications. Solved a Major problem for them in IOS Safari in Voice to Voice Conversation and was able to build/deliver 10+ demos for clients' visits,  also provided major contribution in the company's product."
+    ],
+    
+  },
+];
+
+const InternshipData = [
+    {
+    id:3,
 
     tech: "Company Name: Kloudidev",
     title: "Designation: React Engineer Intern",
@@ -69,10 +84,9 @@ const ExperienceData = [
       "Kloudidev Digital Solution Oct 2023 – Jun 2024 Acquired advanced proficiency in Tailwind CSS and Shadcnui frameworks , immediately implementing techniques to elevate a company website's design and functionality",
       "Recognized as the top-performing intern within the first month of tenure. Executed frontend enhancements for Teckshila AI, optimizing user interfaces with innovative solutions and streamlined experiences; Websites built by me are below",
     ],
-    link: "https://www.kloudidev.com/",
   },
   {
-    id: 3,
+    id: 4,
 
     tech: "Company Name: Institute of Nuclear Medicine & Allied Sciences (INMAS), DRDO",
     title: "Designation Research Internship",
@@ -83,7 +97,7 @@ const ExperienceData = [
     ],
   },
   {
-    id: 4,
+    id: 5,
 
     tech: "Company Name: Robust Results PVT LTD",
     title: "Designation: Full-stack Developer Intern",
@@ -93,7 +107,7 @@ const ExperienceData = [
       "Directed a cross-functional team to create an innovative web platform for E-Learners Technology, harnessing HTML, CSS, JavaScript, PHP, and MySQL",
     ],
   },
-];
+]
 const aboutData = [
   {
     id: 1,
@@ -151,6 +165,9 @@ function HomePage({ setSelectedItem }: { setSelectedItem?: React.Dispatch<React.
       </ScrollReveal>
       <ScrollReveal>
         <Experience ExperienceData={ExperienceData}/>
+      </ScrollReveal>
+            <ScrollReveal>
+        <Experience ExperienceData={InternshipData} title="Internships" />
       </ScrollReveal>
       <ScrollReveal>
         <Projects ProjectsData={ProjectsData} heading="Projects" setSelectedItem={setSelectedItem}/>

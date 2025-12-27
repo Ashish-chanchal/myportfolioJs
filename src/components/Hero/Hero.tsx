@@ -73,7 +73,7 @@ const Hero = ({}) => {
             <Button
               text="Download CV !!"
               link={
-                "https://drive.google.com/file/d/105lDwcWenzrpZmccnCBzOh_bMxOowsuT/view?usp=drive_link"
+                "https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link"
               }
             />
           </motion.div>
@@ -106,7 +106,7 @@ const Hero = ({}) => {
                 variants={cardVariants}
               >
                 <div className="w-3 h-3 bg-secondary"></div>
-                <h2 className="text-white">Currently working on Portfolio</h2>
+                <h2 className="text-white">Currently working on Automations</h2>
               </motion.div>
               <img
                 src={dots}

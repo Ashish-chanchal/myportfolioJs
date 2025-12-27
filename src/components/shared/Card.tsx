@@ -24,7 +24,7 @@ const cardVariants = {
 const ProjectCard = ({ img , title = "Project Name",tech, description = ["Project Description"], link ,liveLink }: CardProps) => {
   return (
     <motion.div
-      className="flex flex-col border border-gray-500 w-fit h-fit relative z-50  bg-primary"
+      className="flex flex-col border border-gray-500 w-fit h-fit relative z-1  bg-primary"
       variants={cardVariants}
       initial="hidden"
       animate="visible"

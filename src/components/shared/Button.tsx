@@ -10,7 +10,7 @@ interface ButtonProps {
 
 function Button({ text, btnimg,link,setSelectedItem ,id}: ButtonProps) {
   return (
-    <Link to={link ||"/"}>
+    <Link to={link ||"/"} >
     <button className="bg-primary border border-secondary p-2 flex gap-4 " onClick={()=>{setSelectedItem&&setSelectedItem(id||0)}}>
         <span className="text-secondary text-sm">{text}</span>
         {btnimg && <img src={btnimg} alt={text} />}

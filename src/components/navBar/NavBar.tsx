@@ -45,7 +45,7 @@ const Navbar = ({setSelectedItem,selectedItem}:{setSelectedItem: React.Dispatch<
   };
 
   return (
-    <nav className="bg-primary text-white p-4 top-0 w-full z-50 fixed ">
+    <nav className="bg-primary text-white p-4 top-0 w-full z-[100] fixed">
       <div className='flex flex-col absolute top-0 md:left-5 left-0 items-center gap-1 bg-transparent'>
         <img src={Line} alt=""  className='md:w-[2px]  w-[2px]'/>
         <Link to='https://www.linkedin.com/in/ashishchanchal/'  target='_blank' className='text-brandWhite font-semibold bg-primary rounded-full'><FaLinkedinIn className='text-brandWhite w-5 h-5 p-1'/></Link>

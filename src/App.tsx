@@ -6,6 +6,7 @@ import WorksPage from "./pages/WorksPage/WorksPage";
 import Footer from "./components/Footer/Footer";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 function App() {
   const [selectedItem, setSelectedItem] = useState(0);
   useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
        <Route path="/works" element={<WorksPage />} />
        <Route path="/about-me" element={<AboutPage setSelectedItem={setSelectedItem}/>} />
        <Route path="/contact-me" element={<ContactPage/>} />
+       <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
         </Routes>
         <Footer />
       </BrowserRouter>

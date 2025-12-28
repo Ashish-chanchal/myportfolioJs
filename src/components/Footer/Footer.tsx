@@ -28,6 +28,9 @@ const Footer = () => {
         
       </div>
         </div>
+        <div className='flex flex-col gap-2 md:items-end'>
+          <Link to={'/privacy-policy'} className='text-sm text-gray-300 hover:text-white'>Privacy Policy</Link>
+        </div>
       </div>
       <div className="text-center p-4 md:text-lg text-sm">
 <h2>@CopyRight 2024 Made by <span className="text-secondary">Ashish Chanchal</span></h2>

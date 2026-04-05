@@ -8,156 +8,101 @@ import Projects from "../../components/Projects/Projects";
 const ProjectsData = [
   {
     id: 1,
-    title: "EStypeShop",
-    tech: "React and TailwindCSS",
-
+    title: "Parkinson Disease Detection",
+    tech: "Python ML MNE EEG",
     description: [
-      "EStypeShop is an e-commerce website built using React and TailwindCSS. It includes a home page, product page, and cart page.",
+      "Engineered predictive models using Random Forest and Decision Tree reaching 88.89% detection accuracy",
+      "Processed high-density EEG data with Python's MNE library for signal denoising and feature extraction",
     ],
-livelink:"https://e-stype-shop.vercel.app/",
-    link: "https://github.com/Ashish-chanchal/EStypeShop",
+    link: "https://github.com/Ashish-chanchal/Parkinson-Disease-Detection",
   },
   {
     id: 2,
-    title: "Basic Website for NGO",
-    tech: "React ,Vite and TailwindCSS",
-
-    description: [
-      "I have created a basic website for an NGO using React, Vite, and TailwindCSS. The website is responsive and includes a home page, about page, and contact page.",
-    ],
-    liveLink:
-      "https://forntedweb-k4jegxf2b-ashish-chanchals-projects.vercel.app/",
-    link: "https://github.com/Ashish-chanchal/forntedweb",
-  },
-  {
-    id: 3,
-    title: "Weather App",
-    tech: "Flutter and OpenWeatherMap API",
-
-    description: [
-      "Weather app using Flutter and OpenWeatherMap API. It is a simple app that allows users to check the weather in their location.",
-    ],
-
-    link: "https://github.com/Ashish-chanchal/weather_app",
-  },
-  {
-    id: 4,
     title: "Words that Sparkle",
-
     tech: "React and FreeAPI",
     description: [
-      "Cosntructed an innovative React.js web application, 'Words that Sparkle', optimizing user experience and content accessibility",
-      "Enhanced user engagement by seamlessly integrating motivational quotes with active content from the Quotes API",
+      "Vibrant motivational platform integrating real-time quotes via FreeAPI with optimized React state management",
     ],
     livelink: "https://quotes-sparkle.netlify.app/",
     link: "https://github.com/Ashish-chanchal/words-sparkle-react",
   },
   {
-    id: 5,
+    id: 3,
     title: "Music Player",
     tech: "HTML CSS JavaScript",
-
     description: [
-      "This  is my favorite project. I have made a music player using HTML, CSS, and JavaScript. It is a simple music player that can play, pause, and skip songs.",
-      "I have also added a feature to jump to a specific part of the song by clicking on the progress bar.",
+      "Feature-rich music player with dynamic progress tracking, volume control, and minimalist UI",
     ],
     link: "https://github.com/Ashish-chanchal/music_player",
     livelink: "https://ashish-chanchal.github.io/music_player/",
   },
   {
-    id: 6,
-
-    title: "Text Utils",
-    tech: "React",
+    id: 4,
+    title: "Weather App",
+    tech: "Flutter and OpenWeatherMap API",
     description: [
-      "Developed a React.js web application, 'Text Utils', optimizing text editing and data storage capabilities",
+      "Location-aware weather forecasting application with real-time API integration and GetX state management",
     ],
-    livelink: "https://txetutils-react.netlify.app/",
-    link: "https://github.com/Ashish-chanchal/textutils",
+    link: "https://github.com/Ashish-chanchal/weather_app",
   },
-
   {
-    id: 7,
+    id: 5,
     title: "ChatBot",
     tech: "HTML CSS JavaScript",
-
     description: [
-      "I have created a chatbot using HTML, CSS, and JavaScript. It is a simple chatbot that can answer basic questions and provide information on a variety of topics.",
+      "Rule-based intelligent assistant providing instant responses to common technical queries",
     ],
     link: "https://github.com/Ashish-chanchal/chatbot",
     livelink: "https://ashish-chanchal.github.io/chatbot/",
   },
-  {
-    id: 8,
-    title: "INR to USD Converter",
-    tech: "Flutter",
-
-    description: [
-      "I have created a currency converter app using Flutter. It is a simple app that allows users to convert Indian Rupees to US Dollars.",
-    ],
-    link: "https://github.com/Ashish-chanchal/Currency_converter_flutter",
-  },
-  
-  
-
 ];
 
 const ProjectsCMPdata = [
   {
     id: 1,
-    title: "CareLink",
+    title: "Conversational AI Appointment Booking",
+    tech: "React NestJS GRPC Sockets OpenAI",
+    description: [
+      "Engineered a production-ready AI appointment booking system with real-time voice and text interaction capabilities",
+      "Architected a robust GRPC-based backend for multi-channel communication between distributed microservices",
+      "Implemented intelligent conversation management using Socket.io and OpenAI's Assistant API with function calling",
+    ],
+  },
+  {
+    id: 2,
+    title: "CareLink (PDMS)",
     image:
       "https://github.com/Ashish-chanchal/pdms_college/assets/86229520/6deaf936-3c8c-4319-8c2d-c8a1430e0275",
-    tech: "Dart Flutter Firebase GetX Firebase Auth FireStore",
+    tech: "Dart Flutter Firebase GetX",
     description: [
-      "Constructed an innovative patient-doctor connection app utilizing Dart, Flutter, and Firebase technologies, enabling seamless appointment booking and prescription viewing functionalities",
-      "Implemented user-friendly interfaces, enhancing navigation pathways and optimizing user experience. Leveraged heat mapping tools to refine user flow and content accessibility",
+      "Innovative patient-doctor hub facilitating seamless appointment booking and digital prescription management",
+      "Optimized UX with advanced heat mapping and secure authentication using the GetX architecture",
     ],
     link: "https://github.com/Ashish-chanchal/pdms_college",
   },
   {
-    id: 2,
-    image:
-      "https://user-images.githubusercontent.com/86229520/191169870-a28f527b-2e61-49ae-b8af-a5c3a2c3527a.png",
-    title: "E-Learners",
-    tech: "HTML CSS JavaScript",
-    description: [
-      "Built Vibrant website functionalities by leveraging PHP and MySQL databases",
-      "Created user-centric interfaces by streamlining navigation pathways. Employed visualization tools to optimize user navigation and ensure the reachability of content",
-    ],
-    link: "https://github.com/Ashish-chanchal/E-learners",
-  },
-  {
     id: 3,
-    title: "Movie Tickiter",
-    tech: "HTML CSS JavaScript",
-    image:
-      "https://github.com/user-attachments/assets/cd00474b-837c-401f-88d4-329d9fe3d56e",
-    description: [
-      "Engineered an innovative React.js web application, 'Movie Tickiter, optimizing movie ticket booking and data storage capabilities",
-      "It has enhanced user experience by seamlessly merging booking functionality with active content from the Movies Data API",
-    ],
-    link:"https://github.com/Ashish-chanchal/MovieTickiter",
-    livelink: "https://movieshowticket.netlify.app/",
-  },
-  {
-    id: 4,
     title: "Rent-Up",
     tech: "React Material UI",
     image:
       "https://github.com/user-attachments/assets/cd972e1d-816f-4140-9a19-00a154eb16bc",
     description: [
-      "Home Page: Search for properties by city, street, or property type.",
-      "About Page: Information about the company and mission.",
-      "Services: List of services offered.",
-      "Property Listings: View recent and featured property listings.",
-      "Blog: Access real estate articles and news.",
-      "Pricing: Various subscription packages for different user needs.",
-      "Contact Page: Get in touch with the team.",
-      "Newsletter Subscription: Users can subscribe to the newsletter for updates.",
+      "Full-featured real estate portal with intelligent property filtering, subscription tiers, and responsive design",
     ],
     link: "https://github.com/Ashish-chanchal/Rentup",
     livelink: "https://rentup1702.netlify.app/",
+  },
+  {
+    id: 4,
+    title: "Movie Tickiter",
+    tech: "HTML CSS JavaScript",
+    image:
+      "https://github.com/user-attachments/assets/cd00474b-837c-401f-88d4-329d9fe3d56e",
+    description: [
+      "Dynamic ticket booking application integrating live data from the Movies Data API with optimized state handling",
+    ],
+    link: "https://github.com/Ashish-chanchal/MovieTickiter",
+    livelink: "https://movieshowticket.netlify.app/",
   },
 ];
 const sectionVariants = {

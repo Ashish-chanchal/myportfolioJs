@@ -10,44 +10,43 @@ export const techData = [
   {
     id: 1,
     category: "Frontend Development",
-    technologies: ["HTML", "CSS","Tailwind CSS", "Javascript", "Typescript"],
+    technologies: ["React JS", "Next JS", "JavaScript", "TypeScript", "ThreeJS", "Tailwind CSS", "Material UI"],
   },
   {
     id: 2,
     category: "Backend Development",
-    technologies: ["NodeJS", "ExpressJS","NestJS"],
+    technologies: ["NodeJS", "ExpressJS", "NestJS", "Fast API"],
   },
   {
     id: 3,
-    category: "Databases",
-    technologies: ["Firbase", "MongoDB"],
+    category: "GenAI",
+    technologies: ["OpenAI", "Gemini", "Assistant API", "Structured Output"],
   },
   {
     id: 4,
     category: "App Development",
-    technologies: ["Dart", "Flutter"],
+    technologies: ["React Native", "Ionic", "Capacitor"],
   },
   {
     id: 5,
-    category: "Data Structures & Algorithms",
-    technologies: ["C & C++"],
+    category: "Databases & Cache",
+    technologies: ["Redis", "MongoDB", "MSSQL", "Firebase"],
   },
   {
     id: 6,
-    category: "Tools & Environments",
+    category: "Tools & DevOps",
     technologies: [
-      "VSCode",
-      "Git",
-      "GitHub",
-      "Canva",
-      "Font Awesome",
+      "Docker",
+      "Azure",
+      "GCP",
+      "Git/Github",
+      "CI/CD (Azure DevOps)",
     ],
   },
-
   {
     id: 7,
-    category: "Frameworks & Libraries",
-    technologies: ["React",  "Next JS", "Zod", "ShadCN UI", "BootStrap"],
+    category: "Libraries",
+    technologies: ["WebSocket", "Socket.io", "Redux Toolkit", "Notifee", "ShadcnUI"],
   },
 ];
 
@@ -61,7 +60,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const Skills = ( {showimg}:{showimg?:boolean}) => {
+const Skills = ({ showimg }: { showimg?: boolean }) => {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const animation = useAnimation();
 
@@ -78,7 +77,7 @@ const Skills = ( {showimg}:{showimg?:boolean}) => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto p-4">
         {/* Image Section */}
-       {showimg&& <div className="md:block hidden">
+        {showimg && <div className="md:block hidden">
           <img src={skillgroup} alt="" />
         </div>}
 
@@ -96,7 +95,7 @@ const Skills = ( {showimg}:{showimg?:boolean}) => {
             </motion.div>
           ))}
         </motion.div>
-        {!showimg&& <div className="md:block hidden">
+        {!showimg && <div className="md:block hidden">
           <img src={skillgroup} alt="" />
         </div>}
       </div>

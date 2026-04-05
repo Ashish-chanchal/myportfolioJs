@@ -21,7 +21,7 @@ const cardVariants = {
 
 
 
-const ProjectCard = ({ img , title = "Project Name",tech, description = ["Project Description"], link ,liveLink }: CardProps) => {
+const ProjectCard = ({ img, title = "Project Name", tech, description = ["Project Description"], link, liveLink }: CardProps) => {
   return (
     <motion.div
       className="flex flex-col border border-gray-500 w-fit h-fit relative z-1  bg-primary"
@@ -31,7 +31,7 @@ const ProjectCard = ({ img , title = "Project Name",tech, description = ["Projec
       whileHover="hover"
     >
       {/* Image Section */}
-      {img&&<div className=" overflow-hidden">
+      {img && <div className=" overflow-hidden">
         <img src={img} alt="Project" className="md:w-fit  " />
       </div>}
 
@@ -40,22 +40,22 @@ const ProjectCard = ({ img , title = "Project Name",tech, description = ["Projec
         <h2 className="text-sm border-b p-2 border-gray-500">{tech}</h2>
         <h2 className="text-lg p-2">{title}</h2>
         <ul className="text-xs p-2 ">
-        {description.map((desc, index) => (
-          <li className="p-1" key={index}>{desc} </li>
-        ))}
-          
+          {description.map((desc, index) => (
+            <li className="p-1" key={index}>{desc} </li>
+          ))}
+
         </ul>
       </div>
 
       {/* Button Section */}
-   <div className="flex "> 
-   {link&& <div className="p-2">
-        <Button text="View Project" link={link} />
-      </div>} 
-     {liveLink&& <div className="p-2">
-        <Button text="Live Link" link={liveLink} />
-      </div>}
-   </div>
+      <div className="flex ">
+        {link && <div className="p-2">
+          <Button text="View Project" link={link} />
+        </div>}
+        {liveLink && <div className="p-2">
+          <Button text="Live Link" link={liveLink} />
+        </div>}
+      </div>
     </motion.div>
   );
 };

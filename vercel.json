@@ -1,10 +1,8 @@
 {
-    "rewrites": [
-      { "source": "/", "destination": "/index.html" },
-      { "source": "/works", "destination": "/index.html" },
-      { "source": "/contact-me", "destination": "/index.html" },
-      { "source": "/about-me", "destination": "/index.html" },
-      { "source": "/privacy-policy", "destination": "/index.html" }
-    ]
-  }
+  "rewrites": [
+    { "source": "/windows11", "destination": "/index.html" },
+    { "source": "/macos", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
   

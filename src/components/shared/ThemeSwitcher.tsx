@@ -176,6 +176,42 @@ export const ThemeSwitcher: React.FC<{ compact?: boolean }> = ({ compact = false
             </div>
           </div>
 
+          {/* Desktop Workstation Operating Systems */}
+          <div className="mb-3 pb-3 border-b border-zinc-800">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-mono text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+                DESKTOP OPERATING SYSTEMS
+              </span>
+              <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-bold border border-blue-500/30">
+                INTERACTIVE
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href="/macos"
+                className="p-2 rounded-xl bg-gradient-to-r from-purple-900/40 to-blue-900/40 hover:from-purple-800/60 hover:to-blue-800/60 border border-white/15 flex items-center gap-2 text-white transition-all group shadow-sm"
+              >
+                <span className="text-base group-hover:scale-110 transition-transform"></span>
+                <div className="text-left leading-tight">
+                  <div className="font-bold text-[11px]">macOS Sequoia</div>
+                  <div className="text-[9px] text-zinc-400 font-mono">Apple Desktop</div>
+                </div>
+              </a>
+
+              <a
+                href="/windows11"
+                className="p-2 rounded-xl bg-gradient-to-r from-blue-900/40 to-cyan-900/40 hover:from-blue-800/60 hover:to-cyan-800/60 border border-white/15 flex items-center gap-2 text-white transition-all group shadow-sm"
+              >
+                <span className="text-base text-cyan-400 group-hover:scale-110 transition-transform">⊞</span>
+                <div className="text-left leading-tight">
+                  <div className="font-bold text-[11px]">Windows 11</div>
+                  <div className="text-[9px] text-zinc-400 font-mono">Microsoft Desktop</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
           {/* Color Palette List */}
           <div className="flex items-center justify-between pb-2 border-b border-zinc-800/60 mb-2.5">
             <span className="font-mono text-[10px] font-bold text-zinc-400 uppercase tracking-wider">

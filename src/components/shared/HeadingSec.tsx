@@ -12,6 +12,30 @@ const HeadingSec: React.FC<HeadingSecProps> = ({ title, description, waypoint })
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
+
+  if (isRetro) {
+    return (
+      <div className="max-w-7xl mx-auto p-4 pt-28 pb-6">
+        <div className="retro-window p-5 sm:p-6 font-mono">
+          <div className="flex items-center justify-between border-b border-[#5a5247] pb-2 mb-4 text-xs text-zinc-400">
+            <div className="flex items-center gap-2">
+              <span className="text-accent font-bold">[FILE_DIR]</span>
+              <span className="text-white">{waypoint || 'C:\\SYS\\ARCHIVE.DIR'}</span>
+            </div>
+            <span className="text-[10px] text-zinc-500">FORMAT: FAT16</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-pixel text-white tracking-wider mb-2">
+            &gt; {title.replace(/_/g, ' ')}
+          </h1>
+          <p className="text-sm md:text-base text-zinc-400 max-w-2xl leading-relaxed font-mono">
+            {description}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (isEditorial) {
     return (

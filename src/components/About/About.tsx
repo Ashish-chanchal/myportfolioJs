@@ -35,6 +35,7 @@ const About: React.FC<{
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   return (
     <section id="about" className="py-16 md:py-20 relative bg-brutal-grid">
@@ -46,9 +47,80 @@ const About: React.FC<{
         />
 
         {/* ══════════════════════════════════════════════════════
-             EDITORIAL / MAGAZINE IN-DEPTH INTERVIEW SPREAD
+             MODE 1: RETRO / VINTAGE SYSTEM SPECIFICATION SPREAD
         ══════════════════════════════════════════════════════ */}
-        {isEditorial ? (
+        {isRetro ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mt-4 font-mono">
+            {/* Left Col: Machine Architecture Dossier (7 cols) */}
+            <div className="lg:col-span-7 retro-window p-1">
+              <div className="bg-[#38322b] px-3 py-1.5 flex items-center justify-between text-xs text-white border-b border-[#5a5247]">
+                <div className="flex items-center gap-2">
+                  <span className="text-accent font-bold">■</span>
+                  <span className="font-pixel text-[11px] text-accent">HARDWARE_PROFILE // ASHISH_CHANCHAL</span>
+                </div>
+                <span className="text-[10px] text-zinc-300">FORMAT: ASCII_TXT</span>
+              </div>
+
+              <div className="p-5 sm:p-7 bg-[#1a1714] flex flex-col justify-between gap-5">
+                <div>
+                  <h3 className="font-pixel text-xl sm:text-2xl text-white tracking-wide mb-4">
+                    &gt; BUILDING SCALABLE SYSTEMS <br />
+                    <span className="text-accent">FROM FOUNDATIONAL CODE TO AI.</span>
+                  </h3>
+
+                  <div className="space-y-3 text-xs sm:text-sm text-zinc-300 leading-relaxed font-mono">
+                    <p className="p-2.5 bg-[#12100e] border border-[#3d362e]">
+                      &gt; I am a Software Developer and AI Engineer based in Noida, Uttar Pradesh, India.
+                      My journey spans designing resilient backend microservices in NestJS, crafting
+                      interactive frontend systems in React and Three.js, and training clinical ML models at DRDO.
+                    </p>
+                    <p className="p-2.5 bg-[#12100e] border border-[#3d362e]">
+                      &gt; Whether orchestrating automated deployment pipelines on Azure Cloud or pushing the
+                      frontiers of conversational voice AI latency, I focus on ruthless execution and
+                      unapologetic software quality.
+                    </p>
+                  </div>
+                </div>
+
+                {setSelectedItem && (
+                  <div className="pt-3 border-t border-[#3d362e] flex items-center justify-between">
+                    <span className="text-xs text-zinc-500">[FILE: BIO_FULL.DAT]</span>
+                    <button
+                      onClick={() => {
+                        if (setSelectedItem) setSelectedItem(2);
+                      }}
+                      className="retro-btn px-3 py-1.5 text-xs font-pixel flex items-center gap-1"
+                    >
+                      <span>▶</span>
+                      <span>READ_FULL_DOSSIER</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Col: System Protocols (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col gap-3">
+              <div className="retro-window p-2.5 bg-[#2a2520] border border-[#5a5247] flex items-center justify-between text-xs font-pixel text-accent">
+                <span>&gt;&gt; CORE SYSTEM PROTOCOLS</span>
+                <span className="text-white">v2.0</span>
+              </div>
+
+              {PRINCIPLES.map((p) => (
+                <div key={p.code} className="retro-window p-1">
+                  <div className="bg-[#24201c] px-3 py-1 flex items-center justify-between text-[11px] border-b border-[#3d362e]">
+                    <span className="text-accent font-bold font-pixel">PROTOCOL #{p.code}</span>
+                    <span className="text-zinc-400 font-pixel text-[10px]">{p.title}</span>
+                  </div>
+                  <div className="p-3 bg-[#181512] text-xs text-zinc-300 leading-relaxed font-mono">
+                    {p.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        ) : isEditorial ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4">
             {/* Left Col: The Feature Essay (7 cols) */}
             <div className="lg:col-span-7 p-6 sm:p-8 bg-[#0e0e12] border border-white/12 rounded-md flex flex-col justify-between">

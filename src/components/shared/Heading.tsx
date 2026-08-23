@@ -12,6 +12,36 @@ const Heading: React.FC<HeadingProps> = ({ text, tag, index }) => {
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
+
+  if (isRetro) {
+    return (
+      <div className="flex flex-col gap-2 mb-8 font-mono">
+        <div className="flex items-center justify-between border-b-2 border-[#5a5247] pb-1.5 text-xs text-zinc-400">
+          <div className="flex items-center gap-2">
+            <span className="text-accent font-bold">&gt;&gt; DISK_SECTOR:</span>
+            <span className="text-white bg-[#2a2520] px-2 py-0.5 border border-[#5a5247]">
+              {index || 'WAYPOINT_00'}
+            </span>
+            {tag && (
+              <span className="text-amber-400 font-bold hidden sm:inline">
+                [{tag.replace('//', '').trim()}]
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] text-zinc-500">[STATUS: READY]</span>
+        </div>
+
+        <div className="flex items-baseline gap-3 mt-1">
+          <span className="text-accent text-2xl font-bold">C:\&gt;</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-pixel text-white tracking-wider">
+            {text}
+          </h2>
+          <span className="inline-block w-3 h-6 bg-accent animate-pulse ml-1"></span>
+        </div>
+      </div>
+    );
+  }
 
   if (isEditorial) {
     return (

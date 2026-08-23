@@ -41,6 +41,7 @@ const Contact = () => {
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
   const email = 'akchanchal2002@gmail.com';
 
   const copyEmail = () => {
@@ -59,9 +60,111 @@ const Contact = () => {
         />
 
         {/* ══════════════════════════════════════════════════════
-             EDITORIAL / MAGAZINE DISPATCH SPREAD
+             MODE 1: RETRO / VINTAGE BBS MODEM TRANSMISSION DESK
         ══════════════════════════════════════════════════════ */}
-        {isEditorial ? (
+        {isRetro ? (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mt-4 font-mono">
+            {/* Left Column: BBS Transmission Desk (7 cols) */}
+            <div className="lg:col-span-7 retro-window p-1">
+              <div className="bg-[#38322b] px-3 py-1.5 flex items-center justify-between text-xs text-white border-b border-[#5a5247]">
+                <div className="flex items-center gap-2">
+                  <span className="text-accent font-bold">■</span>
+                  <span className="font-pixel text-[11px] text-accent">BBS_NODE_01 // CARRIER_DETECT</span>
+                </div>
+                <span className="text-emerald-400 text-[10px] font-bold">[ONLINE: 9600 BAUD]</span>
+              </div>
+
+              <div className="p-5 sm:p-7 bg-[#1a1714] flex flex-col gap-5">
+                <div>
+                  <h3 className="font-pixel text-xl sm:text-2xl text-white tracking-wide mb-2">
+                    &gt; INITIATE COMM_PACKET.EXE
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-mono">
+                    Ready to collaborate on high-throughput backend microservices, real-time voice AI pipelines, or production web apps? Transmit a packet below.
+                  </p>
+                </div>
+
+                {/* Email Telex Desk */}
+                <div className="p-3 bg-[#100e0c] border border-[#3d362e] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <FaEnvelope className="text-accent w-4 h-4 flex-shrink-0" />
+                    <div>
+                      <div className="text-[9px] uppercase tracking-widest text-zinc-500">ELECTRONIC_MAIL_ADDR</div>
+                      <div className="text-sm font-bold text-white font-mono select-all">{email}</div>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={copyEmail}
+                    className="retro-btn px-3 py-1.5 text-xs flex items-center justify-center gap-1.5 font-pixel"
+                  >
+                    {copied ? <><FaCheck /><span>COPIED_OK</span></> : <><FaCopy /><span>COPY_ADDR</span></>}
+                  </button>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex flex-wrap gap-3 pt-1">
+                  <a
+                    href={`mailto:${email}`}
+                    className="retro-btn px-4 py-2 text-xs font-pixel flex items-center gap-1.5 font-bold"
+                  >
+                    <span>✉</span>
+                    <span>SEND_DIRECT_MAIL</span>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/ashishchanchal/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="retro-btn px-4 py-2 text-xs font-pixel flex items-center gap-1.5"
+                  >
+                    <span>🔗</span>
+                    <span>LINKEDIN.COM</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Communications Channels (5 cols) */}
+            <div className="lg:col-span-5 flex flex-col gap-3">
+              <div className="retro-window p-2.5 bg-[#2a2520] border border-[#5a5247] flex items-center justify-between text-xs font-pixel text-accent">
+                <span>&gt;&gt; EXTERNAL FREQUENCIES</span>
+                <span className="text-white">COM1..COM4</span>
+              </div>
+
+              <div className="space-y-2">
+                {SOCIALS.map((s, idx) => (
+                  <a
+                    key={idx}
+                    href={s.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="retro-window p-2.5 bg-[#181512] flex items-center justify-between hover:bg-[#221e1a] transition-all"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span style={{ color: s.color }}>{s.icon}</span>
+                      <div>
+                        <div className="text-xs font-pixel text-white">{s.name}</div>
+                        <div className="text-[10px] text-zinc-500 font-mono">{s.handle}</div>
+                      </div>
+                    </div>
+                    <span className="text-accent text-xs font-bold font-mono">[CONNECT ↗]</span>
+                  </a>
+                ))}
+              </div>
+
+              {/* Status */}
+              <div className="retro-window p-3 bg-[#12100e] text-xs font-mono">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold mb-1">
+                  <span>●</span> HARDWARE STATUS: READY
+                </div>
+                <p className="text-[11px] text-zinc-400 leading-relaxed">
+                  Open for software engineering appointments & AI advisory contracts. Packet reply SLA: &lt;24 hrs.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        ) : isEditorial ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mt-4">
             {/* Left Column: Editorial Inquiry Desk (7 cols) */}
             <div className="lg:col-span-7 p-6 sm:p-8 bg-[#0e0e12] border border-white/12 rounded-md flex flex-col justify-between gap-6">

@@ -13,6 +13,79 @@ export interface ExperienceDataProps {
   type?: 'Industry' | 'Research' | 'Internship';
 }
 
+/* ─── Retro / Vintage Card — BIOS POST / Memory Address Slip ─── */
+const RetroExperienceCard: React.FC<{ data: ExperienceDataProps; index: number }> = ({
+  data,
+  index,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const role = data.title.split('|')[0]?.trim() || data.title;
+  const period = data.title.split('|')[1]?.trim() || data.period || '';
+
+  return (
+    <div className="retro-window p-1 font-mono flex flex-col gap-2">
+      {/* Title bar */}
+      <div className="bg-[#38322b] px-3 py-1 flex items-center justify-between text-xs text-white border-b border-[#5a5247]">
+        <div className="flex items-center gap-2">
+          <span className="text-accent font-bold">■</span>
+          <span className="font-pixel text-[10px] text-accent">
+            MEM_ADDR: 0x00{index + 1}F // IRQ 0{index + 1}
+          </span>
+        </div>
+        <span className="text-[10px] text-zinc-300 font-bold bg-[#1e1b18] px-2 py-0.5 border border-[#5a5247]">
+          {data.tech}
+        </span>
+      </div>
+
+      {/* Content Interior */}
+      <div className="p-4 bg-[#1a1714] flex flex-col gap-3">
+        <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[#3d362e] pb-2">
+          <h3 className="font-pixel text-base sm:text-lg font-bold text-white tracking-wide">
+            &gt; {role}
+          </h3>
+          <span className="text-xs text-amber-300 font-bold font-mono">{period}</span>
+        </div>
+
+        {/* Narrative Points */}
+        <ul className="space-y-2 text-xs text-zinc-300 font-mono">
+          {(isExpanded ? data.description : data.description.slice(0, 3)).map((desc, idx) => (
+            <li key={idx} className="flex items-start gap-2">
+              <span className="text-accent font-bold">&gt;&gt;</span>
+              <span className="leading-relaxed">{desc}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Footer */}
+        <div className="pt-2 border-t border-[#3d362e] flex items-center justify-between text-xs">
+          {data.description.length > 3 ? (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-accent hover:underline flex items-center gap-1 font-bold"
+            >
+              {isExpanded ? '[-] COLLAPSE_LOG' : `[+] EXPAND_FULL_LOG (+${data.description.length - 3})`}
+            </button>
+          ) : (
+            <span className="text-[10px] text-zinc-500">[LOG_VERIFIED: 100%]</span>
+          )}
+
+          {data.link && (
+            <a
+              href={data.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="retro-btn px-2.5 py-0.5 text-[10px] flex items-center gap-1"
+            >
+              <span>DETAILS.EXE</span>
+              <span>↗</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* ─── Editorial / Magazine Card — broadside column layout ─── */
 const EditorialExperienceCard: React.FC<{ data: ExperienceDataProps; index: number }> = ({
   data,
@@ -239,7 +312,7 @@ const TimelineExperienceCard: React.FC<{ data: ExperienceDataProps; index: numbe
           ))}
         </ul>
 
-        <div className={`mt-4 pt-3 flex items-center justify-between ${isMinimal ? 'border-t border-zinc-800/60' : 'border-t border-[#262626]'}`}>
+        <div className={`mt-4 pt-3 flex items-center justify-between ${isMinimal ? 'border-t border-zinc-800/60' : 'border-t-2 border-[#262626]'}`}>
           {data.description.length > 2 ? (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
@@ -271,6 +344,7 @@ const Experience: React.FC<{
   const { designMode } = useTheme();
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   // Bento column spans — first card wide, rest alternate
   const bentoSpan = (idx: number) =>
@@ -291,7 +365,14 @@ const Experience: React.FC<{
           index={waypointIndex || 'WAYPOINT_01'}
         />
 
-        {isEditorial ? (
+        {isRetro ? (
+          /* ── Retro: 2-column BIOS POST log window grid ── */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            {ExperienceData.map((item, index) => (
+              <RetroExperienceCard key={item.id} data={item} index={index} />
+            ))}
+          </div>
+        ) : isEditorial ? (
           /* ── Editorial: 2-column magazine broadside layout ── */
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             {ExperienceData.map((item, index) => (

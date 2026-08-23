@@ -98,11 +98,10 @@
 }
 [data-design-mode="brutalist"] .brutal-btn:active {
   transform: translate(2px, 2px);
-  box-shadow: none !important;
 }
 
 [data-design-mode="brutalist"] .brutal-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s ease;
 }
 [data-design-mode="brutalist"] .brutal-card:hover {
   transform: translate(-4px, -4px);
@@ -111,169 +110,171 @@
 /* ═══════════════════════════════════════
    MINIMALIST MODE
 ═══════════════════════════════════════ */
-[data-design-mode="minimalist"] .shadow-brutal-accent {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px 0 var(--accent-primary, rgba(0, 240, 255, 0.15)) !important;
+[data-design-mode="minimalist"] {
+  --radius-subtle: 1rem;
 }
 
-[data-design-mode="minimalist"] .shadow-brutal-sec {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px 0 var(--accent-secondary, rgba(199, 120, 221, 0.15)) !important;
+[data-design-mode="minimalist"] * {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-design-mode="minimalist"] body {
+  background-color: #09090b !important;
+  color: #ededed !important;
+}
+
+[data-design-mode="minimalist"] .bg-brutal-grid {
+  background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 70%) !important;
+}
+
+[data-design-mode="minimalist"] .bg-brutal-dots {
+  background-image: none !important;
+  background-color: #09090b !important;
 }
 
 [data-design-mode="minimalist"] .shadow-brutal,
-[data-design-mode="minimalist"] .shadow-brutal-sm {
+[data-design-mode="minimalist"] .shadow-brutal-sm,
+[data-design-mode="minimalist"] .shadow-brutal-accent,
+[data-design-mode="minimalist"] .shadow-brutal-sec {
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5) !important;
 }
 
-[data-design-mode="minimalist"] .bg-brutal-grid,
-[data-design-mode="minimalist"] .bg-brutal-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
+[data-design-mode="minimalist"] .brutal-btn {
+  border-radius: 9999px !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
-[data-design-mode="minimalist"] .brutal-btn {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  border-radius: 9999px !important;
-}
 [data-design-mode="minimalist"] .brutal-btn:hover {
-  transform: translateY(-2px);
-  opacity: 0.95;
-}
-[data-design-mode="minimalist"] .brutal-btn:active {
-  transform: translateY(0px);
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.6) !important;
 }
 
 [data-design-mode="minimalist"] .brutal-card {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.3s ease;
   border-radius: 1rem !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
-  background-color: rgba(18, 18, 20, 0.7) !important;
-  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8) !important;
+  transform: none !important;
 }
+
 [data-design-mode="minimalist"] .brutal-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent-primary, #00F0FF) !important;
+  transform: translateY(-4px) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9) !important;
 }
 
 /* ═══════════════════════════════════════
-   BENTO MODE
+   BENTO 2.0 MODE
 ═══════════════════════════════════════ */
-[data-design-mode="bento"] .shadow-brutal-accent {
-  box-shadow:
-    0 20px 60px -10px rgba(0, 0, 0, 0.6),
-    0 0 40px -5px color-mix(in srgb, var(--accent-primary, #00F0FF) 20%, transparent) !important;
+[data-design-mode="bento"] * {
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-[data-design-mode="bento"] .shadow-brutal-sec {
-  box-shadow:
-    0 20px 60px -10px rgba(0, 0, 0, 0.6),
-    0 0 40px -5px color-mix(in srgb, var(--accent-secondary, #C778DD) 20%, transparent) !important;
+[data-design-mode="bento"] body {
+  background-color: #060608 !important;
+  color: #f4f4f5 !important;
+}
+
+[data-design-mode="bento"] .bg-brutal-grid {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.12), transparent),
+    radial-gradient(circle at 100% 100%, rgba(0, 240, 255, 0.05), transparent 40%),
+    radial-gradient(circle at 0% 50%, rgba(199, 120, 221, 0.05), transparent 40%) !important;
+}
+
+[data-design-mode="bento"] .bg-brutal-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
 }
 
 [data-design-mode="bento"] .shadow-brutal,
-[data-design-mode="bento"] .shadow-brutal-sm {
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-}
-
-[data-design-mode="bento"] .bg-brutal-grid,
-[data-design-mode="bento"] .bg-brutal-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 32px 32px;
+[data-design-mode="bento"] .shadow-brutal-sm,
+[data-design-mode="bento"] .shadow-brutal-accent,
+[data-design-mode="bento"] .shadow-brutal-sec {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45) !important;
 }
 
 [data-design-mode="bento"] .brutal-btn {
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   border-radius: 9999px !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  transform: none !important;
 }
+
 [data-design-mode="bento"] .brutal-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-}
-[data-design-mode="bento"] .brutal-btn:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
 }
 
 [data-design-mode="bento"] .brutal-card {
-  transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.35s ease, border-color 0.2s ease;
-  border-radius: 1.5rem !important;
-  border-color: rgba(255, 255, 255, 0.07) !important;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  ) !important;
-  backdrop-filter: blur(20px) saturate(1.2);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-[data-design-mode="bento"] .brutal-card:hover {
-  transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--accent-primary, #00F0FF) 40%, transparent) !important;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px -10px color-mix(in srgb, var(--accent-primary, #00F0FF) 25%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 1.25rem !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(18, 18, 24, 0.7) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
+  transform: none !important;
 }
 
-/* Bento Card — glass tile surface */
+[data-design-mode="bento"] .brutal-card:hover {
+  transform: translateY(-3px) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Bento Tile Primitive */
 .bento-tile {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  backdrop-filter: blur(20px) saturate(1.3);
+  background: rgba(15, 15, 20, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.5rem;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1),
-              box-shadow 0.35s ease,
-              border-color 0.2s ease;
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.07);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .bento-tile:hover {
-  transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--accent-primary, #00F0FF) 35%, transparent);
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px -10px color-mix(in srgb, var(--accent-primary, #00F0FF) 20%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
 }
 
 /* ═══════════════════════════════════════
    EDITORIAL / MAGAZINE MODE
 ═══════════════════════════════════════ */
-[data-design-mode="editorial"] .shadow-brutal-accent {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--accent-primary, #00F0FF) !important;
+[data-design-mode="editorial"] {
+  --radius-subtle: 0.25rem;
 }
 
-[data-design-mode="editorial"] .shadow-brutal-sec {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--accent-secondary, #C778DD) !important;
+[data-design-mode="editorial"] body {
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
+  font-family: 'Space Grotesk', serif;
 }
 
-[data-design-mode="editorial"] .shadow-brutal,
-[data-design-mode="editorial"] .shadow-brutal-sm {
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6) !important;
+[data-design-mode="editorial"] .bg-brutal-grid {
+  background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 60%) !important;
 }
 
-[data-design-mode="editorial"] .bg-brutal-grid,
 [data-design-mode="editorial"] .bg-brutal-dots {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-image: none !important;
+  background-color: #09090b !important;
 }
 
 [data-design-mode="editorial"] .brutal-btn {
-  transition: all 0.2s ease;
   border-radius: 0.25rem !important;
-  font-family: 'Playfair Display', Georgia, serif;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  font-family: 'Space Mono', monospace !important;
 }
+
 [data-design-mode="editorial"] .brutal-btn:hover {
-  transform: translateY(-2px);
+  background-color: var(--accent-primary, #00F0FF) !important;
+  color: #000000 !important;
+  border-color: var(--accent-primary, #00F0FF) !important;
 }
 
 [data-design-mode="editorial"] .brutal-card {
@@ -317,6 +318,175 @@
   padding-top: 0.25rem;
   color: var(--accent-primary, #00F0FF);
   font-weight: 700;
+}
+
+/* ═══════════════════════════════════════
+   RETRO / VINTAGE 1980s-90s WORKSTATION MODE
+═══════════════════════════════════════ */
+[data-design-mode="retro"] body {
+  background-color: #121110 !important;
+  color: #e6dfd3 !important;
+  font-family: 'VT323', 'Space Mono', monospace;
+}
+
+[data-design-mode="retro"] .bg-brutal-grid {
+  background-image: 
+    linear-gradient(rgba(229, 169, 60, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 169, 60, 0.05) 1px, transparent 1px) !important;
+  background-size: 32px 32px !important;
+}
+
+[data-design-mode="retro"] .bg-brutal-dots {
+  background-image: radial-gradient(rgba(229, 169, 60, 0.08) 1px, transparent 1px) !important;
+  background-size: 16px 16px !important;
+}
+
+/* CRT Scanline Overlay */
+.retro-scanlines {
+  background: linear-gradient(
+    rgba(18, 17, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.35) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Classic Beveled Retro Window */
+.retro-window {
+  background-color: #1a1714;
+  border-top: 2px solid #5a5247;
+  border-left: 2px solid #5a5247;
+  border-right: 2px solid #0a0908;
+  border-bottom: 2px solid #0a0908;
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+/* Classic Beveled Retro Button */
+.retro-btn {
+  background-color: #2a2520;
+  border-top: 2px solid #6b6154;
+  border-left: 2px solid #6b6154;
+  border-right: 2px solid #0f0d0b;
+  border-bottom: 2px solid #0f0d0b;
+  color: #e6dfd3;
+  font-family: 'Silkscreen', 'VT323', monospace;
+  transition: all 0.1s ease;
+}
+
+.retro-btn:hover {
+  background-color: #38322b;
+  color: var(--accent-primary, #E5A93C);
+}
+
+.retro-btn:active {
+  border-top: 2px solid #0f0d0b;
+  border-left: 2px solid #0f0d0b;
+  border-right: 2px solid #6b6154;
+  border-bottom: 2px solid #6b6154;
+  transform: translate(1px, 1px);
+}
+
+/* Retro Inset Recessed Screen / Card */
+.retro-inset {
+  background-color: #0d0c0a;
+  border-top: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-right: 2px solid #3d362e;
+  border-bottom: 2px solid #3d362e;
+}
+
+/* ══════════════════════════════════════════════════════
+   DESIGN PATTERN SIGNATURE ANIMATION ACTIONS
+══════════════════════════════════════════════════════ */
+
+/* 1. BRUTALIST ANIMATION ACTIONS: Snappy, hard offset jump, cyber glitch */
+[data-design-mode="brutalist"] .pattern-action-card {
+  transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1), box-shadow 0.12s cubic-bezier(0, 0, 0.2, 1);
+}
+[data-design-mode="brutalist"] .pattern-action-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 6px 6px 0px 0px var(--accent-primary, #00F0FF) !important;
+}
+[data-design-mode="brutalist"] .pattern-action-btn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 4px 4px 0px 0px #ffffff !important;
+}
+
+/* 2. MINIMALIST ANIMATION ACTIONS: Gentle breathing float, velvet easing, soft luminous halo */
+[data-design-mode="minimalist"] .pattern-action-card {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+[data-design-mode="minimalist"] .pattern-action-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 30px -5px color-mix(in srgb, var(--accent-primary, #00F0FF) 25%, transparent) !important;
+  border-color: color-mix(in srgb, var(--accent-primary, #00F0FF) 40%, rgba(255, 255, 255, 0.15)) !important;
+}
+[data-design-mode="minimalist"] .pattern-action-btn {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+[data-design-mode="minimalist"] .pattern-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--accent-primary, #00F0FF) 35%, transparent);
+}
+
+/* 3. BENTO 2.0 ANIMATION ACTIONS: Shimmering border glow, frosted glass lift, dynamic refraction */
+[data-design-mode="bento"] .pattern-action-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+[data-design-mode="bento"] .pattern-action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), 0 0 25px -3px color-mix(in srgb, var(--accent-primary, #00F0FF) 30%, transparent) !important;
+  border-color: color-mix(in srgb, var(--accent-primary, #00F0FF) 50%, transparent) !important;
+}
+[data-design-mode="bento"] .pattern-action-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent-primary, #00F0FF) 40%, transparent);
+}
+
+/* 4. EDITORIAL / MAGAZINE ANIMATION ACTIONS: Literary letter-spacing expansion, paper lift, hairline line draw */
+[data-design-mode="editorial"] .pattern-action-card {
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.45s ease, border-color 0.35s ease;
+}
+[data-design-mode="editorial"] .pattern-action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 40px -15px rgba(0, 0, 0, 0.9), 0 0 15px -3px rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+[data-design-mode="editorial"] .pattern-action-card:hover h3 {
+  letter-spacing: 0.02em;
+  transition: letter-spacing 0.4s ease;
+}
+[data-design-mode="editorial"] .pattern-action-btn:hover {
+  letter-spacing: 0.05em;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+/* 5. RETRO / VINTAGE ANIMATION ACTIONS: Tactile bevel depression, CRT scanline flash, phosphor glow */
+[data-design-mode="retro"] .pattern-action-card {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+[data-design-mode="retro"] .pattern-action-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #000000, 0 0 12px rgba(229, 169, 60, 0.2) !important;
+}
+[data-design-mode="retro"] .pattern-action-card:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px 0px #000000 !important;
+}
+[data-design-mode="retro"] .pattern-action-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+[data-design-mode="retro"] .pattern-action-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0px 0px 0px 0px #000000;
 }
 
 /* Marquee infinite animation */

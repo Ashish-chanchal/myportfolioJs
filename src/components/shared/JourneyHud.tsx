@@ -18,6 +18,7 @@ const JourneyHud: React.FC = () => {
   const { designMode } = useTheme();
   const isMinimal = designMode === 'minimalist';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   useEffect(() => {
     if (location.pathname !== '/') return;
@@ -58,11 +59,13 @@ const JourneyHud: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 hidden lg:flex flex-col items-end gap-2">
+    <div className="fixed bottom-6 right-6 z-40 hidden lg:flex flex-col items-end gap-2 font-mono">
       {/* Journey Coordinates HUD */}
       <div
         className={`transition-all ${
-          isEditorial
+          isRetro
+            ? 'retro-window p-2.5 shadow-2xl'
+            : isEditorial
             ? 'bg-[#0e0e12] border border-white/15 rounded-md p-3 shadow-2xl'
             : isMinimal
             ? 'bg-zinc-950/90 border border-zinc-800/90 rounded-2xl p-3 shadow-xl backdrop-blur-xl'
@@ -70,14 +73,16 @@ const JourneyHud: React.FC = () => {
         }`}
       >
         <div className={`flex items-center justify-between gap-4 pb-2 font-mono text-[10px] ${
-          isEditorial
+          isRetro
+            ? 'border-b border-[#5a5247]'
+            : isEditorial
             ? 'border-b border-white/10 font-serif italic text-xs'
             : isMinimal
             ? 'border-b border-zinc-800/80'
             : 'border-b border-[#262626]'
         }`}>
           <span className="text-accent font-bold">
-            {isEditorial ? 'Dispatch Progress' : isMinimal ? 'PAGE PROGRESS' : 'JOURNEY_TRACKER'}
+            {isRetro ? 'SECTOR_POS' : isEditorial ? 'Dispatch Progress' : isMinimal ? 'PAGE PROGRESS' : 'JOURNEY_TRACKER'}
           </span>
           <span className="text-white font-bold">{scrollPercent}%</span>
         </div>
@@ -91,7 +96,13 @@ const JourneyHud: React.FC = () => {
                 key={wp.id}
                 onClick={() => scrollToSection(wp.id)}
                 className={`flex items-center justify-between gap-3 text-left text-xs px-2.5 py-1 transition-all ${
-                  isEditorial
+                  isRetro
+                    ? `border ${
+                        isActive
+                          ? 'bg-accent text-black font-bold'
+                          : 'bg-[#181512] text-zinc-400 border-[#3d362e] hover:text-white'
+                      }`
+                    : isEditorial
                     ? `rounded font-serif italic ${
                         isActive
                           ? 'bg-white/10 text-white font-bold not-italic border border-white/20'

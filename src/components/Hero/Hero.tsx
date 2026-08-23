@@ -23,6 +23,7 @@ const Hero = () => {
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,9 +44,154 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-4">
 
         {/* ══════════════════════════════════════════════════════
-             MODE 1: EDITORIAL / MAGAZINE HERO LAYOUT (3-Col Broadside)
+             MODE 1: RETRO / VINTAGE 1980s-90s PC WORKSTATION LAYOUT
         ══════════════════════════════════════════════════════ */}
-        {isEditorial ? (
+        {isRetro ? (
+          <div className="flex flex-col gap-6 mb-12 font-mono">
+            {/* Retro Desktop Window Frame */}
+            <div className="retro-window p-1">
+              {/* Retro Window Titlebar */}
+              <div className="bg-[#38322b] px-3 py-1.5 flex items-center justify-between text-xs text-white border-b border-[#5a5247]">
+                <div className="flex items-center gap-2">
+                  <span className="text-accent font-bold">■</span>
+                  <span className="font-pixel text-[11px] tracking-wider text-accent">ASHISH_OS // v1.984 [SYSTEM_CONSOLE]</span>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] text-zinc-300">
+                  <span className="px-1.5 py-0.5 bg-[#201c18] border border-[#5a5247]">_</span>
+                  <span className="px-1.5 py-0.5 bg-[#201c18] border border-[#5a5247]">□</span>
+                  <span className="px-1.5 py-0.5 bg-[#201c18] border border-[#5a5247] text-red-400 font-bold">X</span>
+                </div>
+              </div>
+
+              {/* Retro Menu Bar */}
+              <div className="bg-[#24201c] px-3 py-1 flex flex-wrap items-center gap-4 text-[11px] text-zinc-300 border-b border-[#3d362e]">
+                <span className="hover:text-accent cursor-pointer">FILE</span>
+                <span className="hover:text-accent cursor-pointer">EDIT</span>
+                <span className="hover:text-accent cursor-pointer">VIEW</span>
+                <span className="hover:text-accent cursor-pointer">TERMINAL</span>
+                <span className="hover:text-accent cursor-pointer">RUN</span>
+                <span className="hover:text-accent cursor-pointer text-zinc-500">HELP</span>
+                <span className="ml-auto text-accent text-[10px] hidden sm:inline">IRQ 07 // 640KB VRAM</span>
+              </div>
+
+              {/* Main CRT Screen Interior */}
+              <div className="retro-inset p-5 sm:p-8 relative overflow-hidden">
+                <div className="retro-scanlines absolute inset-0 pointer-events-none z-10" />
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-20">
+                  {/* Left Column: DOS Prompt & Systems Narrative (7 cols) */}
+                  <div className="lg:col-span-7 flex flex-col gap-5">
+                    <div>
+                      <div className="flex items-center gap-2 text-xs text-accent mb-2">
+                        <span>C:\SYSTEM\BOOT&gt;</span>
+                        <span className="text-zinc-400">INIT_ARCHITECT.EXE</span>
+                        <span className="w-2 h-3.5 bg-accent inline-block animate-dos-blink"></span>
+                      </div>
+
+                      <h1 className="text-3xl sm:text-5xl font-pixel text-white leading-tight mb-4">
+                        BUILDING INTELLIGENT <br />
+                        <span className="text-accent">&lt;SYSTEMS_CODE /&gt;</span> <br />
+                        AND AI PIPELINES.
+                      </h1>
+
+                      <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-mono">
+                        Hardware-conscious software development. Architecting resilient NestJS microservices,
+                        real-time voice AI streaming with &lt;3s latency, and clinical ML neural nets at DRDO.
+                      </p>
+                    </div>
+
+                    {/* Analog Telemetry Cycle */}
+                    <div className="p-3 bg-[#181614] border border-[#3d362e]">
+                      <div className="flex items-center justify-between text-[11px] mb-1.5">
+                        <span className="text-accent font-bold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                          &gt;&gt; CPU LOADOUT FOCUS:
+                        </span>
+                        <span className="text-white font-bold">{ROLES[roleIndex]}</span>
+                      </div>
+                      <div className="w-full bg-[#0a0908] h-2 border border-[#3d362e] p-0.5">
+                        <div
+                          className="bg-accent h-full transition-all duration-500"
+                          style={{ width: `${((roleIndex + 1) / ROLES.length) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Retro Button Cluster */}
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      <button
+                        onClick={() => scrollToSection('projects')}
+                        className="retro-btn pattern-action-btn px-4 py-2 text-xs font-pixel flex items-center gap-2"
+                      >
+                        <span>▶</span>
+                        <span>EXEC_WORKS.EXE</span>
+                      </button>
+                      <button
+                        onClick={() => scrollToSection('experience')}
+                        className="retro-btn pattern-action-btn px-4 py-2 text-xs font-pixel flex items-center gap-2"
+                      >
+                        <span>💾</span>
+                        <span>CAREER_LOG.DAT</span>
+                      </button>
+                      <a
+                        href="https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="retro-btn pattern-action-btn px-4 py-2 text-xs font-pixel flex items-center gap-2"
+                      >
+                        <span>📠</span>
+                        <span>RESUME.TXT</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Right Column: CRT Monitor & Floppy Drives (5 cols) */}
+                  <div className="lg:col-span-5 flex flex-col gap-4">
+                    {/* CRT Avatar Viewport */}
+                    <div className="retro-window p-3 flex flex-col items-center justify-center relative animate-crt-flicker">
+                      <div className="w-full flex items-center justify-between text-[10px] text-zinc-400 pb-1.5 mb-2 border-b border-[#3d362e]">
+                        <span className="text-accent font-bold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping inline-block"></span>
+                          DISPLAY: CRT_RGB
+                        </span>
+                        <span>60Hz VSYNC</span>
+                      </div>
+
+                      <div className="w-48 h-48 sm:w-56 sm:h-56 relative overflow-hidden border-2 border-[#5a5247] shadow-inner bg-[#000000]">
+                        <img
+                          src={heromain}
+                          alt="Ashish Chanchal"
+                          className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-300"
+                        />
+                        <div className="retro-scanlines absolute inset-0 pointer-events-none" />
+                      </div>
+
+                      <div className="w-full text-center mt-2.5 pt-1.5 border-t border-[#3d362e] text-[11px]">
+                        <span className="text-white font-bold font-pixel">ASHISH CHANCHAL</span>
+                        <span className="text-zinc-500 block text-[9px]">ID: 0x7F4A · STATUS: OPERATIONAL</span>
+                      </div>
+                    </div>
+
+                    {/* Floppy Disk Metric Grid */}
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      {METRICS.map((m, idx) => (
+                        <div key={idx} className="p-2.5 bg-[#181512] border border-[#4a4237]">
+                          <div className="text-[9px] text-zinc-500 uppercase tracking-widest">{m.label}</div>
+                          <div className="font-pixel text-lg text-accent my-0.5">{m.val}</div>
+                          <div className="text-[10px] text-zinc-400">{m.sub}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        ) : isEditorial ? (
+          /* ══════════════════════════════════════════════════════
+               MODE 2: EDITORIAL / MAGAZINE HERO LAYOUT (3-Col Broadside)
+          ══════════════════════════════════════════════════════ */
           <div className="flex flex-col gap-8 mb-12">
             {/* Magazine Masthead Broadside Header */}
             <div className="border-b border-t border-white/20 py-3 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] text-zinc-400">
@@ -202,7 +348,7 @@ const Hero = () => {
 
         ) : isBento ? (
           /* ══════════════════════════════════════════════════════
-               MODE 2: BENTO 2.0 HERO LAYOUT (12-Col Asymmetric Mosaic)
+               MODE 3: BENTO 2.0 HERO LAYOUT (12-Col Asymmetric Mosaic)
           ══════════════════════════════════════════════════════ */
           <div className="grid grid-cols-12 gap-4 mb-12">
 
@@ -290,7 +436,7 @@ const Hero = () => {
 
         ) : isMinimal ? (
           /* ══════════════════════════════════════════════════════
-               MODE 3: MINIMALIST HERO LAYOUT (Centered Zen Studio)
+               MODE 4: MINIMALIST HERO LAYOUT (Centered Zen Studio)
           ══════════════════════════════════════════════════════ */
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-16">
             {/* Minimal Pill Badge */}
@@ -346,7 +492,7 @@ const Hero = () => {
 
         ) : (
           /* ══════════════════════════════════════════════════════
-               MODE 4: BRUTALIST HERO LAYOUT (Cyber-Industrial Terminal)
+               MODE 5: BRUTALIST HERO LAYOUT (Cyber-Industrial Terminal)
           ══════════════════════════════════════════════════════ */
           <div>
             {/* Top Status Bar */}
@@ -436,7 +582,7 @@ const Hero = () => {
 
               {/* Right Column: Hero Visual & Metric Pillars (5 cols) */}
               <div className="lg:col-span-5 flex flex-col gap-6">
-                {/* Tech Portrait - Clean full-bleed presentation without awkward nested circle boxes */}
+                {/* Tech Portrait */}
                 <div className="relative overflow-hidden bg-[#141414] border-2 border-white shadow-brutal-accent">
                   <div className="w-full h-72 sm:h-80 overflow-hidden relative">
                     <img
@@ -444,6 +590,8 @@ const Hero = () => {
                       alt="Ashish Chanchal"
                       className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-300"
                     />
+                    {/* Laser Radar Sweep Beam */}
+                    <div className="absolute inset-x-0 h-1 bg-accent/70 shadow-[0_0_10px_#00F0FF] animate-radar-sweep pointer-events-none" />
                     <div className="absolute top-2 left-2 px-2 py-0.5 bg-black/80 text-accent font-mono text-[10px] font-bold border border-white">
                       ID: ARCHITECT_01
                     </div>

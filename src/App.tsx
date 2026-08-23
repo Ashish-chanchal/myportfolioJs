@@ -8,6 +8,7 @@ import AboutPage from "./pages/AboutPage/AboutPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { ThemeProvider } from "./context/ThemeContext";
+import ThemeTransitionOverlay from "./components/shared/ThemeTransitionOverlay";
 
 function App() {
   const [selectedItem, setSelectedItem] = useState(0);
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <ThemeProvider>
+      <ThemeTransitionOverlay />
       <div className="bg-[#0a0a0a] min-h-screen text-white">
         <BrowserRouter>
           <Navbar setSelectedItem={setSelectedItem} selectedItem={selectedItem} />

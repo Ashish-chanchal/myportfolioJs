@@ -32,6 +32,7 @@ const ProjectCard: React.FC<CardProps> = ({
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   // Parse tech stack into individual chips
   const techPills = tech
@@ -42,11 +43,117 @@ const ProjectCard: React.FC<CardProps> = ({
     : [];
 
   // ══════════════════════════════════════════════════════
+  // RETRO / VINTAGE 1980s-90s EXECUTABLE WINDOW CARD
+  // ══════════════════════════════════════════════════════
+  if (isRetro) {
+    return (
+      <div className="retro-window pattern-action-card flex flex-col font-mono overflow-hidden h-auto">
+        {/* Title bar */}
+        <div className="bg-[#38322b] px-3 py-1.5 flex items-center justify-between text-xs text-white border-b border-[#5a5247]">
+          <div className="flex items-center gap-1.5">
+            <span className="text-accent font-bold">■</span>
+            <span className="font-pixel text-[10px] text-white tracking-wider truncate max-w-[180px]">
+              {title.toUpperCase().replace(/\s+/g, '_')}.EXE
+            </span>
+          </div>
+          <span className="text-[10px] text-accent font-bold">
+            {categoryBadge ? `[${categoryBadge}]` : '[BIN]'}
+          </span>
+        </div>
+
+        {/* CRT Scanline Visual Container */}
+        {img && (
+          <div className="retro-inset relative overflow-hidden h-44 sm:h-48 border-b border-[#3d362e]">
+            <img
+              src={img}
+              alt={title}
+              className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-300"
+            />
+            <div className="retro-scanlines absolute inset-0 pointer-events-none" />
+            <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/80 text-accent font-mono text-[9px] border border-[#5a5247]">
+              IMG: 0x{id + 1}0A
+            </div>
+          </div>
+        )}
+
+        {/* Card Body */}
+        <div className="p-4 bg-[#1e1b18] flex flex-col gap-3">
+          <h3 className="font-pixel text-base sm:text-lg font-bold text-white tracking-wide">
+            &gt; {title}
+          </h3>
+
+          {/* Tech Chips */}
+          {techPills.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {techPills.map((t, idx) => (
+                <span
+                  key={idx}
+                  className="text-[10px] font-mono px-2 py-0.5 bg-[#12100e] text-amber-300 border border-[#3a342c]"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Bulleted Points */}
+          <ul className="space-y-1.5 text-xs text-zinc-300 font-mono">
+            {description.map((desc, index) => (
+              <li key={index} className="flex items-start gap-1.5">
+                <span className="text-accent font-bold">&gt;</span>
+                <span className="leading-relaxed">{desc}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Team */}
+          {team && (
+            <div className="p-1.5 bg-[#12100e] border border-[#3a342c] text-[11px] text-zinc-400 flex items-center justify-between">
+              <span>CO-DEV:</span>
+              <a href={team.link} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-bold">
+                @{team.name}
+              </a>
+            </div>
+          )}
+
+          {/* Buttons */}
+          {(liveLink || link) && (
+            <div className="pt-2 border-t border-[#3d362e] flex flex-wrap items-center gap-2">
+              {liveLink && (
+                <a
+                  href={liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="retro-btn pattern-action-btn px-3 py-1 text-xs flex items-center gap-1 font-bold"
+                >
+                  <span>▶</span>
+                  <span>RUN.EXE</span>
+                </a>
+              )}
+              {link && (
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="retro-btn pattern-action-btn px-3 py-1 text-xs flex items-center gap-1"
+                >
+                  <span>💾</span>
+                  <span>SRC.ZIP</span>
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ══════════════════════════════════════════════════════
   // EDITORIAL / MAGAZINE FEATURE ARTICLE SPREAD
   // ══════════════════════════════════════════════════════
   if (isEditorial) {
     return (
-      <article className="flex flex-col bg-[#0e0e12] border border-white/12 rounded-md overflow-hidden transition-all duration-300 hover:border-white/30 hover:shadow-2xl h-auto group">
+      <article className="pattern-action-card flex flex-col bg-[#0e0e12] border border-white/12 rounded-md overflow-hidden h-auto group">
         {/* Magazine Kicker Header */}
         <div className="flex items-center justify-between p-3.5 px-4 border-b border-white/10 bg-[#121216] font-mono text-[10px] text-zinc-400">
           <div className="flex items-center gap-2">
@@ -159,7 +266,7 @@ const ProjectCard: React.FC<CardProps> = ({
   // ══════════════════════════════════════════════════════
   if (isBento) {
     return (
-      <div className="bento-tile flex flex-col overflow-hidden h-auto group">
+      <div className="bento-tile pattern-action-card flex flex-col overflow-hidden h-auto group">
         {/* Bento Image with subtle color overlay */}
         {img && (
           <div className="relative overflow-hidden h-44 sm:h-48">
@@ -247,7 +354,7 @@ const ProjectCard: React.FC<CardProps> = ({
   // ══════════════════════════════════════════════════════
   if (isMinimal) {
     return (
-      <div className="flex flex-col bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-600 rounded-2xl overflow-hidden backdrop-blur-md transition-all duration-300 hover:-translate-y-1 shadow-xl shadow-black/40 h-auto group">
+      <div className="pattern-action-card flex flex-col bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-600 rounded-2xl overflow-hidden backdrop-blur-md shadow-xl shadow-black/40 h-auto group">
         {/* Top Header Bar (only if category or live status exists) */}
         {(categoryBadge || liveLink) && (
           <div className="flex items-center justify-between p-3.5 px-5 border-b border-zinc-800/60 bg-zinc-950/40">
@@ -357,7 +464,7 @@ const ProjectCard: React.FC<CardProps> = ({
   // BRUTALIST CARD
   // ══════════════════════════════════════════════════════
   return (
-    <div className="flex flex-col bg-[#121212] border-2 border-white shadow-brutal hover:shadow-brutal-accent brutal-card h-auto">
+    <div className="pattern-action-card flex flex-col bg-[#121212] border-2 border-white shadow-brutal hover:shadow-brutal-accent brutal-card h-auto">
       {/* Top Tech Category Banner */}
       {(categoryBadge || liveLink) && (
         <div className="flex items-center justify-between p-3 border-b-2 border-white bg-[#181818]">

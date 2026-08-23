@@ -53,6 +53,7 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   return (
     <section id="skills" className="py-16 md:py-20 relative bg-brutal-dots">
@@ -65,14 +66,39 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
 
         {/* Loadout Matrix Grid */}
         <div className={`grid gap-5 mt-8 ${
-          isEditorial
+          isRetro
+            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
+            : isEditorial
             ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
             : isBento
             ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
             : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
         }`}>
           {techData.map((tech) => (
-            isEditorial ? (
+            isRetro ? (
+              /* ── Retro: Vintage ROM Expansion Module ── */
+              <div key={tech.id} className="retro-window p-1 font-mono flex flex-col justify-between">
+                <div className="bg-[#38322b] px-2.5 py-1 flex items-center justify-between text-[11px] border-b border-[#5a5247]">
+                  <span className="text-accent font-bold">SLOT: 0{tech.id}</span>
+                  <span className="text-zinc-300 font-pixel text-[9px]">ROM_OK</span>
+                </div>
+                <div className="p-3.5 bg-[#181512] flex flex-col gap-2.5 flex-1">
+                  <h4 className="font-pixel text-xs text-white tracking-wider text-accent uppercase">
+                    &gt; {tech.category}
+                  </h4>
+                  <div className="flex flex-wrap gap-1">
+                    {tech.technologies.map((t, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] font-mono px-2 py-0.5 bg-[#100e0c] text-amber-200 border border-[#3d362e]"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : isEditorial ? (
               /* ── Editorial: Gazette Classifieds Directory ── */
               <div key={tech.id} className="p-5 bg-[#0e0e12] border border-white/12 rounded-md flex flex-col justify-between gap-3 hover:border-white/25 transition-all">
                 <div>
@@ -130,7 +156,9 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
         {/* Engineering Tenet Footer Strip */}
         <div
           className={`mt-10 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs ${
-            isEditorial
+            isRetro
+              ? 'retro-window p-3 text-xs'
+              : isEditorial
               ? 'bg-[#0e0e12] border border-white/12 rounded-md font-serif text-sm italic'
               : isBento
               ? 'bento-tile font-sans text-xs'
@@ -140,12 +168,18 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
           }`}
         >
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent inline-block animate-pulse"></span>
+            <span className="w-2 h-2 bg-accent inline-block animate-pulse"></span>
             <span className="text-zinc-300">
-              {isEditorial ? 'The Technical Arsenal — Continuously audited for zero-latency execution.' : isMinimal || isBento ? 'Continuous Integration & Production Ready Tooling' : 'TECH STACK AUDIT // ZERO DEPRECATION TOLERANCE'}
+              {isRetro
+                ? 'HARDWARE DIAGNOSTIC: 100% BUS UTILIZATION // NO DEPRECATIONS'
+                : isEditorial
+                ? 'The Technical Arsenal — Continuously audited for zero-latency execution.'
+                : isMinimal || isBento
+                ? 'Continuous Integration & Production Ready Tooling'
+                : 'TECH STACK AUDIT // ZERO DEPRECATION TOLERANCE'}
             </span>
           </div>
-          <span className="text-accent font-bold">ALL SYSTEMS OPERATIONAL</span>
+          <span className="text-accent font-bold">ALL CHIPS ONLINE</span>
         </div>
       </div>
     </section>

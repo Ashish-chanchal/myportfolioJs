@@ -9,6 +9,7 @@ const Footer: React.FC = () => {
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -17,7 +18,9 @@ const Footer: React.FC = () => {
   return (
     <footer
       className={`pt-12 pb-8 text-white relative transition-all ${
-        isEditorial
+        isRetro
+          ? 'bg-[#12100e] border-t-2 border-[#5a5247] font-mono'
+          : isEditorial
           ? 'bg-[#09090b] border-t border-white/15'
           : isBento
           ? 'bg-zinc-950/80 border-t border-white/8 backdrop-blur-xl'
@@ -28,7 +31,7 @@ const Footer: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4">
         {/* Main Footer Grid */}
-        <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 ${isEditorial ? 'border-b border-white/10' : isBento ? 'border-b border-white/8' : isMinimal ? 'border-b border-zinc-800/60' : 'border-b-2 border-[#262626]'}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 ${isRetro ? 'border-b border-[#3d362e]' : isEditorial ? 'border-b border-white/10' : isBento ? 'border-b border-white/8' : isMinimal ? 'border-b border-zinc-800/60' : 'border-b-2 border-[#262626]'}`}>
           {/* Brand & Mission (5 cols) */}
           <div className="md:col-span-5 space-y-4">
             <Link to="/" onClick={scrollToTop}>

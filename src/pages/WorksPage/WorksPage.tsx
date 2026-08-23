@@ -224,6 +224,7 @@ const WorksPage: React.FC = () => {
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -259,7 +260,9 @@ const WorksPage: React.FC = () => {
         {/* Filter and Search Controls Bar */}
         <div
           className={`p-4 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 transition-all ${
-            isEditorial
+            isRetro
+              ? 'retro-window p-3 font-mono'
+              : isEditorial
               ? 'bg-[#0e0e12] border border-white/15 rounded-md'
               : isBento
               ? 'bento-tile'
@@ -275,7 +278,13 @@ const WorksPage: React.FC = () => {
                 key={cat.id}
                 onClick={() => setSelectedFilter(cat.id)}
                 className={`text-xs transition-all ${
-                  isEditorial
+                  isRetro
+                    ? `retro-btn px-3 py-1 text-xs font-mono ${
+                        selectedFilter === cat.id
+                          ? 'bg-accent text-black font-bold'
+                          : ''
+                      }`
+                    : isEditorial
                     ? `px-3.5 py-1.5 rounded font-serif italic text-xs tracking-wider ${
                         selectedFilter === cat.id
                           ? 'bg-accent text-black font-bold not-italic'
@@ -309,11 +318,13 @@ const WorksPage: React.FC = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder={isEditorial ? 'Search catalog artifacts...' : 'SEARCH BY TECH OR TITLE...'}
+              placeholder={isRetro ? 'FILTER *.EXE...' : isEditorial ? 'Search catalog artifacts...' : 'SEARCH BY TECH OR TITLE...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={`text-xs px-3.5 py-2 w-full md:w-64 focus:outline-none placeholder:text-zinc-600 ${
-                isEditorial
+                isRetro
+                  ? 'retro-inset text-white focus:border-accent font-mono'
+                  : isEditorial
                   ? 'bg-[#141418] border border-white/10 rounded text-white focus:border-accent font-serif italic'
                   : isBento
                   ? 'font-mono bg-black/40 border border-white/10 rounded-full text-white focus:border-accent'

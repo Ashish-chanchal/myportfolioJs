@@ -38,6 +38,7 @@ const Projects: React.FC<ProjectsProps> = ({
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   // Asymmetric bento col spans for each card index
   const bentoSpan = (idx: number): string => {
@@ -229,9 +230,40 @@ const Projects: React.FC<ProjectsProps> = ({
             ))}
           </div>
 
+        ) : isRetro ? (
+          /* ══════════════════════════════════════════════════════
+               MODE 4: RETRO / VINTAGE SOFTWARE CABINET GRID
+          ══════════════════════════════════════════════════════ */
+          <div className="flex flex-col gap-4 font-mono">
+            <div className="p-2.5 bg-[#1e1b18] border border-[#4a4237] text-xs flex items-center justify-between text-zinc-300">
+              <div className="flex items-center gap-2">
+                <span className="text-accent font-bold">&gt;&gt; DIR:</span>
+                <span>C:\PORTFOLIO\BUILDS\*.*</span>
+              </div>
+              <span className="text-[11px] text-accent">[{ProjectsData.length} FILES FOUND]</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {ProjectsData.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  id={project.id}
+                  title={project.title}
+                  img={project.image}
+                  tech={project.tech}
+                  link={project.link}
+                  liveLink={project.livelink}
+                  description={project.description}
+                  categoryBadge={project.category}
+                  team={project.team}
+                />
+              ))}
+            </div>
+          </div>
+
         ) : (
           /* ══════════════════════════════════════════════════════
-               MODE 4: BRUTALIST GRID LAYOUT (3-Column Industrial Matrix)
+               MODE 5: BRUTALIST GRID LAYOUT (3-Column Industrial Matrix)
           ══════════════════════════════════════════════════════ */
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {ProjectsData.map((project) => (

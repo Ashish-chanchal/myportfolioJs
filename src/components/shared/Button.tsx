@@ -67,7 +67,7 @@ const Button: React.FC<ButtonProps> = ({
 
   const variantStyles = isMinimal ? minimalVariantStyles : brutalVariantStyles;
   const selectedVariant = variantStyles[variant] || variantStyles.accent;
-  const combinedClass = `inline-flex items-center justify-center gap-2 cursor-pointer select-none brutal-btn ${
+  const combinedClass = `inline-flex items-center justify-center gap-2 cursor-pointer select-none brutal-btn pattern-action-btn ${
     isMinimal ? 'tracking-normal font-medium' : 'uppercase tracking-wider'
   } ${selectedVariant} ${sizeStyles[size]}`;
 

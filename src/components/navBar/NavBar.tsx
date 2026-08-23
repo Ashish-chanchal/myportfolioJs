@@ -24,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
   const isMinimal = designMode === 'minimalist';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -32,7 +33,9 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isEditorial
+        isRetro
+          ? 'bg-[#181512] border-b-2 border-[#5a5247] font-mono shadow-md'
+          : isEditorial
           ? 'bg-[#09090b]/95 border-b border-white/15 backdrop-blur-xl'
           : isBento
           ? 'bg-zinc-950/70 border-b border-white/8 backdrop-blur-2xl'
@@ -41,6 +44,21 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
           : 'bg-[#0a0a0a] border-b-2 border-white'
       }`}
     >
+      {/* Retro 1980s-90s OS Titlebar */}
+      {isRetro && (
+        <div className="bg-[#2a2520] border-b border-[#5a5247] px-4 py-0.5 flex items-center justify-between text-[11px] font-mono text-zinc-300">
+          <div className="flex items-center gap-2">
+            <span className="text-accent font-bold">[■]</span>
+            <span className="font-bold text-white tracking-wider">ASHISH_WORKSTATION // v1.984</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-3 text-[10px] text-zinc-400">
+            <span>MEM: 640KB OK</span>
+            <span className="text-accent">COM1: 9600 BAUD</span>
+            <span className="text-white font-bold">[▲][▼][X]</span>
+          </div>
+        </div>
+      )}
+
       {/* Editorial Top Masthead Dateline */}
       {isEditorial && (
         <div className="bg-[#0e0e12] border-b border-white/10 px-4 py-1 flex items-center justify-between text-[10px] font-mono text-zinc-400">
@@ -57,7 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
       )}
 
       {/* Brutalist Top Terminal Bar (only in brutalist mode) */}
-      {!isMinimal && !isBento && !isEditorial && (
+      {!isMinimal && !isBento && !isEditorial && !isRetro && (
         <div className="bg-[#141414] border-b border-[#262626] px-4 py-1 flex items-center justify-between text-[11px] font-mono text-[#888888]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#00FF66] inline-block animate-pulse"></span>
@@ -84,7 +102,9 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
         {/* Desktop Navigation Links */}
         <div
           className={`hidden lg:flex items-center gap-1.5 ${
-            isEditorial
+            isRetro
+              ? 'bg-[#221e1a] p-1 border border-[#4a4237] shadow-inner font-mono'
+              : isEditorial
               ? 'px-3 py-1 border-x border-white/10 space-x-1'
               : isBento
               ? 'bg-white/5 p-1.5 rounded-full border border-white/10 backdrop-blur-md'
@@ -101,7 +121,13 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
                 to={item.link}
                 onClick={() => setSelectedItem(item.id)}
                 className={`transition-all ${
-                  isEditorial
+                  isRetro
+                    ? `px-3.5 py-1 text-xs font-mono font-bold tracking-wider ${
+                        isActive
+                          ? 'bg-accent text-black shadow-sm'
+                          : 'text-zinc-300 hover:text-white hover:bg-[#322c25]'
+                      }`
+                    : isEditorial
                     ? `px-3.5 py-1.5 text-xs tracking-wider uppercase transition-all ${
                         isActive
                           ? 'text-white font-serif font-bold italic border-b-2 border-accent pb-1'
@@ -126,7 +152,8 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
                       }`
                 }`}
               >
-                {!isMinimal && !isBento && !isEditorial && <span className="text-[#888888] mr-1">[{item.code}]</span>}
+                {!isMinimal && !isBento && !isEditorial && !isRetro && <span className="text-[#888888] mr-1">[{item.code}]</span>}
+                {isRetro && <span className="text-zinc-500 mr-1">&gt;</span>}
                 <span>{item.name}</span>
               </Link>
             );

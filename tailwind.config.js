@@ -26,6 +26,8 @@ export default {
         sans: ['"Space Grotesk"', "sans-serif"],
         serif: ['"Playfair Display"', '"Instrument Serif"', "Georgia", "serif"],
         editorial: ['"Playfair Display"', '"Instrument Serif"', "Georgia", "serif"],
+        retro: ['"VT323"', '"Courier New"', "monospace"],
+        pixel: ['"Silkscreen"', '"VT323"', "monospace"],
       },
       boxShadow: {
         'brutal-sm': '2px 2px 0px 0px #ffffff',
@@ -44,11 +46,61 @@ export default {
       },
       animation: {
         'ticker': 'ticker 25s linear infinite',
+        'zen-float': 'zenFloat 6s ease-in-out infinite',
+        'glow-breathe': 'glowBreathe 4s ease-in-out infinite',
+        'crt-flicker': 'crtFlicker 0.15s infinite',
+        'dos-blink': 'dosBlink 1s step-start infinite',
+        'radar-sweep': 'radarSweep 3s linear infinite',
+        'shimmer-slide': 'shimmerSlide 3s ease-in-out infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'border-beam': 'borderBeam 4s linear infinite',
+        'spin-slow': 'spin 12s linear infinite',
+        'reverse-spin': 'reverseSpin 8s linear infinite',
+        'cinematic-zoom': 'cinematicZoom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       },
       keyframes: {
         ticker: {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        reverseSpin: {
+          '0%': { transform: 'rotate(360deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        },
+        cinematicZoom: {
+          '0%': { transform: 'scale(0.85)', opacity: '0' },
+          '40%': { transform: 'scale(1)', opacity: '1' },
+          '80%': { transform: 'scale(1.03)', opacity: '1' },
+          '100%': { transform: 'scale(1.1)', opacity: '0' },
+        },
+        zenFloat: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        glowBreathe: {
+          '0%, 100%': { opacity: '0.4', filter: 'blur(20px)' },
+          '50%': { opacity: '0.8', filter: 'blur(30px)' },
+        },
+        crtFlicker: {
+          '0%': { opacity: '0.98' },
+          '50%': { opacity: '1' },
+          '100%': { opacity: '0.96' },
+        },
+        dosBlink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+        radarSweep: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(1000%)' },
+        },
+        shimmerSlide: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+        borderBeam: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
         },
       },
     },

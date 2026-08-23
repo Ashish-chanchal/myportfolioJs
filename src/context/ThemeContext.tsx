@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
 
-export type DesignMode = 'brutalist' | 'minimalist' | 'bento' | 'editorial';
+export type DesignMode = 'brutalist' | 'minimalist' | 'bento' | 'editorial' | 'retro';
 
 export interface ThemeConfig {
   id: string;
@@ -65,7 +65,16 @@ export const THEMES: ThemeConfig[] = [
     primary: '#F59E0B',
     secondary: '#00F0FF',
     tertiary: '#00FF66',
-    description: 'Warm industrial amber & cyan telemetry',
+    description: 'Warm industrial amber & vintage telemetry',
+  },
+  {
+    id: 'vintage-sepia',
+    name: 'VINTAGE SEPIA',
+    code: '07_RETRO',
+    primary: '#E5A93C',
+    secondary: '#56B6C2',
+    tertiary: '#98C379',
+    description: 'Nostalgic 1980s computer CRT & parchment tones',
   },
 ];
 
@@ -76,6 +85,9 @@ interface ThemeContextType {
   designMode: DesignMode;
   setDesignMode: (mode: DesignMode) => void;
   toggleDesignMode: () => void;
+  isTransitioning: boolean;
+  transitionMode: DesignMode;
+  transitionTheme: ThemeConfig;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -105,7 +117,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [designMode, setDesignModeState] = useState<DesignMode>(() => {
     try {
       const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
-      return savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial'
+      return savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial' || savedMode === 'retro'
         ? (savedMode as DesignMode)
         : 'minimalist';
     } catch {
@@ -113,7 +125,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionMode, setTransitionMode] = useState<DesignMode>(designMode);
   const currentTheme = THEMES.find((t) => t.id === themeId) || THEMES[0];
+  const [transitionTheme, setTransitionTheme] = useState<ThemeConfig>(currentTheme);
 
   useLayoutEffect(() => {
     applyThemeVariables(currentTheme);
@@ -133,25 +148,46 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const setTheme = (id: string) => {
     const found = THEMES.find((t) => t.id === id);
-    if (found) {
-      applyThemeVariables(found);
-      setThemeId(id);
+    if (found && found.id !== themeId) {
+      setTransitionTheme(found);
+      setTransitionMode(designMode);
+      setIsTransitioning(true);
+      
+      setTimeout(() => {
+        applyThemeVariables(found);
+        setThemeId(id);
+      }, 450);
+
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 1200);
     }
   };
 
   const setDesignMode = (mode: DesignMode) => {
-    setDesignModeState(mode);
-    document.documentElement.setAttribute('data-design-mode', mode);
-    try {
-      localStorage.setItem('ashish-portfolio-design-mode', mode);
-    } catch {
-      // ignore
-    }
+    if (mode === designMode) return;
+    setTransitionMode(mode);
+    setTransitionTheme(currentTheme);
+    setIsTransitioning(true);
+
+    setTimeout(() => {
+      setDesignModeState(mode);
+      document.documentElement.setAttribute('data-design-mode', mode);
+      try {
+        localStorage.setItem('ashish-portfolio-design-mode', mode);
+      } catch {
+        // ignore
+      }
+    }, 450);
+
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1200);
   };
 
-  // Cycle: minimalist → brutalist → bento → editorial → minimalist
+  // Cycle: minimalist → brutalist → bento → editorial → retro → minimalist
   const toggleDesignMode = () => {
-    const cycle: DesignMode[] = ['minimalist', 'brutalist', 'bento', 'editorial'];
+    const cycle: DesignMode[] = ['minimalist', 'brutalist', 'bento', 'editorial', 'retro'];
     const nextIndex = (cycle.indexOf(designMode) + 1) % cycle.length;
     setDesignMode(cycle[nextIndex]);
   };
@@ -165,6 +201,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         designMode,
         setDesignMode,
         toggleDesignMode,
+        isTransitioning,
+        transitionMode,
+        transitionTheme,
       }}
     >
       {children}

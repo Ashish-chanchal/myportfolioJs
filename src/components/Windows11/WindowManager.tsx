@@ -105,6 +105,7 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
       onClick={onFocus}
       style={{
         zIndex: winConfig.zIndex,
+        transition: isDragging ? 'none' : 'width 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), height 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), top 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), left 0.2s cubic-bezier(0.1, 0.9, 0.2, 1)',
         ...(winConfig.maximized || isSmallScreen
           ? {
               top: 0,
@@ -124,7 +125,7 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
               maxHeight: 'calc(100vh - 72px)',
             }),
       }}
-      className={`absolute win11-window win11-mica flex flex-col select-none ${
+      className={`absolute win11-window win11-mica flex flex-col select-none animate-win11-open ${
         isDragging ? 'shadow-2xl opacity-95' : 'shadow-2xl'
       }`}
     >

@@ -38,6 +38,7 @@ import OfficeApp from '../../components/Windows11/Apps/OfficeApp';
 import RecycleBinApp from '../../components/Windows11/Apps/RecycleBinApp';
 import CameraApp from '../../components/Windows11/Apps/CameraApp';
 import BootScreen from '../../components/Windows11/BootScreen';
+import DesktopOnlyGate from '../../components/shared/DesktopOnlyGate';
 import LockScreen from '../../components/Windows11/LockScreen';
 
 export const Windows11Page: React.FC = () => {
@@ -593,6 +594,9 @@ export const Windows11Page: React.FC = () => {
           content="Interactive Windows 11 Operating System simulator showcasing Ashish Chanchal's software engineering portfolio, project files, PowerShell terminal, and system telemetry."
         />
       </Helmet>
+
+      {/* Desktop Only Gate for Screen Size */}
+      <DesktopOnlyGate osName="Windows 11" />
 
       {/* ══════════════════════════════════════════════════════
            DESKTOP ICONS MULTI-COLUMN WRAPPING GRID (Never overflows onto taskbar)

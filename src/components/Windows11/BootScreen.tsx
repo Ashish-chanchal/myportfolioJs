@@ -13,12 +13,15 @@ export const BootScreen: React.FC<BootScreenProps> = ({ onBootComplete }) => {
     const t2 = setTimeout(() => setStatusText('Starting Microservices & MCP Daemons...'), 1400);
     const t3 = setTimeout(() => setStatusText('Preparing Windows 11 User Environment...'), 2100);
     const t4 = setTimeout(() => onBootComplete(), 2800);
+    const handleKeyDown = () => onBootComplete();
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
       clearTimeout(t4);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onBootComplete]);
 

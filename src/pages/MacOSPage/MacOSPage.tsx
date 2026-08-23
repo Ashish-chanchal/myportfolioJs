@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './macos.css';
 import { MACOS_ICONS } from '../../components/MacOS/icons';
@@ -330,17 +330,28 @@ export const MacOSPage: React.FC = () => {
     };
   }, [activeAppId, closeApp, focusApp, isAppSwitcherOpen, openApps, switcherIndex, toggleMaximize, toggleMinimize, openApp]);
 
+  const lastContextMenuTimeRef = useRef(0);
+
   // Desktop Context Menu Handler
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    lastContextMenuTimeRef.current = Date.now();
+    const menuWidth = 220;
+    const menuHeight = 280;
+    const x = Math.min(e.clientX, window.innerWidth - menuWidth);
+    const y = Math.min(e.clientY, window.innerHeight - menuHeight);
     setContextMenu({
-      x: e.clientX,
-      y: e.clientY,
+      x: Math.max(10, x),
+      y: Math.max(10, y),
       visible: true,
     });
   };
 
   const closeContextMenu = () => {
+    if (Date.now() - lastContextMenuTimeRef.current < 250) {
+      return;
+    }
     setContextMenu({ x: 0, y: 0, visible: false });
   };
 

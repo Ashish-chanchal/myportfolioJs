@@ -119,9 +119,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
       return savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial' || savedMode === 'retro'
         ? (savedMode as DesignMode)
-        : 'minimalist';
+        : 'retro';
     } catch {
-      return 'minimalist';
+      return 'retro';
     }
   });
 

@@ -147,14 +147,25 @@
   }
 }
 
-.animate-win11-open {
-  animation: win11WindowOpen 0.2s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+@keyframes win11StartMenuOpen {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 16px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.animate-win11-start {
+  animation: win11StartMenuOpen 0.18s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
 @keyframes win11FlyoutUp {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.96);
+    transform: translateY(16px) scale(0.96);
   }
   100% {
     opacity: 1;

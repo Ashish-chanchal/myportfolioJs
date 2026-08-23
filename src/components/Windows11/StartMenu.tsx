@@ -33,65 +33,78 @@ export const StartMenu: React.FC<StartMenuProps> = ({
   if (!isOpen) return null;
 
   const PINNED_APPS = [
-    { id: 'thispc', name: 'This PC', icon: WIN11_ICONS.thisPc },
-    { id: 'copilot', name: 'Copilot AI', icon: WIN11_ICONS.copilot },
-    { id: 'explorer', name: 'File Explorer', icon: WIN11_ICONS.explorer },
-    { id: 'terminal', name: 'PowerShell', icon: WIN11_ICONS.terminal },
-    { id: 'vscode', name: 'VS Code', icon: WIN11_ICONS.vscode },
-    { id: 'photos', name: 'Photos Gallery', icon: WIN11_ICONS.photos },
-    { id: 'notepad', name: 'Notepad', icon: WIN11_ICONS.notepad },
-    { id: 'spotify', name: 'Spotify Player', icon: WIN11_ICONS.spotify },
-    { id: 'taskManager', name: 'Task Manager', icon: WIN11_ICONS.taskManager },
-    { id: 'calculator', name: 'Calculator', icon: WIN11_ICONS.calculator },
-    { id: 'edge', name: 'Edge Browser', icon: WIN11_ICONS.edge },
-    { id: 'mail', name: 'Outlook Mail', icon: WIN11_ICONS.mail },
-    { id: 'settings', name: 'Settings', icon: WIN11_ICONS.settings },
-    { id: 'paint', name: 'Paint 3D', icon: WIN11_ICONS.paint },
-    { id: 'camera', name: 'Camera', icon: WIN11_ICONS.camera || WIN11_ICONS.photos },
-    { id: 'store', name: 'Microsoft Store', icon: WIN11_ICONS.store },
-    { id: 'teams', name: 'Microsoft Teams', icon: WIN11_ICONS.teams },
-    { id: 'excel', name: 'Excel Sheet', icon: WIN11_ICONS.excel },
-    { id: 'powerpoint', name: 'PowerPoint', icon: WIN11_ICONS.powerpoint },
-    { id: 'github', name: 'GitHub Profile', icon: WIN11_ICONS.github, ext: 'https://github.com/Ashish-chanchal' },
-    { id: 'linkedin', name: 'LinkedIn', icon: WIN11_ICONS.linkedin, ext: 'https://www.linkedin.com/in/ashishchanchal/' },
-    { id: 'twitter', name: 'X / Twitter', icon: WIN11_ICONS.twitter, ext: 'https://x.com/ashishchanchal0' },
-    { id: 'instagram', name: 'Instagram', icon: WIN11_ICONS.instagram, ext: 'https://www.instagram.com/ashish._chanchal/' },
-    { id: 'resume', name: 'Resume PDF', icon: WIN11_ICONS.pdf, ext: 'https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link' },
-    { id: 'word', name: 'Bio Document', icon: WIN11_ICONS.word },
-    { id: 'recycle', name: 'Recycle Bin', icon: WIN11_ICONS.recycle },
+    // Top Row: Featured Project Apps
+    { id: 'sociantra', name: 'Sociantra', icon: WIN11_ICONS.sociantra, ext: 'https://sociantra.ashishchanchal.in/', keywords: 'project sociantra ai community networking platform social' },
+    { id: 'todoai', name: 'TODOAI', icon: WIN11_ICONS.todoai, ext: 'https://todoai.ashishchanchal.in/', keywords: 'project todoai ai task intelligence planner agent autonomous' },
+    { id: 'vibepulse', name: 'VibePulse', icon: WIN11_ICONS.vibepulse, ext: 'https://vibepluse.ashishchanchal.in/', keywords: 'project vibepulse audio sound music streamer equalizer web audio' },
+    { id: 'cineverse', name: 'CineVerse', icon: WIN11_ICONS.cineverse, ext: 'https://cineverse.ashishchanchal.in/', keywords: 'project cineverse movie cinema film 3d streaming engine' },
+    { id: 'sixteen', name: 'Sixteen Clothing', icon: WIN11_ICONS.sixteen, ext: 'https://sixteenclothes.ashishchanchal.in/', keywords: 'project sixteen clothing apparel ecommerce store fashion' },
+    { id: 'estype', name: 'Estype Shop', icon: WIN11_ICONS.estype, ext: 'https://github.com/Ashish-chanchal/E-Commerce-Website', keywords: 'project estype shop ecommerce retail cart' },
+
+    // Core Windows 11 Utilities
+    { id: 'thispc', name: 'This PC', icon: WIN11_ICONS.thisPc, keywords: 'system computer files drives' },
+    { id: 'copilot', name: 'Copilot AI', icon: WIN11_ICONS.copilot, keywords: 'ai assistant bot chat' },
+    { id: 'explorer', name: 'File Explorer', icon: WIN11_ICONS.explorer, keywords: 'files projects folder code' },
+    { id: 'terminal', name: 'PowerShell', icon: WIN11_ICONS.terminal, keywords: 'terminal powershell bash cli command' },
+    { id: 'vscode', name: 'VS Code', icon: WIN11_ICONS.vscode, keywords: 'code editor developer ide programming' },
+    { id: 'photos', name: 'Photos Gallery', icon: WIN11_ICONS.photos, keywords: 'photos gallery images architecture' },
+    { id: 'notepad', name: 'Notepad', icon: WIN11_ICONS.notepad, keywords: 'notes text editor document' },
+    { id: 'spotify', name: 'Spotify Player', icon: WIN11_ICONS.spotify, keywords: 'music audio songs tracks spotify' },
+    { id: 'taskManager', name: 'Task Manager', icon: WIN11_ICONS.taskManager, keywords: 'system cpu ram memory processes performance' },
+    { id: 'calculator', name: 'Calculator', icon: WIN11_ICONS.calculator, keywords: 'math calculator numbers' },
+    { id: 'edge', name: 'Edge Browser', icon: WIN11_ICONS.edge, keywords: 'web browser internet edge safari chrome' },
+    { id: 'mail', name: 'Outlook Mail', icon: WIN11_ICONS.mail, keywords: 'email contact message mail outlook' },
+    { id: 'settings', name: 'Settings', icon: WIN11_ICONS.settings, keywords: 'settings system wallpaper appearance personalize' },
+    { id: 'paint', name: 'Paint 3D', icon: WIN11_ICONS.paint, keywords: 'draw paint art sketch canvas' },
+    { id: 'camera', name: 'Camera', icon: WIN11_ICONS.camera || WIN11_ICONS.photos, keywords: 'camera webcam photo booth video vision' },
+    { id: 'store', name: 'Microsoft Store', icon: WIN11_ICONS.store, keywords: 'store app store download marketplace' },
+    { id: 'teams', name: 'Microsoft Teams', icon: WIN11_ICONS.teams, keywords: 'teams chat call meetings' },
+    { id: 'excel', name: 'Excel Sheet', icon: WIN11_ICONS.excel, keywords: 'excel metrics data spreadsheet' },
+    { id: 'powerpoint', name: 'PowerPoint', icon: WIN11_ICONS.powerpoint, keywords: 'powerpoint presentation deck slides' },
+    { id: 'github', name: 'GitHub Profile', icon: WIN11_ICONS.github, ext: 'https://github.com/Ashish-chanchal', keywords: 'github repo code open source git' },
+    { id: 'linkedin', name: 'LinkedIn', icon: WIN11_ICONS.linkedin, ext: 'https://www.linkedin.com/in/ashishchanchal/', keywords: 'linkedin profile resume career network' },
+    { id: 'twitter', name: 'X / Twitter', icon: WIN11_ICONS.twitter, ext: 'https://x.com/ashishchanchal0', keywords: 'twitter x social feed posts' },
+    { id: 'instagram', name: 'Instagram', icon: WIN11_ICONS.instagram, ext: 'https://www.instagram.com/ashish._chanchal/', keywords: 'instagram social photos profile' },
+    { id: 'resume', name: 'Resume PDF', icon: WIN11_ICONS.pdf, ext: 'https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link', keywords: 'resume cv pdf document hire' },
+    { id: 'word', name: 'Bio Document', icon: WIN11_ICONS.word, keywords: 'about bio profile chronicle word' },
+    { id: 'recycle', name: 'Recycle Bin', icon: WIN11_ICONS.recycle, keywords: 'trash bin delete recycle' },
   ];
 
-  const filteredApps = PINNED_APPS.filter((a) => a.name.toLowerCase().includes(search.toLowerCase()));
+  const filteredApps = PINNED_APPS.filter((a) => {
+    const q = search.toLowerCase().trim();
+    if (!q) return true;
+    return a.name.toLowerCase().includes(q) || (a.keywords && a.keywords.toLowerCase().includes(q));
+  });
 
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="absolute bottom-14 left-1/2 -translate-x-1/2 w-[95vw] max-w-[560px] h-[580px] win11-mica rounded-xl p-6 flex flex-col justify-between z-[9999] shadow-2xl animate-cinematic-zoom select-none"
+      className="fixed bottom-14 left-1/2 w-[95vw] max-w-[580px] max-h-[calc(100vh-72px)] win11-mica rounded-2xl p-5 sm:p-6 flex flex-col justify-between z-[99999] shadow-2xl animate-win11-start select-none overflow-hidden border border-white/20"
     >
-      <div className="space-y-5">
+      <div className="space-y-4 overflow-y-auto win11-scroll pr-1">
         {/* Windows 11 Search Box */}
-        <div className="relative">
+        <div className="relative flex-shrink-0">
           <img src={WIN11_ICONS.search} alt="Search" className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 object-contain" />
           <input
             type="text"
             placeholder="Type here to search apps, files, skills..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#1c1c22]/90 border border-white/10 rounded-full pl-10 pr-4 py-2 text-xs text-white placeholder:text-zinc-500 outline-none focus:border-blue-500 focus:bg-[#25252c]"
+            className="w-full bg-[#1c1c22]/90 border border-white/10 rounded-full pl-10 pr-4 py-2 text-xs text-white placeholder:text-zinc-400 outline-none focus:border-blue-500 focus:bg-[#25252c] transition-all"
             autoFocus
           />
         </div>
 
         {/* Pinned Section */}
         <div>
-          <div className="flex items-center justify-between text-xs font-bold text-white px-2 mb-3">
+          <div className="flex items-center justify-between text-xs font-bold text-white px-2 mb-2.5">
             <span>Pinned Apps</span>
             <span className="text-[11px] text-blue-400 font-normal hover:underline cursor-pointer">
               All apps ({PINNED_APPS.length}) &gt;
             </span>
           </div>
 
-          <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+          <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-[260px] overflow-y-auto win11-scroll p-1">
             {filteredApps.map((app) => (
               <button
                 key={app.id}

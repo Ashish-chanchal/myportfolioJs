@@ -1,64 +1,35 @@
-import React from 'react'
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import HeadingSec from '../../components/shared/HeadingSec';
 import Contact from '../../components/Contact/Contact';
 import Socials from '../../components/Socials/Socials';
-import { Helmet } from 'react-helmet-async';
 
+const ContactPage: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-const sectionVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-  };
-  
-  // Custom hook for adding scroll animations to each section
-  const ScrollReveal = ({ children }: { children: React.ReactNode }) => {
-    const controls = useAnimation();
-    const [ref, inView] = useInView({
-      triggerOnce: true, // Only animate once when in view
-      threshold: 0.1, // Trigger when 10% of the component is visible
-    });
-  
-    useEffect(() => {
-      if (inView) {
-        controls.start("visible");
-      }
-    }, [controls, inView]);
-    useEffect(() => {
-        window.scrollTo(0, 0);  // Scroll to the top
-      }, []);
-    return (
-      <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={controls}
-        variants={sectionVariants}
-      >
-        {children}
-      </motion.div>
-    );
-  };
-const ContactPage = () => {
   return (
-    <div>
+    <div className="bg-[#0a0a0a] min-h-screen pb-20">
       <Helmet>
-        <title>Contact - Ashish Chanchal</title>
-        <meta name="description" content="Contact Ashish Chanchal for software development, web design, and community management services. Connect with Ashish Chanchal on social media platforms like LinkedIn, Twitter, GitHub, and Instagram. Reach out to Ashish Chanchal for collaborations, projects, and more." />
+        <title>Contact // Ashish Chanchal - Transmission Relay</title>
+        <meta
+          name="description"
+          content="Initiate contact with Ashish Chanchal for software development contracts, AI systems engineering, and full-stack collaborations."
+        />
       </Helmet>
-      <ScrollReveal>
-        <HeadingSec title="Contact" description="Let's Connect"/>
-      </ScrollReveal>
-      <ScrollReveal>
-        <Contact />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Socials />
-      </ScrollReveal>
-      
-    </div>
-  )
-}
 
-export default ContactPage
+      <HeadingSec
+        title="TRANSMISSION_RELAY"
+        description="Establish direct communications for software engineering opportunities, AI architectures, and technical inquiries."
+        waypoint="LOGBOOK // WAYPOINT_05_RELAY"
+      />
+
+      <Contact />
+
+      <Socials />
+    </div>
+  );
+};
+
+export default ContactPage;

@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
 
+export type DesignMode = 'brutalist' | 'minimalist';
+
 export interface ThemeConfig {
   id: string;
   name: string;
@@ -71,6 +73,9 @@ interface ThemeContextType {
   currentTheme: ThemeConfig;
   setTheme: (themeId: string) => void;
   themes: ThemeConfig[];
+  designMode: DesignMode;
+  setDesignMode: (mode: DesignMode) => void;
+  toggleDesignMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -97,21 +102,32 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
+  const [designMode, setDesignModeState] = useState<DesignMode>(() => {
+    try {
+      const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
+      return savedMode === 'brutalist' || savedMode === 'minimalist' ? savedMode : 'minimalist';
+    } catch {
+      return 'minimalist';
+    }
+  });
+
   const currentTheme = THEMES.find((t) => t.id === themeId) || THEMES[0];
 
-  // Apply immediately before painting
   useLayoutEffect(() => {
     applyThemeVariables(currentTheme);
+    document.documentElement.setAttribute('data-design-mode', designMode);
     try {
       localStorage.setItem('ashish-portfolio-theme', currentTheme.id);
+      localStorage.setItem('ashish-portfolio-design-mode', designMode);
     } catch {
-      // ignore in restricted environments
+      // ignore
     }
-  }, [currentTheme]);
+  }, [currentTheme, designMode]);
 
   useEffect(() => {
     applyThemeVariables(currentTheme);
-  }, [currentTheme]);
+    document.documentElement.setAttribute('data-design-mode', designMode);
+  }, [currentTheme, designMode]);
 
   const setTheme = (id: string) => {
     const found = THEMES.find((t) => t.id === id);
@@ -121,8 +137,31 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const setDesignMode = (mode: DesignMode) => {
+    setDesignModeState(mode);
+    document.documentElement.setAttribute('data-design-mode', mode);
+    try {
+      localStorage.setItem('ashish-portfolio-design-mode', mode);
+    } catch {
+      // ignore
+    }
+  };
+
+  const toggleDesignMode = () => {
+    setDesignMode(designMode === 'minimalist' ? 'brutalist' : 'minimalist');
+  };
+
   return (
-    <ThemeContext.Provider value={{ currentTheme, setTheme, themes: THEMES }}>
+    <ThemeContext.Provider
+      value={{
+        currentTheme,
+        setTheme,
+        themes: THEMES,
+        designMode,
+        setDesignMode,
+        toggleDesignMode,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

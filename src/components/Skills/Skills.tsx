@@ -1,6 +1,7 @@
 import React from 'react';
 import Heading from '../shared/Heading';
 import Box from '../shared/Box';
+import { useTheme } from '../../context/ThemeContext';
 
 export const techData = [
   {
@@ -48,6 +49,9 @@ export const techData = [
 ];
 
 const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypointIndex }) => {
+  const { designMode } = useTheme();
+  const isMinimal = designMode === 'minimalist';
+
   return (
     <section id="skills" className="py-16 md:py-20 relative bg-brutal-dots">
       <div className="max-w-7xl mx-auto px-4">
@@ -71,12 +75,24 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
         </div>
 
         {/* Engineering Tenet Footer Strip */}
-        <div className="mt-8 bg-[#121212] border-2 border-white p-4 shadow-brutal flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#A3A3A3]">
+        <div
+          className={`mt-8 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs ${
+            isMinimal
+              ? 'rounded-2xl bg-zinc-900/40 border border-zinc-800/80 text-zinc-400 backdrop-blur-sm shadow-md'
+              : 'bg-[#121212] border-2 border-white shadow-brutal text-[#A3A3A3]'
+          }`}
+        >
           <div className="flex items-center gap-2">
-            <span className="text-[#00F0FF] font-bold">⚡ STACK PHILOSOPHY:</span>
+            <span className="text-accent font-bold">⚡ STACK PHILOSOPHY:</span>
             <span>Right tool for high throughput, sub-second latency, and maintainable type safety.</span>
           </div>
-          <span className="text-white font-bold bg-[#1e1e1e] px-2 py-1 border border-[#333]">
+          <span
+            className={`px-2.5 py-1 ${
+              isMinimal
+                ? 'rounded-full bg-zinc-800 text-zinc-200 border border-zinc-700 font-medium'
+                : 'text-white font-bold bg-[#1e1e1e] border border-[#333]'
+            }`}
+          >
             100% PRODUCTION READY
           </span>
         </div>

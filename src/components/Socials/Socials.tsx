@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaEnvelope, FaGithub, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import Heading from '../shared/Heading';
+import { useTheme } from '../../context/ThemeContext';
 
 const SocialsData = [
   {
@@ -41,6 +42,9 @@ const SocialsData = [
 ];
 
 const Socials: React.FC = () => {
+  const { designMode } = useTheme();
+  const isMinimal = designMode === 'minimalist';
+
   return (
     <div className="py-16 md:py-20 relative bg-brutal-dots">
       <div className="max-w-7xl mx-auto px-4">
@@ -57,17 +61,21 @@ const Socials: React.FC = () => {
               href={social.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#121212] border-2 border-white p-4 shadow-brutal hover:shadow-brutal-accent brutal-card flex flex-col justify-between"
+              className={`p-4 flex flex-col justify-between transition-all ${
+                isMinimal
+                  ? 'bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-600 rounded-2xl backdrop-blur-sm shadow-md hover:-translate-y-1'
+                  : 'bg-[#121212] border-2 border-white shadow-brutal hover:shadow-brutal-accent brutal-card'
+              }`}
             >
-              <div className="flex items-center justify-between pb-2 border-b border-[#262626] mb-3">
+              <div className={`flex items-center justify-between pb-2 mb-3 ${isMinimal ? 'border-b border-zinc-800/60' : 'border-b border-[#262626]'}`}>
                 {social.icon}
                 <span className="font-mono text-xs text-accent">↗</span>
               </div>
               <div>
-                <h4 className="font-heading font-black text-base text-white uppercase">
+                <h4 className={`text-base text-white ${isMinimal ? 'font-semibold' : 'font-heading font-black uppercase'}`}>
                   {social.name}
                 </h4>
-                <p className="font-mono text-[11px] text-[#888888] truncate mt-0.5">
+                <p className="font-mono text-[11px] text-zinc-400 truncate mt-0.5">
                   {social.tag}
                 </p>
               </div>

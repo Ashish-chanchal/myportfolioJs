@@ -11,34 +11,34 @@
 @layer base {
   * {
     border-color: #262626;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   }
 
   body {
     font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-color: #0a0a0a;
+    background-color: #09090b;
     color: #ffffff;
     overflow-x: hidden;
   }
 
-  /* Custom Brutalist Solid Scrollbar */
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0a0a;
-    border-left: 2px solid #262626;
+    background: #09090b;
   }
   ::-webkit-scrollbar-thumb {
     background: var(--accent-primary, #00F0FF);
-    border: 1px solid #000000;
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: var(--accent-secondary, #C778DD);
   }
 }
 
-/* Guaranteed Theme Color Utility Classes */
+/* Theme Color Utility Classes */
 .bg-accent {
   background-color: var(--accent-primary, #00F0FF) !important;
 }
@@ -63,47 +63,101 @@
   border-color: var(--accent-secondary, #C778DD) !important;
 }
 
-.shadow-brutal-accent {
+/* Brutalist Mode Shadows */
+[data-design-mode="brutalist"] .shadow-brutal-accent {
   box-shadow: 4px 4px 0px 0px var(--accent-primary, #00F0FF) !important;
 }
 
-.shadow-brutal-sec {
+[data-design-mode="brutalist"] .shadow-brutal-sec {
   box-shadow: 4px 4px 0px 0px var(--accent-secondary, #C778DD) !important;
 }
 
-/* Brutalist Architectural Grid Pattern (Flat Solid Shapes, Pure Flat Fills) */
-.bg-brutal-grid {
+[data-design-mode="brutalist"] .shadow-brutal {
+  box-shadow: 4px 4px 0px 0px #ffffff !important;
+}
+
+[data-design-mode="brutalist"] .shadow-brutal-sm {
+  box-shadow: 2px 2px 0px 0px #ffffff !important;
+}
+
+/* Minimalist Mode Shadows & Surfaces */
+[data-design-mode="minimalist"] .shadow-brutal-accent {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px 0 var(--accent-primary, rgba(0, 240, 255, 0.15)) !important;
+}
+
+[data-design-mode="minimalist"] .shadow-brutal-sec {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px 0 var(--accent-secondary, rgba(199, 120, 221, 0.15)) !important;
+}
+
+[data-design-mode="minimalist"] .shadow-brutal,
+[data-design-mode="minimalist"] .shadow-brutal-sm {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Background Grids */
+[data-design-mode="brutalist"] .bg-brutal-grid {
   background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M23 0h1v1h-1zM0 23h1v1H0z' fill='%23222222' fill-opacity='0.6'/%3E%3C/svg%3E");
 }
 
-.bg-brutal-dots {
+[data-design-mode="brutalist"] .bg-brutal-dots {
   background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1.5' height='1.5' fill='%23FFFFFF' fill-opacity='0.12'/%3E%3C/svg%3E");
 }
 
-/* Brutalist Tactile Push-Down Effect */
-.brutal-btn {
+[data-design-mode="minimalist"] .bg-brutal-grid,
+[data-design-mode="minimalist"] .bg-brutal-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Buttons Interaction */
+[data-design-mode="brutalist"] .brutal-btn {
   transition: all 0.15s ease;
 }
-.brutal-btn:hover {
+[data-design-mode="brutalist"] .brutal-btn:hover {
   transform: translate(-3px, -3px);
 }
-.brutal-btn:active {
+[data-design-mode="brutalist"] .brutal-btn:active {
   transform: translate(2px, 2px);
   box-shadow: none !important;
 }
 
-.brutal-card {
+[data-design-mode="minimalist"] .brutal-btn {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 9999px !important;
+}
+[data-design-mode="minimalist"] .brutal-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+[data-design-mode="minimalist"] .brutal-btn:active {
+  transform: translateY(0px);
+}
+
+/* Card Interaction */
+[data-design-mode="brutalist"] .brutal-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.brutal-card:hover {
+[data-design-mode="brutalist"] .brutal-card:hover {
   transform: translate(-4px, -4px);
 }
 
-/* Marquee infinite animation helper */
+[data-design-mode="minimalist"] .brutal-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.3s ease;
+  border-radius: 1rem !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(18, 18, 20, 0.7) !important;
+  backdrop-filter: blur(12px);
+}
+[data-design-mode="minimalist"] .brutal-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-primary, #00F0FF) !important;
+}
+
+/* Marquee infinite animation */
 .animate-marquee {
   display: flex;
   width: 200%;
-  animation: marquee 20s linear infinite;
+  animation: marquee 25s linear infinite;
 }
 
 @keyframes marquee {

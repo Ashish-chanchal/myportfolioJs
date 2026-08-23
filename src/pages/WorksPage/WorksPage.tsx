@@ -4,8 +4,11 @@ import HeadingSec from '../../components/shared/HeadingSec';
 import ProjectCard from '../../components/shared/Card';
 import todoaiImg from '../../assets/projects/todoai.png';
 import sociantraImg from '../../assets/projects/sociantra.png';
+import cineverseImg from '../../assets/projects/cineverse.png';
+import estypeshopImg from '../../assets/projects/estypeshop.png';
 import vibepulseImg from '../../assets/projects/vibepulse.png';
 import sixteenImg from '../../assets/projects/sixteenclothing.png';
+import { useTheme } from '../../context/ThemeContext';
 
 const AllProjects = [
   {
@@ -98,6 +101,34 @@ const AllProjects = [
   },
   {
     id: 6,
+    title: 'CineVerse // Cinema & Streaming Platform',
+    image: cineverseImg,
+    tech: 'React · Tailwind CSS · Movie Streaming UI · Responsive Frontend',
+    description: [
+      'Engineered a cinematic OTT movie streaming web application with dynamic hero showcases, video trailer previews, and metadata overlays',
+      'Implemented multi-genre taxonomy filters (Action, Drama, Crime, Sci-Fi) and responsive carousel sorting for trending blockbusters',
+      'Designed a sleek dark-mode cinema aesthetic with smooth modal transitions, search bars, and cross-device optimization',
+    ],
+    livelink: 'https://cineverse.ashishchanchal.in/',
+    category: 'Frontend & Streaming',
+    type: 'web',
+  },
+  {
+    id: 7,
+    title: 'ESTYPESHOP // Electronics E-Commerce',
+    image: estypeshopImg,
+    tech: 'React · Tailwind CSS · E-Commerce Frontend · State Management',
+    description: [
+      'Engineered a premium audio & electronics storefront featuring Beats Solo headphone spotlights and category carousels',
+      'Implemented real-time shopping cart count state, item search bar, dynamic category routing, and dark-mode product showcase',
+      'Crafted sleek high-contrast product cards with responsive layouts, fluid animations, and mobile-first navigation',
+    ],
+    livelink: 'https://estypeshop.ashishchanchal.in/',
+    category: 'Frontend & E-Commerce',
+    type: 'web',
+  },
+  {
+    id: 8,
     title: 'Sixteen Clothing // E-Commerce Storefront',
     image: sixteenImg,
     tech: 'React · Tailwind CSS · Responsive Frontend · State Management',
@@ -111,7 +142,7 @@ const AllProjects = [
     type: 'web',
   },
   {
-    id: 7,
+    id: 9,
     title: 'VibePulse // Web Audio Streamer',
     image: vibepulseImg,
     tech: 'React · Web Audio API · Tailwind CSS · Frontend State',
@@ -125,7 +156,7 @@ const AllProjects = [
     type: 'web',
   },
   {
-    id: 8,
+    id: 10,
     title: 'Movie Tickiter',
     tech: 'HTML · CSS · JavaScript · Movie Data API',
     image:
@@ -140,7 +171,7 @@ const AllProjects = [
     type: 'web',
   },
   {
-    id: 9,
+    id: 11,
     title: 'Words that Sparkle',
     tech: 'React · FreeAPI · Tailwind CSS',
     description: [
@@ -153,7 +184,7 @@ const AllProjects = [
     type: 'web',
   },
   {
-    id: 10,
+    id: 12,
     title: 'Weather App',
     tech: 'Flutter · OpenWeatherMap API · GetX',
     description: [
@@ -165,7 +196,7 @@ const AllProjects = [
     type: 'mobile',
   },
   {
-    id: 11,
+    id: 13,
     title: 'Rule-Based ChatBot',
     tech: 'HTML · CSS · JavaScript Engine',
     description: [
@@ -189,6 +220,8 @@ const CATEGORIES = [
 const WorksPage: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const { designMode } = useTheme();
+  const isMinimal = designMode === 'minimalist';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -222,17 +255,31 @@ const WorksPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 mt-6">
         {/* Filter and Search Controls Bar */}
-        <div className="bg-[#121212] border-2 border-white p-4 shadow-brutal mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div
+          className={`p-4 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 transition-all ${
+            isMinimal
+              ? 'bg-zinc-900/40 border border-zinc-800/80 rounded-2xl backdrop-blur-md shadow-lg'
+              : 'bg-[#121212] border-2 border-white shadow-brutal'
+          }`}
+        >
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-2">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedFilter(cat.id)}
-                className={`font-mono text-xs font-bold px-3 py-1.5 border-2 transition-all brutal-btn ${
-                  selectedFilter === cat.id
-                    ? 'bg-accent text-black border-black shadow-[2px_2px_0px_0px_#ffffff]'
-                    : 'bg-[#181818] text-white border-[#333333] hover:border-white hover:bg-[#202020]'
+                className={`font-mono text-xs transition-all brutal-btn ${
+                  isMinimal
+                    ? `px-3.5 py-1.5 rounded-full font-medium ${
+                        selectedFilter === cat.id
+                          ? 'bg-accent text-black font-bold'
+                          : 'bg-zinc-950 text-zinc-400 border border-zinc-800 hover:text-white hover:border-zinc-600'
+                      }`
+                    : `px-3 py-1.5 border-2 font-bold ${
+                        selectedFilter === cat.id
+                          ? 'bg-accent text-black border-black shadow-[2px_2px_0px_0px_#ffffff]'
+                          : 'bg-[#181818] text-white border-[#333333] hover:border-white hover:bg-[#202020]'
+                      }`
                 }`}
               >
                 {cat.label}
@@ -247,12 +294,16 @@ const WorksPage: React.FC = () => {
               placeholder="SEARCH BY TECH OR TITLE..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-[#0a0a0a] border-2 border-white text-white font-mono text-xs px-3 py-2 w-full md:w-64 focus:outline-none focus:border-accent placeholder:text-[#555555]"
+              className={`font-mono text-xs px-3.5 py-2 w-full md:w-64 focus:outline-none placeholder:text-zinc-600 ${
+                isMinimal
+                  ? 'bg-zinc-950/80 border border-zinc-800 rounded-xl text-white focus:border-accent'
+                  : 'bg-[#0a0a0a] border-2 border-white text-white focus:border-accent'
+              }`}
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-2 text-xs font-mono text-[#888888] hover:text-white"
+                className="absolute right-2.5 top-2 text-xs font-mono text-zinc-400 hover:text-white"
               >
                 ✕
               </button>
@@ -261,14 +312,14 @@ const WorksPage: React.FC = () => {
         </div>
 
         {/* Results Counter */}
-        <div className="flex items-center justify-between font-mono text-xs text-[#888888] mb-6 pb-2 border-b border-[#262626]">
+        <div className={`flex items-center justify-between font-mono text-xs mb-6 pb-2 ${isMinimal ? 'border-b border-zinc-800/60 text-zinc-500' : 'border-b border-[#262626] text-[#888888]'}`}>
           <span>SHOWING {filteredProjects.length} OF {AllProjects.length} ARTIFACTS</span>
           <span className="text-accent font-bold">SYSTEM_QUERY: OK</span>
         </div>
 
         {/* Projects Grid */}
         {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.id}
@@ -285,11 +336,17 @@ const WorksPage: React.FC = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-[#121212] border-2 border-white p-8 text-center shadow-brutal my-8">
+          <div
+            className={`p-8 text-center my-8 ${
+              isMinimal
+                ? 'rounded-2xl bg-zinc-900/40 border border-zinc-800'
+                : 'bg-[#121212] border-2 border-white shadow-brutal'
+            }`}
+          >
             <div className="font-mono text-sm text-accent font-bold uppercase mb-2">
               NO MATCHING ARTIFACTS FOUND
             </div>
-            <p className="font-mono text-xs text-[#888888]">
+            <p className="font-mono text-xs text-zinc-400">
               Try adjusting your search query or switching category filters.
             </p>
           </div>

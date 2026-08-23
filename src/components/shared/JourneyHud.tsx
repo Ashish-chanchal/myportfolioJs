@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import ThemeSwitcher from './ThemeSwitcher';
+import { useTheme } from '../../context/ThemeContext';
 
 const WAYPOINTS = [
   { id: 'hero', name: '00 // DEPARTURE', label: 'Start' },
@@ -15,6 +16,8 @@ const JourneyHud: React.FC = () => {
   const [activeWaypoint, setActiveWaypoint] = useState('hero');
   const [scrollPercent, setScrollPercent] = useState(0);
   const location = useLocation();
+  const { designMode } = useTheme();
+  const isMinimal = designMode === 'minimalist';
 
   useEffect(() => {
     if (location.pathname !== '/') return;
@@ -56,32 +59,46 @@ const JourneyHud: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-40 hidden lg:flex flex-col items-end gap-2">
-      {/* Theme Switcher quick action */}
+      {/* Theme & Mode Switcher */}
       <ThemeSwitcher />
 
-      {/* Brutalist Journey Coordinates HUD */}
-      <div className="bg-[#121212] border-2 border-white p-3 shadow-brutal-accent">
-        <div className="flex items-center justify-between gap-4 pb-2 border-b border-[#262626] font-mono text-[10px]">
-          <span className="text-accent font-bold">JOURNEY_TRACKER</span>
-          <span className="text-white font-bold">{scrollPercent}% OF ROUTE</span>
+      {/* Journey Coordinates HUD */}
+      <div
+        className={`transition-all ${
+          isMinimal
+            ? 'bg-zinc-950/90 border border-zinc-800/90 rounded-2xl p-3 shadow-xl backdrop-blur-xl'
+            : 'bg-[#121212] border-2 border-white p-3 shadow-brutal-accent'
+        }`}
+      >
+        <div className={`flex items-center justify-between gap-4 pb-2 font-mono text-[10px] ${isMinimal ? 'border-b border-zinc-800/80' : 'border-b border-[#262626]'}`}>
+          <span className="text-accent font-bold">{isMinimal ? 'PAGE PROGRESS' : 'JOURNEY_TRACKER'}</span>
+          <span className="text-white font-bold">{scrollPercent}%</span>
         </div>
 
         {/* Waypoint Nodes */}
-        <div className="flex flex-col gap-1.5 mt-2">
+        <div className="flex flex-col gap-1 mt-2">
           {WAYPOINTS.map((wp) => {
             const isActive = activeWaypoint === wp.id;
             return (
               <button
                 key={wp.id}
                 onClick={() => scrollToSection(wp.id)}
-                className={`flex items-center justify-between gap-3 text-left font-mono text-xs px-2 py-1 border transition-all ${
-                  isActive
-                    ? 'bg-accent text-black border-black font-bold shadow-[2px_2px_0px_0px_#ffffff]'
-                    : 'bg-[#181818] text-[#888888] border-[#2c2c2c] hover:text-white hover:border-white'
+                className={`flex items-center justify-between gap-3 text-left font-mono text-xs px-2.5 py-1 transition-all ${
+                  isMinimal
+                    ? `rounded-lg ${
+                        isActive
+                          ? 'bg-zinc-800 text-white font-bold border border-zinc-700'
+                          : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900'
+                      }`
+                    : `border ${
+                        isActive
+                          ? 'bg-accent text-black border-black font-bold shadow-[2px_2px_0px_0px_#ffffff]'
+                          : 'bg-[#181818] text-[#888888] border-[#2c2c2c] hover:text-white hover:border-white'
+                      }`
                 }`}
               >
-                <span>{wp.name}</span>
-                <span className="text-[10px]">{isActive ? '◄' : '—'}</span>
+                <span>{isMinimal ? wp.label : wp.name}</span>
+                <span className="text-[10px]">{isActive ? '●' : '—'}</span>
               </button>
             );
           })}

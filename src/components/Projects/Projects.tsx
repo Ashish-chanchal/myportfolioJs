@@ -58,8 +58,8 @@ const Projects: React.FC<ProjectsProps> = ({
           )}
         </div>
 
-        {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-6">
+        {/* Project Cards Grid with Natural Content Fit */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-6 items-start">
           {ProjectsData.map((project) => (
             <ProjectCard
               key={project.id}

@@ -4,6 +4,7 @@ import HeadingSec from '../../components/shared/HeadingSec';
 import Skills from '../../components/Skills/Skills';
 import FunFacts from '../../components/Funfacts/FunFacts';
 import Button from '../../components/shared/Button';
+import { useTheme } from '../../context/ThemeContext';
 
 const facts = [
   { id: 1, facts: 'Winter enthusiast > Summer heat anytime' },
@@ -42,6 +43,9 @@ const MILESTONES = [
 const AboutPage: React.FC<{
   setSelectedItem?: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ setSelectedItem }) => {
+  const { designMode } = useTheme();
+  const isMinimal = designMode === 'minimalist';
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -65,42 +69,48 @@ const AboutPage: React.FC<{
 
       <div className="max-w-7xl mx-auto px-4 mt-6">
         {/* Main Bio Card */}
-        <div className="bg-[#121212] border-2 border-white p-6 md:p-8 shadow-brutal hover:shadow-brutal-accent brutal-card mb-12">
-          <div className="flex items-center justify-between pb-3 border-b-2 border-[#262626] mb-6">
+        <div
+          className={`p-6 md:p-8 mb-12 transition-all ${
+            isMinimal
+              ? 'bg-zinc-900/40 border border-zinc-800/80 rounded-2xl backdrop-blur-md shadow-xl shadow-black/40'
+              : 'bg-[#121212] border-2 border-white shadow-brutal hover:shadow-brutal-accent brutal-card'
+          }`}
+        >
+          <div className={`flex items-center justify-between pb-3 mb-6 ${isMinimal ? 'border-b border-zinc-800/60' : 'border-b-2 border-[#262626]'}`}>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 bg-accent inline-block border border-black"></span>
-              <span className="font-mono text-xs text-accent font-black uppercase tracking-wider">
-                SUBJECT DOSSIER: ASHISH CHANCHAL
+              <span className={`w-2.5 h-2.5 inline-block ${isMinimal ? 'rounded-full bg-accent' : 'bg-accent border border-black'}`}></span>
+              <span className="font-mono text-xs text-accent font-bold uppercase tracking-wider">
+                {isMinimal ? 'Subject Dossier: Ashish Chanchal' : 'SUBJECT DOSSIER: ASHISH CHANCHAL'}
               </span>
             </div>
-            <span className="font-mono text-xs text-accentSec">NOIDA, UTTAR PRADESH, INDIA</span>
+            <span className={`font-mono text-xs ${isMinimal ? 'text-zinc-400' : 'text-accentSec'}`}>NOIDA, UTTAR PRADESH, INDIA</span>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8 space-y-4 font-mono text-xs sm:text-sm text-[#D4D4D4] leading-relaxed">
-              <h2 className="text-2xl sm:text-3xl font-heading font-black text-white uppercase tracking-tight mb-4">
-                TURNING CURIOSITY INTO <br />
-                <span className="text-accent">HIGH-THROUGHPUT REALITY.</span>
+            <div className={`lg:col-span-8 space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed ${isMinimal ? 'font-sans' : 'font-mono'}`}>
+              <h2 className={`text-2xl sm:text-3xl font-heading text-white tracking-tight mb-4 ${isMinimal ? 'font-bold' : 'font-black uppercase'}`}>
+                Turning curiosity into <br />
+                <span className="text-accent">high-throughput reality.</span>
               </h2>
 
-              <p className="border-l-2 border-accent pl-3">
+              <p className={isMinimal ? 'border-l-2 border-zinc-700 pl-3.5' : 'border-l-2 border-accent pl-3'}>
                 I am a self-taught Software Developer and AI Engineer based in Noida, Uttar Pradesh, India.
                 Over the past several years, I have architected and shipped complete web and mobile ecosystems,
                 scalable cloud-native microservices, and cutting-edge GenAI applications.
               </p>
 
-              <p className="border-l-2 border-accentSec pl-3">
+              <p className={isMinimal ? 'border-l-2 border-zinc-700 pl-3.5' : 'border-l-2 border-accentSec pl-3'}>
                 My approach to engineering is grounded in first principles: measure real-world performance,
                 keep architectures clear and resilient, and eliminate latency bottlenecks wherever they hide.
               </p>
 
-              <p className="border-l-2 border-[#00FF66] pl-3">
+              <p className={isMinimal ? 'border-l-2 border-accent/60 pl-3.5' : 'border-l-2 border-[#00FF66] pl-3'}>
                 When I’m not writing NestJS microservices or tuning LLM function calls, you’ll find me exploring
                 modern web graphics (WebGL & Three.js), participating in technical communities, or testing the latest
                 advances in distributed systems.
               </p>
 
-              <div className="pt-4 flex flex-wrap gap-4">
+              <div className="pt-4 flex flex-wrap gap-3">
                 <Button
                   text="Dispatch Message"
                   link="/contact-me"
@@ -120,28 +130,34 @@ const AboutPage: React.FC<{
             </div>
 
             {/* Quick Spec Box */}
-            <div className="lg:col-span-4 bg-[#181818] border-2 border-white p-4 shadow-brutal-sm font-mono text-xs space-y-3">
-              <div className="text-accent font-bold pb-2 border-b border-[#333]">
-                // TELEMETRY SUMMARY
+            <div
+              className={`lg:col-span-4 p-5 font-mono text-xs space-y-3 ${
+                isMinimal
+                  ? 'bg-zinc-950/60 border border-zinc-800/80 rounded-2xl'
+                  : 'bg-[#181818] border-2 border-white shadow-brutal-sm'
+              }`}
+            >
+              <div className={`text-accent font-bold pb-2 ${isMinimal ? 'border-b border-zinc-800/60' : 'border-b border-[#333]'}`}>
+                {isMinimal ? 'Telemetry Summary' : '// TELEMETRY SUMMARY'}
               </div>
               <div className="flex justify-between">
-                <span className="text-[#888888]">SPECIALTY:</span>
+                <span className="text-zinc-500">SPECIALTY:</span>
                 <span className="text-white font-bold">FULL-STACK & AI</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#888888]">BACKEND:</span>
+                <span className="text-zinc-500">BACKEND:</span>
                 <span className="text-white font-bold">NESTJS / FASTAPI / GRPC</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#888888]">FRONTEND:</span>
+                <span className="text-zinc-500">FRONTEND:</span>
                 <span className="text-white font-bold">REACT / NEXT / THREEJS</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#888888]">AI STACK:</span>
+                <span className="text-zinc-500">AI STACK:</span>
                 <span className="text-white font-bold">OPENAI / GEMINI / MNE</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#888888]">CLOUD:</span>
+                <span className="text-zinc-500">CLOUD:</span>
                 <span className="text-white font-bold">AZURE / DEVOPS / DOCKER</span>
               </div>
             </div>
@@ -150,9 +166,15 @@ const AboutPage: React.FC<{
 
         {/* Evolutionary Stages / Milestones */}
         <div className="mb-16">
-          <div className="bg-accent text-black font-heading font-black text-lg p-3 border-2 border-black shadow-[4px_4px_0px_0px_#ffffff] uppercase mb-6 flex items-center justify-between">
-            <span>■ CHRONOLOGICAL EVOLUTION STAGES</span>
-            <span className="font-mono text-xs bg-black text-accent px-2 py-0.5 border border-black font-bold">
+          <div
+            className={`p-4 mb-6 flex items-center justify-between ${
+              isMinimal
+                ? 'bg-zinc-900/60 border border-zinc-800 text-white rounded-2xl font-mono text-sm font-semibold'
+                : 'bg-accent text-black font-heading font-black text-lg border-2 border-black shadow-[4px_4px_0px_0px_#ffffff] uppercase'
+            }`}
+          >
+            <span>{isMinimal ? 'Chronological Evolution Stages' : '■ CHRONOLOGICAL EVOLUTION STAGES'}</span>
+            <span className={`font-mono text-xs px-2.5 py-0.5 font-bold ${isMinimal ? 'rounded-full bg-zinc-800 text-accent border border-zinc-700' : 'bg-black text-accent border border-black'}`}>
               4 MILESTONES
             </span>
           </div>
@@ -161,18 +183,22 @@ const AboutPage: React.FC<{
             {MILESTONES.map((m) => (
               <div
                 key={m.phase}
-                className="bg-[#121212] border-2 border-white p-5 shadow-brutal hover:shadow-brutal-accent brutal-card"
+                className={`p-5 transition-all ${
+                  isMinimal
+                    ? 'bg-zinc-900/40 border border-zinc-800/80 hover:border-zinc-700 rounded-2xl backdrop-blur-sm'
+                    : 'bg-[#121212] border-2 border-white shadow-brutal hover:shadow-brutal-accent brutal-card'
+                }`}
               >
-                <div className="flex items-center justify-between pb-2 border-b border-[#262626] mb-3 font-mono text-xs">
+                <div className={`flex items-center justify-between pb-2 mb-3 font-mono text-xs ${isMinimal ? 'border-b border-zinc-800/60' : 'border-b border-[#262626]'}`}>
                   <span className="text-accent font-bold">[{m.phase}]</span>
-                  <span className="bg-[#1f1f1f] text-accent px-2 py-0.5 border border-[#333]">
+                  <span className={`px-2 py-0.5 ${isMinimal ? 'rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700 text-[11px]' : 'bg-[#1f1f1f] text-accent border border-[#333]'}`}>
                     {m.badge}
                   </span>
                 </div>
-                <h3 className="font-heading font-black text-base text-white uppercase mb-2">
+                <h3 className={`text-base text-white mb-2 ${isMinimal ? 'font-heading font-semibold' : 'font-heading font-black uppercase'}`}>
                   {m.title}
                 </h3>
-                <p className="font-mono text-xs text-[#A3A3A3] leading-relaxed">
+                <p className={`text-xs text-zinc-400 leading-relaxed ${isMinimal ? 'font-sans' : 'font-mono'}`}>
                   {m.desc}
                 </p>
               </div>

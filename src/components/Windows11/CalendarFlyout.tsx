@@ -33,7 +33,7 @@ export const CalendarFlyout: React.FC<CalendarFlyoutProps> = ({ isOpen }) => {
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="absolute bottom-14 right-4 w-84 win11-mica rounded-xl p-5 flex flex-col gap-4 z-[9999] shadow-2xl animate-cinematic-zoom select-none text-xs"
+      className="fixed bottom-14 right-4 w-84 win11-mica rounded-2xl p-5 flex flex-col gap-4 z-[99999] shadow-2xl animate-win11-open select-none text-xs border border-white/20"
     >
       {/* Big Clock Header */}
       <div className="border-b border-white/10 pb-3">

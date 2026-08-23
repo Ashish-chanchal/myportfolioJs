@@ -541,6 +541,10 @@ export const Windows11Page: React.FC = () => {
 
   const DESKTOP_SHORTCUTS = [
     { id: 'thispc', name: 'This PC', icon: <img src={WIN11_ICONS.thisPc} alt="This PC" className="w-10 h-10 object-contain drop-shadow" /> },
+    { id: 'sociantra-dt', name: 'Sociantra.app', icon: <img src={WIN11_ICONS.sociantra} alt="Sociantra" className="w-10 h-10 object-contain drop-shadow" />, action: () => openUrlInEdge('https://sociantra.ashishchanchal.in/') },
+    { id: 'todoai-dt', name: 'TODOAI.app', icon: <img src={WIN11_ICONS.todoai} alt="TODOAI" className="w-10 h-10 object-contain drop-shadow" />, action: () => openUrlInEdge('https://todoai.ashishchanchal.in/') },
+    { id: 'vibepulse-dt', name: 'VibePulse.app', icon: <img src={WIN11_ICONS.vibepulse} alt="VibePulse" className="w-10 h-10 object-contain drop-shadow" />, action: () => openUrlInEdge('https://vibepluse.ashishchanchal.in/') },
+    { id: 'cineverse-dt', name: 'CineVerse.app', icon: <img src={WIN11_ICONS.cineverse} alt="CineVerse" className="w-10 h-10 object-contain drop-shadow" />, action: () => openUrlInEdge('https://cineverse.ashishchanchal.in/') },
     { id: 'copilot', name: 'Copilot AI Assistant', icon: <img src={WIN11_ICONS.copilot} alt="Copilot" className="w-10 h-10 object-contain drop-shadow" /> },
     { id: 'explorer', name: 'Projects Explorer', icon: <img src={WIN11_ICONS.explorer} alt="Explorer" className="w-10 h-10 object-contain drop-shadow" /> },
     { id: 'terminal', name: 'PowerShell Terminal', icon: <img src={WIN11_ICONS.terminal} alt="PowerShell" className="w-10 h-10 object-contain drop-shadow" /> },

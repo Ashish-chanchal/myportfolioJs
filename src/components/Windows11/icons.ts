@@ -30,6 +30,14 @@ import instagramIcon from '../../assets/win11/instagram.png';
 import cameraIcon from '../../assets/win11/camera.png';
 import xboxIcon from '../../assets/win11/xbox.png';
 
+// Project Icons
+import sociantraProj from '../../assets/projects/sociantra.png';
+import todoaiProj from '../../assets/projects/todoai.png';
+import vibepulseProj from '../../assets/projects/vibepulse.png';
+import cineverseProj from '../../assets/projects/cineverse.png';
+import sixteenProj from '../../assets/projects/sixteenclothing.png';
+import estypeProj from '../../assets/projects/estypeshop.png';
+
 // Wallpapers
 import bloomDarkWp from '../../assets/win11/wallpapers/bloom_dark.jpg';
 import bloomLightWp from '../../assets/win11/wallpapers/bloom_light.jpg';
@@ -73,6 +81,12 @@ export const WIN11_ICONS = {
   instagram: instagramIcon,
   camera: cameraIcon,
   xbox: xboxIcon,
+  sociantra: sociantraProj,
+  todoai: todoaiProj,
+  vibepulse: vibepulseProj,
+  cineverse: cineverseProj,
+  sixteen: sixteenProj,
+  estype: estypeProj,
 };
 
 export const OFFICIAL_WALLPAPERS = [

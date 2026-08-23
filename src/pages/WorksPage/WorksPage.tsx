@@ -222,6 +222,8 @@ const WorksPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { designMode } = useTheme();
   const isMinimal = designMode === 'minimalist';
+  const isBento = designMode === 'bento';
+  const isEditorial = designMode === 'editorial';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -257,7 +259,11 @@ const WorksPage: React.FC = () => {
         {/* Filter and Search Controls Bar */}
         <div
           className={`p-4 mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 transition-all ${
-            isMinimal
+            isEditorial
+              ? 'bg-[#0e0e12] border border-white/15 rounded-md'
+              : isBento
+              ? 'bento-tile'
+              : isMinimal
               ? 'bg-zinc-900/40 border border-zinc-800/80 rounded-2xl backdrop-blur-md shadow-lg'
               : 'bg-[#121212] border-2 border-white shadow-brutal'
           }`}
@@ -268,14 +274,26 @@ const WorksPage: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedFilter(cat.id)}
-                className={`font-mono text-xs transition-all brutal-btn ${
-                  isMinimal
-                    ? `px-3.5 py-1.5 rounded-full font-medium ${
+                className={`text-xs transition-all ${
+                  isEditorial
+                    ? `px-3.5 py-1.5 rounded font-serif italic text-xs tracking-wider ${
+                        selectedFilter === cat.id
+                          ? 'bg-accent text-black font-bold not-italic'
+                          : 'bg-white/5 text-zinc-400 border border-white/10 hover:text-white hover:bg-white/10'
+                      }`
+                    : isBento
+                    ? `font-mono px-3.5 py-1.5 rounded-full font-semibold ${
+                        selectedFilter === cat.id
+                          ? 'bg-accent text-black shadow-md shadow-accent/20'
+                          : 'bg-white/5 text-zinc-400 border border-white/10 hover:text-white hover:bg-white/10'
+                      }`
+                    : isMinimal
+                    ? `font-mono px-3.5 py-1.5 rounded-full font-medium ${
                         selectedFilter === cat.id
                           ? 'bg-accent text-black font-bold'
                           : 'bg-zinc-950 text-zinc-400 border border-zinc-800 hover:text-white hover:border-zinc-600'
                       }`
-                    : `px-3 py-1.5 border-2 font-bold ${
+                    : `font-mono px-3 py-1.5 border-2 font-bold brutal-btn ${
                         selectedFilter === cat.id
                           ? 'bg-accent text-black border-black shadow-[2px_2px_0px_0px_#ffffff]'
                           : 'bg-[#181818] text-white border-[#333333] hover:border-white hover:bg-[#202020]'
@@ -291,13 +309,17 @@ const WorksPage: React.FC = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="SEARCH BY TECH OR TITLE..."
+              placeholder={isEditorial ? 'Search catalog artifacts...' : 'SEARCH BY TECH OR TITLE...'}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`font-mono text-xs px-3.5 py-2 w-full md:w-64 focus:outline-none placeholder:text-zinc-600 ${
-                isMinimal
-                  ? 'bg-zinc-950/80 border border-zinc-800 rounded-xl text-white focus:border-accent'
-                  : 'bg-[#0a0a0a] border-2 border-white text-white focus:border-accent'
+              className={`text-xs px-3.5 py-2 w-full md:w-64 focus:outline-none placeholder:text-zinc-600 ${
+                isEditorial
+                  ? 'bg-[#141418] border border-white/10 rounded text-white focus:border-accent font-serif italic'
+                  : isBento
+                  ? 'font-mono bg-black/40 border border-white/10 rounded-full text-white focus:border-accent'
+                  : isMinimal
+                  ? 'font-mono bg-zinc-950/80 border border-zinc-800 rounded-xl text-white focus:border-accent'
+                  : 'font-mono bg-[#0a0a0a] border-2 border-white text-white focus:border-accent'
               }`}
             />
             {searchQuery && (
@@ -312,7 +334,7 @@ const WorksPage: React.FC = () => {
         </div>
 
         {/* Results Counter */}
-        <div className={`flex items-center justify-between font-mono text-xs mb-6 pb-2 ${isMinimal ? 'border-b border-zinc-800/60 text-zinc-500' : 'border-b border-[#262626] text-[#888888]'}`}>
+        <div className={`flex items-center justify-between font-mono text-xs mb-6 pb-2 ${isBento ? 'border-b border-white/10 text-zinc-400' : isMinimal ? 'border-b border-zinc-800/60 text-zinc-500' : 'border-b border-[#262626] text-[#888888]'}`}>
           <span>SHOWING {filteredProjects.length} OF {AllProjects.length} ARTIFACTS</span>
           <span className="text-accent font-bold">SYSTEM_QUERY: OK</span>
         </div>
@@ -338,7 +360,9 @@ const WorksPage: React.FC = () => {
         ) : (
           <div
             className={`p-8 text-center my-8 ${
-              isMinimal
+              isBento
+                ? 'bento-tile'
+                : isMinimal
                 ? 'rounded-2xl bg-zinc-900/40 border border-zinc-800'
                 : 'bg-[#121212] border-2 border-white shadow-brutal'
             }`}

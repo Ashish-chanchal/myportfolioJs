@@ -8,23 +8,23 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ size = 'md', className = '', showText = true }) => {
   const sizeMap = {
-    sm: 'w-7 h-7 text-xs',
-    md: 'w-9 h-9 text-sm',
-    lg: 'w-11 h-11 text-base',
+    sm: 'w-11 h-11 text-base',
+    md: 'w-14 h-14 text-lg',
+    lg: 'w-16 h-16 text-xl',
   };
 
   return (
     <div className={`flex items-center gap-3 group cursor-pointer ${className}`}>
-      {/* Crisp Monogram Icon Badge */}
+      {/* Monogram Icon Badge */}
       <div className={`relative ${sizeMap[size]} flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105`}>
         {/* Soft Ambient Glow */}
-        <div className="absolute inset-0 bg-accent/20 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
-        {/* Modern Glassmorphic Container */}
-        <div className="w-full h-full rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center relative z-10 shadow-lg shadow-black/60 overflow-hidden">
-          {/* Subtle Corner Accent Light */}
-          <div className="absolute -top-3 -right-3 w-6 h-6 bg-accent/30 rounded-full blur-sm pointer-events-none" />
-          
+        <div className="absolute inset-0 bg-accent/25 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Borderless Transparent Container */}
+        <div className="w-full h-full rounded-2xl flex items-center justify-center relative z-10 overflow-hidden">
+          {/* Corner Accent Light */}
+          <div className="absolute -top-3 -right-3 w-8 h-8 bg-accent/20 rounded-full blur-md pointer-events-none" />
+
           {/* Typographic Monogram */}
           <div className="font-heading font-black tracking-tighter flex items-center select-none">
             <span className="text-accent font-extrabold">A</span>

@@ -22,6 +22,8 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { designMode } = useTheme();
   const isMinimal = designMode === 'minimalist';
+  const isBento = designMode === 'bento';
+  const isEditorial = designMode === 'editorial';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -30,13 +32,32 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isMinimal
+        isEditorial
+          ? 'bg-[#09090b]/95 border-b border-white/15 backdrop-blur-xl'
+          : isBento
+          ? 'bg-zinc-950/70 border-b border-white/8 backdrop-blur-2xl'
+          : isMinimal
           ? 'bg-zinc-950/80 border-b border-zinc-800/80 backdrop-blur-md'
           : 'bg-[#0a0a0a] border-b-2 border-white'
       }`}
     >
+      {/* Editorial Top Masthead Dateline */}
+      {isEditorial && (
+        <div className="bg-[#0e0e12] border-b border-white/10 px-4 py-1 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+          <div className="flex items-center gap-2">
+            <span className="text-accent font-serif italic text-xs">The Engineering Gazette</span>
+            <span className="text-zinc-600">//</span>
+            <span>VOL. XXIV · NO. 01</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-4 text-zinc-400">
+            <span>NOIDA // NEW DELHI // GLOBAL DISPATCH</span>
+            <span className="text-accent font-semibold">ISSUE: 2026 EDITION</span>
+          </div>
+        </div>
+      )}
+
       {/* Brutalist Top Terminal Bar (only in brutalist mode) */}
-      {!isMinimal && (
+      {!isMinimal && !isBento && !isEditorial && (
         <div className="bg-[#141414] border-b border-[#262626] px-4 py-1 flex items-center justify-between text-[11px] font-mono text-[#888888]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#00FF66] inline-block animate-pulse"></span>
@@ -63,7 +84,13 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
         {/* Desktop Navigation Links */}
         <div
           className={`hidden lg:flex items-center gap-1.5 ${
-            isMinimal ? 'bg-zinc-900/80 p-1.5 rounded-full border border-zinc-800/80' : ''
+            isEditorial
+              ? 'px-3 py-1 border-x border-white/10 space-x-1'
+              : isBento
+              ? 'bg-white/5 p-1.5 rounded-full border border-white/10 backdrop-blur-md'
+              : isMinimal
+              ? 'bg-zinc-900/80 p-1.5 rounded-full border border-zinc-800/80'
+              : ''
           }`}
         >
           {NavItems.map((item) => {
@@ -74,7 +101,19 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
                 to={item.link}
                 onClick={() => setSelectedItem(item.id)}
                 className={`transition-all ${
-                  isMinimal
+                  isEditorial
+                    ? `px-3.5 py-1.5 text-xs tracking-wider uppercase transition-all ${
+                        isActive
+                          ? 'text-white font-serif font-bold italic border-b-2 border-accent pb-1'
+                          : 'text-zinc-400 hover:text-white hover:border-b-2 hover:border-zinc-500 pb-1 font-serif'
+                      }`
+                    : isBento
+                    ? `font-mono text-xs px-4 py-1.5 rounded-full transition-all ${
+                        isActive
+                          ? 'bg-white/15 text-white font-bold border border-white/20 shadow-sm backdrop-blur-sm'
+                          : 'text-zinc-300 hover:text-white hover:bg-white/10'
+                      }`
+                    : isMinimal
                     ? `font-mono text-xs px-4 py-1.5 rounded-full transition-all ${
                         isActive
                           ? 'bg-zinc-800 text-white font-bold border border-zinc-700 shadow-sm'
@@ -87,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
                       }`
                 }`}
               >
-                {!isMinimal && <span className="text-[#888888] mr-1">[{item.code}]</span>}
+                {!isMinimal && !isBento && !isEditorial && <span className="text-[#888888] mr-1">[{item.code}]</span>}
                 <span>{item.name}</span>
               </Link>
             );
@@ -100,7 +139,11 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
 
           <div
             className={`flex items-center gap-1 ${
-              isMinimal
+              isEditorial
+                ? 'p-1 border border-white/10 rounded-md bg-white/3'
+                : isBento
+                ? 'bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md'
+                : isMinimal
                 ? 'bg-zinc-900/80 p-1 rounded-full border border-zinc-800'
                 : 'bg-[#141414] p-1 border border-[#333]'
             }`}
@@ -110,7 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
               target="_blank"
               rel="noopener noreferrer"
               className={`p-1.5 text-zinc-300 hover:text-white transition-colors ${
-                isMinimal ? 'rounded-full hover:bg-zinc-800' : 'hover:text-accent'
+                isBento || isMinimal ? 'rounded-full hover:bg-white/10' : isEditorial ? 'hover:text-accent' : 'hover:text-accent'
               }`}
               title="LinkedIn"
             >
@@ -121,7 +164,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
               target="_blank"
               rel="noopener noreferrer"
               className={`p-1.5 text-zinc-300 hover:text-white transition-colors ${
-                isMinimal ? 'rounded-full hover:bg-zinc-800' : 'hover:text-accent'
+                isBento || isMinimal ? 'rounded-full hover:bg-white/10' : isEditorial ? 'hover:text-accent' : 'hover:text-accent'
               }`}
               title="GitHub"
             >
@@ -132,7 +175,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
               target="_blank"
               rel="noopener noreferrer"
               className={`p-1.5 text-zinc-300 hover:text-white transition-colors ${
-                isMinimal ? 'rounded-full hover:bg-zinc-800' : 'hover:text-accentSec'
+                isBento || isMinimal ? 'rounded-full hover:bg-white/10' : isEditorial ? 'hover:text-accentSec' : 'hover:text-accentSec'
               }`}
               title="Instagram"
             >
@@ -143,7 +186,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
           <Button
             text="Get CV"
             link="https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link"
-            variant="cyan"
+            variant={isEditorial ? 'white' : 'cyan'}
             size="sm"
             external
           />
@@ -162,11 +205,15 @@ const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
           <button
             onClick={toggleMenu}
             className={`p-2 text-white font-mono text-xs font-bold transition-all ${
-              isMinimal
-                ? 'rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800'
-                : 'bg-[#181818] border-2 border-white shadow-brutal-accent active:translate-x-[1px] active:translate-y-[1px]'
+              isEditorial
+                ? 'rounded-md border border-zinc-700 bg-zinc-900'
+                : isMinimal
+                ? 'rounded-full border border-zinc-800 bg-zinc-900'
+                : isBento
+                ? 'rounded-full border border-white/10 bg-white/5 backdrop-blur-md'
+                : 'border-2 border-white bg-[#141414]'
             }`}
-            aria-label="Toggle Navigation Menu"
+            aria-label="Toggle navigation menu"
           >
             {isOpen ? '✕' : '☰'}
           </button>

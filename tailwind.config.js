@@ -24,6 +24,8 @@ export default {
         mono: ['"JetBrains Mono"', '"Space Mono"', "monospace"],
         heading: ['"Space Grotesk"', "sans-serif"],
         sans: ['"Space Grotesk"', "sans-serif"],
+        serif: ['"Playfair Display"', '"Instrument Serif"', "Georgia", "serif"],
+        editorial: ['"Playfair Display"', '"Instrument Serif"', "Georgia", "serif"],
       },
       boxShadow: {
         'brutal-sm': '2px 2px 0px 0px #ffffff',

@@ -7,6 +7,8 @@ import Logo from '../shared/Logo';
 const Footer: React.FC = () => {
   const { designMode } = useTheme();
   const isMinimal = designMode === 'minimalist';
+  const isBento = designMode === 'bento';
+  const isEditorial = designMode === 'editorial';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -15,12 +17,18 @@ const Footer: React.FC = () => {
   return (
     <footer
       className={`pt-12 pb-8 text-white relative transition-all ${
-        isMinimal ? 'bg-zinc-950 border-t border-zinc-800/80' : 'bg-[#0a0a0a] border-t-2 border-white'
+        isEditorial
+          ? 'bg-[#09090b] border-t border-white/15'
+          : isBento
+          ? 'bg-zinc-950/80 border-t border-white/8 backdrop-blur-xl'
+          : isMinimal
+          ? 'bg-zinc-950 border-t border-zinc-800/80'
+          : 'bg-[#0a0a0a] border-t-2 border-white'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4">
         {/* Main Footer Grid */}
-        <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 ${isMinimal ? 'border-b border-zinc-800/60' : 'border-b-2 border-[#262626]'}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 ${isEditorial ? 'border-b border-white/10' : isBento ? 'border-b border-white/8' : isMinimal ? 'border-b border-zinc-800/60' : 'border-b-2 border-[#262626]'}`}>
           {/* Brand & Mission (5 cols) */}
           <div className="md:col-span-5 space-y-4">
             <Link to="/" onClick={scrollToTop}>
@@ -39,7 +47,7 @@ const Footer: React.FC = () => {
           {/* Quick Navigation (4 cols) */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="font-mono font-bold text-xs text-accent uppercase tracking-wider">
-              {isMinimal ? 'Navigation' : '// ARCHIVE WAYPOINTS'}
+              {isBento ? 'Navigate' : isMinimal ? 'Navigation' : '// ARCHIVE WAYPOINTS'}
             </h4>
             <ul className="space-y-2 font-mono text-xs">
               <li>
@@ -74,7 +82,7 @@ const Footer: React.FC = () => {
           <div className="md:col-span-3 space-y-4 flex flex-col justify-between">
             <div>
               <h4 className="font-mono font-bold text-xs text-accent uppercase tracking-wider mb-3">
-                {isMinimal ? 'Connect' : '// MEDIA BEACONS'}
+                {isBento ? 'Socials' : isMinimal ? 'Connect' : '// MEDIA BEACONS'}
               </h4>
               <div className="flex gap-2">
                 <a
@@ -82,7 +90,9 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`p-2.5 transition-all brutal-btn ${
-                    isMinimal
+                    isBento
+                      ? 'rounded-full bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white'
+                      : isMinimal
                       ? 'rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-white'
                       : 'bg-[#181818] border border-white text-white hover:bg-accent hover:text-black'
                   }`}
@@ -95,7 +105,9 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`p-2.5 transition-all brutal-btn ${
-                    isMinimal
+                    isBento
+                      ? 'rounded-full bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white'
+                      : isMinimal
                       ? 'rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-white'
                       : 'bg-[#181818] border border-white text-white hover:bg-accent hover:text-black'
                   }`}
@@ -121,7 +133,9 @@ const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`p-2.5 transition-all brutal-btn ${
-                    isMinimal
+                    isBento
+                      ? 'rounded-full bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white'
+                      : isMinimal
                       ? 'rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-white'
                       : 'bg-[#181818] border border-white text-white hover:bg-accentSec hover:text-black'
                   }`}
@@ -136,12 +150,14 @@ const Footer: React.FC = () => {
             <button
               onClick={scrollToTop}
               className={`px-3 py-2 flex items-center justify-between transition-all font-mono text-xs font-bold brutal-btn ${
-                isMinimal
+                isBento
+                  ? 'rounded-2xl bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white'
+                  : isMinimal
                   ? 'rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-white'
                   : 'bg-[#181818] border-2 border-white text-white hover:bg-accent hover:text-black shadow-brutal-sm'
               }`}
             >
-              <span>{isMinimal ? 'Back to top' : 'WARP TO TOP'}</span>
+              <span>{isBento ? 'Back to top' : isMinimal ? 'Back to top' : 'WARP TO TOP'}</span>
               <FaArrowUp className="w-3 h-3 ml-2" />
             </button>
           </div>

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
 
-export type DesignMode = 'brutalist' | 'minimalist';
+export type DesignMode = 'brutalist' | 'minimalist' | 'bento' | 'editorial';
 
 export interface ThemeConfig {
   id: string;
@@ -105,7 +105,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [designMode, setDesignModeState] = useState<DesignMode>(() => {
     try {
       const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
-      return savedMode === 'brutalist' || savedMode === 'minimalist' ? savedMode : 'minimalist';
+      return savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial'
+        ? (savedMode as DesignMode)
+        : 'minimalist';
     } catch {
       return 'minimalist';
     }
@@ -147,8 +149,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  // Cycle: minimalist → brutalist → bento → editorial → minimalist
   const toggleDesignMode = () => {
-    setDesignMode(designMode === 'minimalist' ? 'brutalist' : 'minimalist');
+    const cycle: DesignMode[] = ['minimalist', 'brutalist', 'bento', 'editorial'];
+    const nextIndex = (cycle.indexOf(designMode) + 1) % cycle.length;
+    setDesignMode(cycle[nextIndex]);
   };
 
   return (

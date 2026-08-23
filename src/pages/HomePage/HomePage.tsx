@@ -155,7 +155,7 @@ const ExperienceData = [
   {
     id: 1,
     tech: 'STUDIO SONRAI',
-    title: 'SOFTWARE DEVELOPER | MAY 2025 – PRESENT',
+    title: 'SOFTWARE DEVELOPER | SEP 2025 – PRESENT',
     period: 'MAY 2025 – PRESENT',
     location: 'Noida, Uttar Pradesh, India',
     type: 'Industry' as const,
@@ -170,7 +170,7 @@ const ExperienceData = [
   {
     id: 2,
     tech: 'ALPHADROID / HEYALPHA',
-    title: 'AI ENGINEER | NOV 2024 – MAY 2025',
+    title: 'SOFTWARE ENGINEER | NOV 2024 – SEP 2025',
     period: 'NOV 2024 – MAY 2025',
     location: 'Noida, Uttar Pradesh, India',
     type: 'Industry' as const,
@@ -194,7 +194,6 @@ const ExperienceData = [
       'Engineered machine learning models (Random Forest, Decision Tree) achieving up to 88.89% detection accuracy on neural datasets',
       'Utilized Python MNE library for sophisticated signal processing, filtering noise artifacts and extracting temporal EEG features',
     ],
-    link: 'https://drdo.gov.in/drdo/labs-and-establishments/institute-nuclear-medicine-allied-sciences-inmas',
   },
 ];
 

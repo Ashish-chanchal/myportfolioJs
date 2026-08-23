@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaArrowRight, FaLock, FaWifi, FaBatteryFull, FaVolumeUp } from 'react-icons/fa';
 import heromainImg from '../../assets/hero/heromain.webp';
 
@@ -35,28 +35,47 @@ export const LockScreen: React.FC<LockScreenProps> = ({ wallpaper, onLogin }) =>
 
         gain.gain.setValueAtTime(0, ctx.currentTime + idx * 0.08);
         gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + idx * 0.08 + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.08 + 1.6);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.08 + 1.2);
 
         osc.connect(gain);
         gain.connect(ctx.destination);
 
         osc.start(ctx.currentTime + idx * 0.08);
-        osc.stop(ctx.currentTime + idx * 0.08 + 1.8);
+        osc.stop(ctx.currentTime + idx * 0.08 + 1.4);
       });
     } catch {
       // Audio context might be restricted before interaction
     }
   };
 
-  const handleSignIn = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    setIsLoggingIn(true);
-    playWin11StartupSound();
+  const handleSignIn = useCallback(
+    (e?: React.FormEvent) => {
+      if (e) e.preventDefault();
+      if (isLoggingIn) return;
+      setIsLoggingIn(true);
+      playWin11StartupSound();
 
-    setTimeout(() => {
-      onLogin();
-    }, 1200);
-  };
+      setTimeout(() => {
+        onLogin();
+      }, 400);
+    },
+    [isLoggingIn, onLogin]
+  );
+
+  // Global Keydown Listener for intuitive keyboard unlock
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isUnlockedView) {
+        setIsUnlockedView(true);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSignIn();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isUnlockedView, handleSignIn]);
 
   const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   const dateString = currentTime.toLocaleDateString('en-US', {
@@ -79,14 +98,14 @@ export const LockScreen: React.FC<LockScreenProps> = ({ wallpaper, onLogin }) =>
     >
       {/* Backdrop blur overlay on lock screen */}
       <div
-        className={`absolute inset-0 transition-all duration-700 ${
-          isUnlockedView ? 'bg-black/50 backdrop-blur-2xl' : 'bg-black/20 backdrop-blur-none'
+        className={`absolute inset-0 transition-all duration-300 pointer-events-none ${
+          isUnlockedView ? 'bg-black/50 backdrop-blur-xl' : 'bg-black/20'
         }`}
       />
 
       {/* Top Lock Screen Clock View (Before sliding up / clicking) */}
       {!isUnlockedView ? (
-        <div className="relative z-10 flex-1 flex flex-col justify-between items-center py-16 animate-fadeIn">
+        <div className="relative z-10 flex-1 flex flex-col justify-between items-center py-16 animate-fadeIn cursor-pointer">
           {/* Big Windows 11 Lock Clock */}
           <div className="flex flex-col items-center gap-1 mt-6">
             <h1 className="text-7xl sm:text-8xl font-light tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] font-sans">
@@ -101,16 +120,19 @@ export const LockScreen: React.FC<LockScreenProps> = ({ wallpaper, onLogin }) =>
           <div className="flex flex-col items-center gap-3">
             <div className="px-5 py-2 rounded-full win11-mica text-xs text-white/90 border border-white/10 flex items-center gap-2 shadow-lg animate-bounce">
               <FaLock className="w-3 h-3 text-blue-400" />
-              <span>Click anywhere or press Enter to Sign In</span>
+              <span>Click anywhere or press any key to unlock</span>
             </div>
           </div>
         </div>
       ) : (
         /* Windows 11 Login / PIN Form View */
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-6 animate-cinematic-zoom">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative z-10 flex-1 flex flex-col items-center justify-center p-6 animate-win11-open"
+        >
           <div className="flex flex-col items-center gap-5 max-w-sm w-full text-center">
             {/* User Profile Avatar */}
-            <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-white/30 shadow-2xl bg-black">
+            <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-white/30 shadow-2xl bg-black flex-shrink-0">
               <img src={heromainImg} alt="Ashish Chanchal" className="w-full h-full object-cover" />
             </div>
 
@@ -139,7 +161,7 @@ export const LockScreen: React.FC<LockScreenProps> = ({ wallpaper, onLogin }) =>
                   />
                   <button
                     type="submit"
-                    className="absolute right-1 p-2 rounded bg-blue-600 hover:bg-blue-500 text-white transition-all shadow"
+                    className="absolute right-1 p-2 rounded bg-blue-600 hover:bg-blue-500 text-white transition-all shadow cursor-pointer"
                     title="Sign In"
                   >
                     <FaArrowRight className="w-3.5 h-3.5" />
@@ -147,20 +169,20 @@ export const LockScreen: React.FC<LockScreenProps> = ({ wallpaper, onLogin }) =>
                 </div>
 
                 <div className="text-[11px] text-zinc-400 bg-white/5 border border-white/10 rounded-md py-1.5 px-3">
-                  💡 Type any PIN / password or click Sign In to unlock
+                  💡 Type any PIN / password or press Enter to unlock
                 </div>
 
                 <div className="flex justify-center gap-3 text-xs pt-1">
                   <button
                     type="submit"
-                    className="px-6 py-2 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg transition-all"
+                    className="px-6 py-2 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg transition-all cursor-pointer"
                   >
                     Sign In
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsUnlockedView(false)}
-                    className="px-4 py-2 rounded-md win11-mica hover:bg-white/10 text-zinc-300 transition-all text-xs"
+                    className="px-4 py-2 rounded-md win11-mica hover:bg-white/10 text-zinc-300 transition-all text-xs cursor-pointer"
                   >
                     Lock
                   </button>

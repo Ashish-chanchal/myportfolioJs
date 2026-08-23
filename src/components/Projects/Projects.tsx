@@ -1,12 +1,9 @@
-import rectangle from "../../assets/common/rectangle.png";
-import dots from "../../assets/common/dots.png";
+import React from 'react';
+import ProjectCard from '../shared/Card';
+import Heading from '../shared/Heading';
+import Button from '../shared/Button';
 
-import ProjectCard from "../shared/Card";
-import Heading from "../shared/Heading";
-
-import { motion } from "framer-motion";
-import Button from "../shared/Button";
-interface ProjectDataProps {
+export interface ProjectDataProps {
   id: number;
   title: string;
   image?: string;
@@ -14,88 +11,72 @@ interface ProjectDataProps {
   description: string[];
   link?: string;
   livelink?: string;
-}[];
+  category?: string;
+  team?: {
+    name: string;
+    link: string;
+  };
+}
 
+interface ProjectsProps {
+  ProjectsData: ProjectDataProps[];
+  heading: string;
+  setSelectedItem?: React.Dispatch<React.SetStateAction<number>>;
+  waypointIndex?: string;
+  tag?: string;
+}
 
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3, // Stagger the appearance of children (ProjectCards)
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.8, y: 50 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-  hover: { scale: 1.05, transition: { duration: 0.3 } },
-};
-
-const backgroundVariants = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 1 } },
-};
-
-const Projects = ({ProjectsData,heading,setSelectedItem}:{ProjectsData:ProjectDataProps[],heading:string,setSelectedItem?: React.Dispatch<React.SetStateAction<number>>}) => {
+const Projects: React.FC<ProjectsProps> = ({
+  ProjectsData,
+  heading,
+  setSelectedItem,
+  waypointIndex,
+  tag,
+}) => {
   return (
-    <motion.div
-      className="text-4xl md:py-20 py-16 relative"
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-    >
-      <div className="max-w-7xl mx-auto p-4">
-        <div className="flex justify-between">
-        <Heading text={heading}  />
-        {setSelectedItem&&<Button text="View All ~~>" link="/works" setSelectedItem={setSelectedItem} id={1}/>}
+    <section id="projects" className="py-16 md:py-20 relative bg-brutal-grid">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Section Header with View Archive Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-2">
+          <Heading
+            text={heading}
+            tag={tag || '// PRODUCTION BUILDS & SYSTEMS'}
+            index={waypointIndex || 'WAYPOINT_02'}
+          />
+
+          {setSelectedItem && (
+            <div className="self-start sm:self-auto mb-6 sm:mb-0">
+              <Button
+                text="All Artifacts Archive"
+                link="/works"
+                setSelectedItem={setSelectedItem}
+                id={1}
+                variant="accent"
+                size="sm"
+              />
+            </div>
+          )}
         </div>
 
         {/* Project Cards Grid */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-10 mt-10 text-white"
-          variants={containerVariants} // Apply staggered animation to the grid
-        >
-          {ProjectsData.map((data) => (
-            <motion.div
-              variants={cardVariants}
-              whileHover="hover"
-              key={data.id}
-            >
-              <ProjectCard
-              title={data.title}
-                img={data.image}
-                tech={data.tech}
-                link={data.link}
-                liveLink={data.livelink}
-                description={data.description}
-              />
-            </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-6">
+          {ProjectsData.map((project) => (
+            <ProjectCard
+              key={project.id}
+              id={project.id}
+              title={project.title}
+              img={project.image}
+              tech={project.tech}
+              link={project.link}
+              liveLink={project.livelink}
+              description={project.description}
+              categoryBadge={project.category}
+              team={project.team}
+            />
           ))}
-        </motion.div>
+        </div>
       </div>
-
-      {/* Background Elements */}
-      <motion.img
-        src={dots}
-        alt=""
-        className="md:block hidden absolute left-0 top-1/3"
-        variants={backgroundVariants}
-      />
-      <motion.img
-        src={rectangle}
-        alt=""
-        className="md:block hidden absolute right-0 top-1/2"
-        variants={backgroundVariants}
-      />
-    </motion.div>
+    </section>
   );
 };
 

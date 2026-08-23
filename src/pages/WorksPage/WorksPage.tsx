@@ -1,158 +1,300 @@
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import HeadingSec from "../../components/shared/HeadingSec";
-import Projects from "../../components/Projects/Projects";
+import HeadingSec from '../../components/shared/HeadingSec';
+import ProjectCard from '../../components/shared/Card';
+import todoaiImg from '../../assets/projects/todoai.png';
+import sociantraImg from '../../assets/projects/sociantra.png';
+import vibepulseImg from '../../assets/projects/vibepulse.png';
+import sixteenImg from '../../assets/projects/sixteenclothing.png';
 
-const ProjectsData = [
+const AllProjects = [
+  {
+    id: 0,
+    title: 'TodoAI // Native MCP Workspace & Task Agent',
+    image: todoaiImg,
+    tech: 'Next.js · Model Context Protocol (MCP) · Gemini Flash · TypeScript · MongoDB',
+    description: [
+      'Engineered an autonomous task management workspace built on Model Context Protocol (MCP), allowing external AI agents (Claude, Cursor) to inspect, create, and complete tasks natively',
+      'Integrated Gemini Cognition Core to extract tasks from conversational chat feeds, emails, and Slack commitment sentences (e.g. "I will fix the timeout before Friday")',
+      'Architected Energy-Aware scheduling negotiation, conflict guards, dynamic webhooks, and live iCal (.ics) calendar synchronization',
+    ],
+    livelink: 'https://todoai.ashishchanchal.in/',
+    category: 'AI Infrastructure & MCP',
+    type: 'ai',
+  },
   {
     id: 1,
-    title: "Parkinson Disease Detection",
-    tech: "Python ML MNE EEG",
+    title: 'Sociantra // AI Social AutoPilot',
+    image: sociantraImg,
+    tech: 'Next.js · React · AI Content Engine · TypeScript · Tailwind CSS',
     description: [
-      "Engineered predictive models using Random Forest and Decision Tree reaching 88.89% detection accuracy",
-      "Processed high-density EEG data with Python's MNE library for signal denoising and feature extraction",
+      'Engineered an autonomous LinkedIn brand automation engine generating high-signal posts, carousel decks, and scheduled cadences',
+      'Built a strict Human-in-the-Loop approval gate allowing creators to review, edit, and fine-tune AI drafts before broadcasting',
+      'Architected live post queuing, interactive Studio Engine, and multi-channel scheduling analytics',
     ],
-    link: "https://github.com/Ashish-chanchal/Parkinson-Disease-Detection",
+    livelink: 'https://sociantra.ashishchanchal.in/',
+    category: 'AI SaaS & Automation',
+    type: 'ai',
+    team: {
+      name: 'Ashwin',
+      link: 'https://www.hi-ashwin.xyz/',
+    },
   },
   {
     id: 2,
-    title: "Words that Sparkle",
-    tech: "React and FreeAPI",
+    title: 'Conversational AI Appointment Booking',
+    tech: 'React · NestJS · gRPC · Sockets · OpenAI Assistant API',
     description: [
-      "Vibrant motivational platform integrating real-time quotes via FreeAPI with optimized React state management",
+      'Engineered an end-to-end AI appointment booking system with real-time voice and text interaction capabilities',
+      'Implemented high-performance conversation microservice using Socket.io and OpenAI Assistant API with function calling',
+      'Architected a robust gRPC-based backend for multi-channel communication between distributed services',
+      'Developed responsive React frontend for user registration, indoor navigation, and automated booking flows',
     ],
-    livelink: "https://quotes-sparkle.netlify.app/",
-    link: "https://github.com/Ashish-chanchal/words-sparkle-react",
+    category: 'AI & Microservices',
+    type: 'ai',
   },
   {
     id: 3,
-    title: "Music Player",
-    tech: "HTML CSS JavaScript",
+    title: 'Parkinson Disease Detection',
+    tech: 'Python · ML · MNE · EEG Signal Analysis',
     description: [
-      "Feature-rich music player with dynamic progress tracking, volume control, and minimalist UI",
+      'Spearheaded comprehensive analysis of EEG data to uncover key patterns in brain activity for early disease detection',
+      'Engineered and evaluated predictive models (Random Forest, Decision Tree) achieving up to 88.89% detection accuracy',
+      'Utilized Python MNE library for sophisticated signal processing and temporal feature extraction from complex neural data',
     ],
-    link: "https://github.com/Ashish-chanchal/music_player",
-    livelink: "https://ashish-chanchal.github.io/music_player/",
+    link: 'https://github.com/Ashish-chanchal/Parkinson-Disease-Detection',
+    category: 'Machine Learning',
+    type: 'ai',
   },
   {
     id: 4,
-    title: "Weather App",
-    tech: "Flutter and OpenWeatherMap API",
+    title: 'CareLink (PDMS)',
+    image:
+      'https://github.com/Ashish-chanchal/pdms_college/assets/86229520/6deaf936-3c8c-4319-8c2d-c8a1430e0275',
+    tech: 'Dart · Flutter · Firebase · GetX',
     description: [
-      "Location-aware weather forecasting application with real-time API integration and GetX state management",
+      'Constructed an innovative patient-doctor connection app facilitating seamless appointment booking and digital prescription management',
+      'Optimized UX with advanced heat mapping, navigation pathways, and GetX reactive architecture',
+      'Implemented secure authentication and real-time database synchronization using Firebase',
     ],
-    link: "https://github.com/Ashish-chanchal/weather_app",
+    link: 'https://github.com/Ashish-chanchal/pdms_college',
+    category: 'Mobile & Cloud',
+    type: 'mobile',
   },
   {
     id: 5,
-    title: "ChatBot",
-    tech: "HTML CSS JavaScript",
+    title: 'Rent-Up',
+    tech: 'React · Material UI · REST API',
+    image:
+      'https://github.com/user-attachments/assets/cd972e1d-816f-4140-9a19-00a154eb16bc',
     description: [
-      "Rule-based intelligent assistant providing instant responses to common technical queries",
+      'Full-featured real estate portal with intelligent property filtering, subscription tiers, and responsive design',
+      'Built reusable frontend UI components and structured state management for fast browsing',
     ],
-    link: "https://github.com/Ashish-chanchal/chatbot",
-    livelink: "https://ashish-chanchal.github.io/chatbot/",
+    link: 'https://github.com/Ashish-chanchal/Rentup',
+    livelink: 'https://rentup1702.netlify.app/',
+    category: 'Full-Stack Web',
+    type: 'web',
+  },
+  {
+    id: 6,
+    title: 'Sixteen Clothing // E-Commerce Storefront',
+    image: sixteenImg,
+    tech: 'React · Tailwind CSS · Responsive Frontend · State Management',
+    description: [
+      'Engineered a modern, high-performance apparel e-commerce storefront with multi-category browsing (Outerwear, Hoodies, Denim)',
+      'Implemented product search, filtering mechanisms, wishlist toggling, and shopping cart drawers',
+      'Crafted sleek dark-theme user experience with tactile interactions and mobile responsiveness',
+    ],
+    livelink: 'https://sixteenclothes.ashishchanchal.in/',
+    category: 'Frontend & E-Commerce',
+    type: 'web',
+  },
+  {
+    id: 7,
+    title: 'VibePulse // Web Audio Streamer',
+    image: vibepulseImg,
+    tech: 'React · Web Audio API · Tailwind CSS · Frontend State',
+    description: [
+      'Interactive music streaming web application featuring live track playback, custom progress scrubbing, and volume modulation',
+      'Implemented dynamic playlist queuing, instant search/filtering across tracks & artists, and Daily Spotlight curation',
+      'Built responsive dark-mode UI with smooth audio playback state handling',
+    ],
+    livelink: 'https://vibepluse.ashishchanchal.in/',
+    category: 'Frontend & Web Audio',
+    type: 'web',
+  },
+  {
+    id: 8,
+    title: 'Movie Tickiter',
+    tech: 'HTML · CSS · JavaScript · Movie Data API',
+    image:
+      'https://github.com/user-attachments/assets/cd00474b-837c-401f-88d4-329d9fe3d56e',
+    description: [
+      'Dynamic ticket booking application integrating live data from the Movies Data API with optimized state handling',
+      'Implemented real-time seat selection and interactive checkout simulation',
+    ],
+    link: 'https://github.com/Ashish-chanchal/MovieTickiter',
+    livelink: 'https://movieshowticket.netlify.app/',
+    category: 'Web App',
+    type: 'web',
+  },
+  {
+    id: 9,
+    title: 'Words that Sparkle',
+    tech: 'React · FreeAPI · Tailwind CSS',
+    description: [
+      'Vibrant motivational quote platform integrating real-time quotes via FreeAPI with optimized React state management',
+      'Created custom shareable cards and responsive daily wisdom generator',
+    ],
+    link: 'https://github.com/Ashish-chanchal/words-sparkle-react',
+    livelink: 'https://quotes-sparkle.netlify.app/',
+    category: 'Web App',
+    type: 'web',
+  },
+  {
+    id: 10,
+    title: 'Weather App',
+    tech: 'Flutter · OpenWeatherMap API · GetX',
+    description: [
+      'Location-aware weather forecasting mobile application with real-time API integration and GetX state management',
+      'Displays 7-day predictive forecasts, humidity metrics, and wind vectors',
+    ],
+    link: 'https://github.com/Ashish-chanchal/weather_app',
+    category: 'Mobile App',
+    type: 'mobile',
+  },
+  {
+    id: 11,
+    title: 'Rule-Based ChatBot',
+    tech: 'HTML · CSS · JavaScript Engine',
+    description: [
+      'Intelligent assistant providing instant responses to common technical queries and customer onboarding',
+      'Engineered fuzzy pattern matching for intent recognition and custom reply generation',
+    ],
+    link: 'https://github.com/Ashish-chanchal/chatbot',
+    livelink: 'https://ashish-chanchal.github.io/chatbot/',
+    category: 'AI Assistant',
+    type: 'ai',
   },
 ];
 
-const ProjectsCMPdata = [
-  {
-    id: 1,
-    title: "Conversational AI Appointment Booking",
-    tech: "React NestJS GRPC Sockets OpenAI",
-    description: [
-      "Engineered a production-ready AI appointment booking system with real-time voice and text interaction capabilities",
-      "Architected a robust GRPC-based backend for multi-channel communication between distributed microservices",
-      "Implemented intelligent conversation management using Socket.io and OpenAI's Assistant API with function calling",
-    ],
-  },
-  {
-    id: 2,
-    title: "CareLink (PDMS)",
-    image:
-      "https://github.com/Ashish-chanchal/pdms_college/assets/86229520/6deaf936-3c8c-4319-8c2d-c8a1430e0275",
-    tech: "Dart Flutter Firebase GetX",
-    description: [
-      "Innovative patient-doctor hub facilitating seamless appointment booking and digital prescription management",
-      "Optimized UX with advanced heat mapping and secure authentication using the GetX architecture",
-    ],
-    link: "https://github.com/Ashish-chanchal/pdms_college",
-  },
-  {
-    id: 3,
-    title: "Rent-Up",
-    tech: "React Material UI",
-    image:
-      "https://github.com/user-attachments/assets/cd972e1d-816f-4140-9a19-00a154eb16bc",
-    description: [
-      "Full-featured real estate portal with intelligent property filtering, subscription tiers, and responsive design",
-    ],
-    link: "https://github.com/Ashish-chanchal/Rentup",
-    livelink: "https://rentup1702.netlify.app/",
-  },
-  {
-    id: 4,
-    title: "Movie Tickiter",
-    tech: "HTML CSS JavaScript",
-    image:
-      "https://github.com/user-attachments/assets/cd00474b-837c-401f-88d4-329d9fe3d56e",
-    description: [
-      "Dynamic ticket booking application integrating live data from the Movies Data API with optimized state handling",
-    ],
-    link: "https://github.com/Ashish-chanchal/MovieTickiter",
-    livelink: "https://movieshowticket.netlify.app/",
-  },
+const CATEGORIES = [
+  { id: 'all', label: 'ALL ARTIFACTS' },
+  { id: 'ai', label: 'AI & MACHINE LEARNING' },
+  { id: 'web', label: 'FRONTEND & WEB APPS' },
+  { id: 'mobile', label: 'MOBILE & FLUTTER' },
 ];
-const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-};
 
-// Custom hook for adding scroll animations to each section
-const ScrollReveal = ({ children }: { children: React.ReactNode }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    triggerOnce: true, // Only animate once when in view
-    threshold: 0.1, // Trigger when 10% of the component is visible
+const WorksPage: React.FC = () => {
+  const [selectedFilter, setSelectedFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const filteredProjects = AllProjects.filter((project) => {
+    const matchesFilter = selectedFilter === 'all' || project.type === selectedFilter;
+    const matchesSearch =
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.tech.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
   });
 
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-  useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top
-  }, []);
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={sectionVariants}
-    >
-      {children}
-    </motion.div>
-  );
-};
-const WorksPage = () => {
-  return (
-    <div>
+    <div className="bg-[#0a0a0a] min-h-screen pb-20">
       <Helmet>
-        <title>Works - Ashish Chanchal</title>
-        <meta name="description" content="Explore a portfolio of innovative projects, including web and mobile apps built with Dart, Flutter, React, Firebase, HTML, CSS, JavaScript, and more. Discover cutting-edge applications like CareLink, E-Learners, Movie Tickiter, and Rent-Up, each showcasing advanced development in user experience, seamless functionality, and modern design principles. View live projects featuring e-commerce platforms, weather apps, music players, and chatbots." />
+        <title>Works Archive // Ashish Chanchal</title>
+        <meta
+          name="description"
+          content="Complete repository of software engineering artifacts: Model Context Protocol (MCP) agents, Conversational AI, Flutter apps, Full-stack platforms, Machine Learning models, and Web tools built by Ashish Chanchal."
+        />
       </Helmet>
-      <ScrollReveal>
-        <HeadingSec title="projects" description="List of my projects" />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Projects heading="complete-webApps" ProjectsData={ProjectsCMPdata} />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Projects heading="small-projects" ProjectsData={ProjectsData} />
-      </ScrollReveal>
+
+      {/* Header Banner */}
+      <HeadingSec
+        title="ARTIFACTS_ARCHIVE"
+        description="Comprehensive manifest of production applications, distributed microservices, AI pipelines, and open-source experiments."
+        waypoint="LOGBOOK // WAYPOINT_02_DEEP_ARCHIVE"
+      />
+
+      <div className="max-w-7xl mx-auto px-4 mt-6">
+        {/* Filter and Search Controls Bar */}
+        <div className="bg-[#121212] border-2 border-white p-4 shadow-brutal mb-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedFilter(cat.id)}
+                className={`font-mono text-xs font-bold px-3 py-1.5 border-2 transition-all brutal-btn ${
+                  selectedFilter === cat.id
+                    ? 'bg-accent text-black border-black shadow-[2px_2px_0px_0px_#ffffff]'
+                    : 'bg-[#181818] text-white border-[#333333] hover:border-white hover:bg-[#202020]'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="SEARCH BY TECH OR TITLE..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-[#0a0a0a] border-2 border-white text-white font-mono text-xs px-3 py-2 w-full md:w-64 focus:outline-none focus:border-accent placeholder:text-[#555555]"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 top-2 text-xs font-mono text-[#888888] hover:text-white"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Results Counter */}
+        <div className="flex items-center justify-between font-mono text-xs text-[#888888] mb-6 pb-2 border-b border-[#262626]">
+          <span>SHOWING {filteredProjects.length} OF {AllProjects.length} ARTIFACTS</span>
+          <span className="text-accent font-bold">SYSTEM_QUERY: OK</span>
+        </div>
+
+        {/* Projects Grid */}
+        {filteredProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {filteredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                id={project.id}
+                title={project.title}
+                img={project.image}
+                tech={project.tech}
+                link={project.link}
+                liveLink={project.livelink}
+                description={project.description}
+                categoryBadge={project.category}
+                team={project.team}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-[#121212] border-2 border-white p-8 text-center shadow-brutal my-8">
+            <div className="font-mono text-sm text-accent font-bold uppercase mb-2">
+              NO MATCHING ARTIFACTS FOUND
+            </div>
+            <p className="font-mono text-xs text-[#888888]">
+              Try adjusting your search query or switching category filters.
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

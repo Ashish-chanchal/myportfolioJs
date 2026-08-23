@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -145,7 +145,12 @@ export const Windows11Page: React.FC = () => {
     localStorage.setItem('win11_windows_state', JSON.stringify(windowsState));
   }, [windowsState]);
 
+  const lastContextMenuTimeRef = useRef(0);
+
   const closeAllFlyouts = () => {
+    if (Date.now() - lastContextMenuTimeRef.current < 250) {
+      return;
+    }
     setIsStartOpen(false);
     setIsQuickSettingsOpen(false);
     setIsCalendarOpen(false);
@@ -221,9 +226,14 @@ export const Windows11Page: React.FC = () => {
   const handleContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    lastContextMenuTimeRef.current = Date.now();
+    const menuWidth = 220;
+    const menuHeight = 320;
+    const x = Math.min(e.clientX, window.innerWidth - menuWidth);
+    const y = Math.min(e.clientY, window.innerHeight - menuHeight);
     setContextMenu({
-      x: Math.min(e.clientX, window.innerWidth - 220),
-      y: Math.min(e.clientY, window.innerHeight - 280),
+      x: Math.max(10, x),
+      y: Math.max(10, y),
       visible: true,
       targetIcon: null,
     });
@@ -232,10 +242,15 @@ export const Windows11Page: React.FC = () => {
   const handleIconContextMenu = (e: React.MouseEvent, iconId: string) => {
     e.preventDefault();
     e.stopPropagation();
+    lastContextMenuTimeRef.current = Date.now();
     setSelectedDesktopIcon(iconId);
+    const menuWidth = 220;
+    const menuHeight = 280;
+    const x = Math.min(e.clientX, window.innerWidth - menuWidth);
+    const y = Math.min(e.clientY, window.innerHeight - menuHeight);
     setContextMenu({
-      x: Math.min(e.clientX, window.innerWidth - 220),
-      y: Math.min(e.clientY, window.innerHeight - 240),
+      x: Math.max(10, x),
+      y: Math.max(10, y),
       visible: true,
       targetIcon: iconId,
     });
@@ -610,6 +625,9 @@ export const Windows11Page: React.FC = () => {
           <div
             key={item.id}
             onClick={(e) => {
+              if (Date.now() - lastContextMenuTimeRef.current < 250) {
+                return;
+              }
               e.stopPropagation();
               setSelectedDesktopIcon(item.id);
               setContextMenu({ x: 0, y: 0, visible: false, targetIcon: null });
@@ -643,7 +661,7 @@ export const Windows11Page: React.FC = () => {
         <div
           onClick={(e) => e.stopPropagation()}
           style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
-          className="absolute win11-mica rounded-lg p-1.5 z-[99999] shadow-2xl border border-white/10 w-52 text-xs text-white space-y-0.5 animate-cinematic-zoom font-sans"
+          className="fixed win11-mica rounded-xl p-1.5 z-[999999] shadow-2xl border border-white/15 w-56 text-xs text-white space-y-0.5 animate-win11-menu font-sans select-none backdrop-blur-3xl"
         >
           {contextMenu.targetIcon ? (
             /* Icon-Specific Context Menu */

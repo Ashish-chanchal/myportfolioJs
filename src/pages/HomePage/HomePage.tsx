@@ -1,183 +1,252 @@
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
-import About from "../../components/About/About";
-import Contact from "../../components/Contact/Contact";
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import Hero from "../../components/Hero/Hero";
-import Projects from "../../components/Projects/Projects";
-import Skills from "../../components/Skills/Skills";
-import Experience from "../../components/Experience/Experience";
-const ProjectsData = [
-  {
-    id: 1,
-    title: "Conversational AI Appointment Booking",
-    tech: "React NestJS GRPC Sockets OpenAI",
-    description: [
-      "Engineered an end-to-end AI appointment booking system with real-time voice and text interaction capabilities",
-      "Implemented a high-performance Conversation microservice using Socket.io and OpenAI's Assistant API with function calling",
-      "Architected a robust GRPC-based backend for seamless multi-channel communication between distributed services",
-      "Developed a responsive React frontend for user registration, indoor navigation, and intuitive booking flows",
-    ],
-    // image: "...", // Add if available
-  },
-  {
-    id: 2,
-    title: "CareLink (PDMS)",
-    image:
-      "https://github.com/Ashish-chanchal/pdms_college/assets/86229520/6deaf936-3c8c-4319-8c2d-c8a1430e0275",
-    tech: "Dart Flutter Firebase GetX",
-    description: [
-      "Constructed an innovative patient-doctor connection app facilitating seamless appointment booking and digital prescription management",
-      "Optimized user navigation pathways and content reachability using advanced heat mapping and UX visualization tools",
-      "Implemented secure authentication and real-time database synchronization using Firebase and GetX architecture",
-    ],
-    link: "https://github.com/Ashish-chanchal/pdms_college",
-  },
-  {
-    id: 3,
-    title: "Parkinson Disease Detection",
-    tech: "Python ML MNE EEG",
-    description: [
-      "Spearheaded comprehensive analysis of EEG data to uncover key patterns in brain activity for early disease detection",
-      "Engineered and evaluated predictive models (Random Forest, Decision Tree) achieving up to 88.89% detection accuracy",
-      "Utilized Python's MNE library for sophisticated signal processing and temporal feature extraction from complex neural data",
-    ],
-  },
-];
-const ExperienceData = [
-  {
-    id: 1,
-    tech: "Studio Sonrai",
-    title: "Software Developer | Sep 2025 – Present",
-    description: [
-      "Engineered a scalable expense management system using NestJS microservices and MSSQL, optimizing financial tracking for enterprise clients",
-      "Architected and deployed automated inspection services and intelligent ticket assignment schedulers on Azure Cloud",
-      "Streamlined deployment pipelines using Azure DevOps (YAML), achieving 100% automated CI/CD for cloud-native services",
-      "Successfully migrated desktop management consoles to high-performance cross-platform mobile apps using Capacitor and Ionic",
-    ],
-  },
-  {
-    id: 2,
-    tech: "Alphadroid / HeyAlpha",
-    title: "Software Engineer | Oct 2024 – Sep 2025",
-    description: [
-      "Revolutionized voice AI interaction by implementing MultiModel Function Calling, reducing response latency from 15s to 3s",
-      "Developed interactive 3D humanoid avatars using Three.js and WebGL, enhancing user engagement for AI-driven hotel services",
-      "Built production-ready React Native applications with complex role-based UI rendering and real-time FCM notification systems",
-      "Optimized enterprise state management architectures using Redux Toolkit and modernized legacy UIs with Material UI",
-    ],
-  },
-];
+import Hero from '../../components/Hero/Hero';
+import Experience from '../../components/Experience/Experience';
+import Projects from '../../components/Projects/Projects';
+import Skills from '../../components/Skills/Skills';
+import About from '../../components/About/About';
+import Contact from '../../components/Contact/Contact';
+import JourneyHud from '../../components/shared/JourneyHud';
+import todoaiImg from '../../assets/projects/todoai.png';
+import sociantraImg from '../../assets/projects/sociantra.png';
+import cineverseImg from '../../assets/projects/cineverse.png';
+import estypeshopImg from '../../assets/projects/estypeshop.png';
+import sixteenImg from '../../assets/projects/sixteenclothing.png';
+import vibepulseImg from '../../assets/projects/vibepulse.png';
 
-const InternshipData = [
+const FeaturedProjectsData = [
+  {
+    id: 0,
+    title: 'TodoAI // Native MCP Workspace & Task Agent',
+    image: todoaiImg,
+    tech: 'Next.js · Model Context Protocol (MCP) · Gemini Flash · TypeScript · MongoDB',
+    description: [
+      'Engineered an autonomous task management workspace built on Model Context Protocol (MCP), allowing external AI agents (Claude, Cursor) to inspect, create, and complete tasks natively',
+      'Integrated Gemini Cognition Core to extract tasks from conversational chat feeds, emails, and Slack commitment sentences (e.g. "I will fix the timeout before Friday")',
+      'Architected Energy-Aware scheduling negotiation, conflict guards, dynamic webhooks, and live iCal (.ics) calendar synchronization',
+    ],
+    livelink: 'https://todoai.ashishchanchal.in/',
+    category: 'AI Infrastructure & MCP',
+  },
+  {
+    id: 1,
+    title: 'Sociantra // AI Social AutoPilot',
+    image: sociantraImg,
+    tech: 'Next.js · React · AI Content Engine · TypeScript · Tailwind CSS',
+    description: [
+      'Engineered an autonomous LinkedIn brand automation engine generating high-signal posts, carousel decks, and scheduled cadences',
+      'Built a strict Human-in-the-Loop approval gate allowing creators to review, edit, and fine-tune AI drafts before broadcasting',
+      'Architected live post queuing, interactive Studio Engine, and multi-channel scheduling analytics',
+    ],
+    livelink: 'https://sociantra.ashishchanchal.in/',
+    category: 'AI SaaS & Automation',
+    team: {
+      name: 'Ashwin',
+      link: 'https://www.hi-ashwin.xyz/',
+    },
+  },
+  {
+    id: 2,
+    title: 'Conversational AI Appointment Booking',
+    tech: 'React · NestJS · gRPC · Sockets · OpenAI Assistant API',
+    description: [
+      'Engineered an end-to-end AI appointment booking system with real-time voice and text interaction capabilities',
+      'Implemented high-performance conversation microservice using Socket.io and OpenAI Assistant API with function calling',
+      'Architected a robust gRPC-based backend for multi-channel communication between distributed services',
+      'Developed responsive frontend for user registration, indoor navigation, and automated booking flows',
+    ],
+    category: 'AI & Microservices',
+  },
   {
     id: 3,
-    tech: "Kloudidev Digital Solution",
-    title: "React Engineer Intern | Oct 2023 – Jun 2024",
+    title: 'Parkinson Disease Detection',
+    tech: 'Python · ML · MNE · EEG Signal Processing',
     description: [
-      "Rapidly mastered Tailwind CSS and ShadcnUI to lead the visual redesign of the Tekshila AI landing page",
-      "Recognized as 'Intern of the Month' for delivering high-impact UI enhancements and optimizing frontend load times",
-      "Successfully launched production-ready websites for kloudidev.com and tekshila.ai",
+      'Spearheaded comprehensive analysis of EEG data to uncover key patterns in brain activity for early disease detection',
+      'Engineered predictive models (Random Forest, Decision Tree) achieving up to 88.89% detection accuracy',
+      'Utilized Python MNE library for sophisticated signal processing and temporal feature extraction from complex neural data',
     ],
+    link: 'https://github.com/Ashish-chanchal/Parkinson-Disease-Detection',
+    category: 'Machine Learning',
   },
   {
     id: 4,
-    tech: "INMAS, DRDO",
-    title: "Research Intern | Aug 2023 – Oct 2023",
+    title: 'CareLink (PDMS)',
+    image:
+      'https://github.com/Ashish-chanchal/pdms_college/assets/86229520/6deaf936-3c8c-4319-8c2d-c8a1430e0275',
+    tech: 'Dart · Flutter · Firebase · GetX',
     description: [
-      "Conducted advanced brain activity analysis using EEG datasets under the mentorship of DRDO senior scientists",
-      "Engineered high-accuracy predictive models for Parkinson's disease using Random Forest and Decision Tree algorithms",
-      "Leveraged Python's MNE library to process complex neural signals and extract diagnostic clinical features",
+      'Constructed a patient-doctor connection app facilitating seamless appointment booking and prescription management',
+      'Optimized UX with advanced heat mapping and navigation pathways with reactive GetX architecture',
+      'Integrated real-time database synchronization and push notifications via Firebase',
     ],
+    link: 'https://github.com/Ashish-chanchal/pdms_college',
+    category: 'Mobile & Cloud',
   },
   {
     id: 5,
-    tech: "Robust Results (IITK Incubated)",
-    title: "Full-stack Developer Intern",
+    title: 'Rent-Up',
+    tech: 'React · Material UI · REST API',
+    image:
+      'https://github.com/user-attachments/assets/cd972e1d-816f-4140-9a19-00a154eb16bc',
     description: [
-      "Spearheaded the development of a cross-functional web platform for E-Learners Technology using the LAMP stack",
-      "Implemented responsive UI components and optimized MySQL database queries for better platform performance",
+      'Full-featured real estate portal with intelligent property filtering, pricing tiers, and responsive design',
+      'Engineered reusable frontend UI components and structured state management for fast browsing',
     ],
+    link: 'https://github.com/Ashish-chanchal/Rentup',
+    livelink: 'https://rentup1702.netlify.app/',
+    category: 'Full-Stack Web',
+  },
+  {
+    id: 6,
+    title: 'CineVerse // Cinema & Streaming Platform',
+    image: cineverseImg,
+    tech: 'React · Tailwind CSS · Movie Streaming UI · Responsive Frontend',
+    description: [
+      'Engineered a cinematic OTT movie streaming web application with dynamic hero showcases, video trailer previews, and metadata overlays',
+      'Implemented multi-genre taxonomy filters (Action, Drama, Crime, Sci-Fi) and responsive carousel sorting for trending blockbusters',
+      'Designed a sleek dark-mode cinema aesthetic with smooth modal transitions, search bars, and cross-device optimization',
+    ],
+    livelink: 'https://cineverse.ashishchanchal.in/',
+    category: 'Frontend & Streaming',
+  },
+  {
+    id: 7,
+    title: 'ESTYPESHOP // Electronics E-Commerce',
+    image: estypeshopImg,
+    tech: 'React · Tailwind CSS · E-Commerce Frontend · State Management',
+    description: [
+      'Engineered a premium audio & electronics storefront featuring Beats Solo headphone spotlights and category carousels',
+      'Implemented real-time shopping cart count state, item search bar, dynamic category routing, and dark-mode product showcase',
+      'Crafted sleek high-contrast product cards with responsive layouts, fluid animations, and mobile-first navigation',
+    ],
+    livelink: 'https://estypeshop.ashishchanchal.in/',
+    category: 'Frontend & E-Commerce',
+  },
+  {
+    id: 8,
+    title: 'Sixteen Clothing // E-Commerce Storefront',
+    image: sixteenImg,
+    tech: 'React · Tailwind CSS · Responsive Frontend · State Management',
+    description: [
+      'Modern apparel storefront featuring multi-category product catalog browsing (Outerwear, Hoodies, Denim)',
+      'Engineered product search, category filtering, cart management, and interactive item showcase',
+      'Responsive dark aesthetic with tactile buttons and fluid transitions',
+    ],
+    livelink: 'https://sixteenclothes.ashishchanchal.in/',
+    category: 'Frontend & E-Commerce',
+  },
+  {
+    id: 9,
+    title: 'VibePulse // Web Audio Streamer',
+    image: vibepulseImg,
+    tech: 'React · Web Audio API · Tailwind CSS · Frontend State',
+    description: [
+      'Interactive music streaming web app with real-time track playback, audio scrubber, and playlist queue',
+      'Instant search and tag filtering across multiple music genres and artists',
+      'Clean playback controller with responsive volume modulation and timeline tracking',
+    ],
+    livelink: 'https://vibepluse.ashishchanchal.in/',
+    category: 'Frontend & Web Audio',
   },
 ];
-const aboutData = [
+
+const ExperienceData = [
   {
     id: 1,
-    description: "I’m a Software Developer and AI Engineer obsessed with building high-performance systems. I specialize in crafting scalable backends and intelligent conversational AI experiences.",
+    tech: 'STUDIO SONRAI',
+    title: 'SOFTWARE DEVELOPER | MAY 2025 – PRESENT',
+    period: 'MAY 2025 – PRESENT',
+    location: 'Noida, Uttar Pradesh, India',
+    type: 'Industry' as const,
+    description: [
+      'Orchestrated backend architectures using NestJS microservices and gRPC, optimizing system throughput and fault tolerance',
+      'Engineered automated cloud scheduler in Azure Functions to trigger asynchronous AI processing jobs during off-peak hours',
+      'Designed and executed complete Azure DevOps YAML CI/CD pipelines, automating test validation and multi-environment deployments',
+      'Developed and deployed cross-platform mobile apps for Android and iOS using Capacitor and Ionic',
+    ],
+    link: 'https://www.linkedin.com/company/studio-sonrai/',
   },
   {
     id: 2,
-    description: "Whether it’s optimizing voice response latency or rendering 3D characters in the browser, I thrive at the intersection of technical precision and creative problem-solving.",
+    tech: 'ALPHADROID / HEYALPHA',
+    title: 'AI ENGINEER | NOV 2024 – MAY 2025',
+    period: 'NOV 2024 – MAY 2025',
+    location: 'Noida, Uttar Pradesh, India',
+    type: 'Industry' as const,
+    description: [
+      'Slashed voice assistant interaction response latency from 15 seconds down to under 3 seconds using MultiModel Function Calling and streaming protocols',
+      'Rendered 3D humanoid character models directly in web interfaces with Three.js and WebGL, syncing realistic facial audio lip-sync',
+      'Implemented robust real-time bi-directional audio streaming pipelines with WebSockets and Node.js',
+      'Integrated structured outputs and fallback models to guarantee deterministic responses in conversational flows',
+    ],
+    link: 'https://alphadroid.io/',
+  },
+  {
+    id: 3,
+    tech: 'INMAS, DRDO',
+    title: 'RESEARCH INTERN | APR 2024 – AUG 2024',
+    period: 'APR 2024 – AUG 2024',
+    location: 'Delhi, India',
+    type: 'Research' as const,
+    description: [
+      'Conducted clinical EEG signal analysis at Institute of Nuclear Medicine and Allied Sciences (DRDO) for early neurological disease detection',
+      'Engineered machine learning models (Random Forest, Decision Tree) achieving up to 88.89% detection accuracy on neural datasets',
+      'Utilized Python MNE library for sophisticated signal processing, filtering noise artifacts and extracting temporal EEG features',
+    ],
+    link: 'https://drdo.gov.in/drdo/labs-and-establishments/institute-nuclear-medicine-allied-sciences-inmas',
   },
 ];
-// Define variants for animation
-const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-};
 
-// Custom hook for adding scroll animations to each section
-const ScrollReveal = ({ children }: { children: React.ReactNode }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    triggerOnce: true, // Only animate once when in view
-    threshold: 0.1, // Trigger when 10% of the component is visible
-  });
-
+const HomePage: React.FC<{
+  setSelectedItem: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ setSelectedItem }) => {
   useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-  useEffect(() => {
-    window.scrollTo(0, 0);  // Scroll to the top
+    window.scrollTo(0, 0);
   }, []);
+
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={sectionVariants}
-    >
-      {children}
-    </motion.div>
+    <main className="relative">
+      <Helmet>
+        <title>Ashish Chanchal // Software Developer & AI Systems Engineer</title>
+        <meta
+          name="description"
+          content="Portfolio of Ashish Chanchal: Software Developer and AI Systems Engineer specializing in Model Context Protocol (MCP), NestJS microservices, Real-time Voice AI, React, Flutter, and machine learning."
+        />
+      </Helmet>
+
+      {/* Floating Coordinates Navigation HUD */}
+      <JourneyHud />
+
+      {/* Hero Section */}
+      <Hero />
+
+      {/* Experience Section */}
+      <Experience
+        ExperienceData={ExperienceData}
+        title="EXPEDITIONS & MILESTONES"
+        waypointIndex="WAYPOINT_01"
+      />
+
+      {/* Featured Projects Grid */}
+      <Projects
+        ProjectsData={FeaturedProjectsData}
+        heading="FEATURED ARTIFACTS"
+        setSelectedItem={setSelectedItem}
+        waypointIndex="WAYPOINT_02"
+        tag="// PRODUCTION BUILDS & SYSTEMS"
+      />
+
+      {/* Technical Arsenal Loadout */}
+      <Skills waypointIndex="WAYPOINT_03" />
+
+      {/* Story & Tenets */}
+      <About setSelectedItem={setSelectedItem} waypointIndex="WAYPOINT_04" />
+
+      {/* Contact Relay Section */}
+      <Contact />
+    </main>
   );
 };
-
-function HomePage({ setSelectedItem }: { setSelectedItem?: React.Dispatch<React.SetStateAction<number>> }) {
-  return (
-    <div>
-      <Helmet>
-        <title>Ashish Chanchal</title>
-        <meta name="description" content="Ashish Chanchal is a Software Developer and Community Manager based in Noida, Uttar Pradesh, India. He specializes in Frontend Development, Full-stack Development, Machine Learning, and Open Source. Explore Ashish Chanchal's portfolio of innovative projects, including web and mobile apps built with Dart, Flutter, React, Firebase, HTML, CSS, JavaScript, and more. Discover cutting-edge applications like CareLink, E-Learners, Movie Tickiter, and Rent-Up, each showcasing advanced development in user experience, seamless functionality, and modern design principles. Connect with Ashish Chanchal for software development, web design, and community management services. Reach out to Ashish Chanchal for collaborations, projects, and more." />
-      </Helmet>
-      {/* Apply scroll reveal to each section */}
-      <ScrollReveal>
-        <Hero />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Experience ExperienceData={ExperienceData} />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Experience ExperienceData={InternshipData} title="Internships" />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Projects ProjectsData={ProjectsData} heading="Projects" setSelectedItem={setSelectedItem} />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Skills showimg={true} />
-      </ScrollReveal>
-      <ScrollReveal>
-        <About description={aboutData} />
-      </ScrollReveal>
-      <ScrollReveal>
-        <Contact />
-      </ScrollReveal>
-
-    </div>
-  );
-}
 
 export default HomePage;
-

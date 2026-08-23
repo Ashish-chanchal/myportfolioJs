@@ -1,149 +1,326 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Line from '../../assets/common/line.png'
-import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { useLocation } from 'react-router-dom';
-// Navigation Items
+import { FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import Button from '../shared/Button';
+import ThemeSwitcher from '../shared/ThemeSwitcher';
+import { useTheme } from '../../context/ThemeContext';
+import Logo from '../shared/Logo';
 
+interface NavbarProps {
+  setSelectedItem: React.Dispatch<React.SetStateAction<number>>;
+  selectedItem: number;
+}
 
 const NavItems = [
-  {
-    id: 0,
-    name: "home",
-    link: "/"
-  },
-  {
-    id: 1,
-    name: "works",
-    link: "/works"
-  },
-  {
-    id: 2,
-    name: "about-me",
-    link: "/about-me"
-  },
-  {
-    id: 3,
-    name: "contacts",
-    link: "/contact-me"
-  }
-]
-const Navbar = ({ setSelectedItem, selectedItem }: { setSelectedItem: React.Dispatch<React.SetStateAction<number>>, selectedItem: number }) => {
+  { id: 0, name: 'HOME', link: '/', code: '00' },
+  { id: 1, name: 'WORKS', link: '/works', code: '01' },
+  { id: 2, name: 'ABOUT', link: '/about-me', code: '02' },
+  { id: 3, name: 'CONTACT', link: '/contact-me', code: '03' },
+];
+
+const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  useEffect(() => {
-    const path = location.pathname;
-    const item = NavItems.find((item) => item.link === path);
-    if (item) {
-      setSelectedItem(item.id);
-    }
-  }, []);
+  const { designMode } = useTheme();
+  const isMinimal = designMode === 'minimalist';
+  const isBento = designMode === 'bento';
+  const isEditorial = designMode === 'editorial';
+  const isRetro = designMode === 'retro';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="bg-primary text-white p-4 top-0 w-full z-[100] fixed">
-      <div className='flex flex-col absolute top-0 md:left-5 left-0 items-center gap-1 bg-transparent'>
-        <img src={Line} alt="" className='md:w-[2px]  w-[2px]' />
-        <Link to='https://www.linkedin.com/in/ashishchanchal/' target='_blank' className='text-brandWhite font-semibold bg-primary rounded-full'><FaLinkedinIn className='text-brandWhite w-5 h-5 p-1' /></Link>
-        <Link to='https://github.com/ashish-chanchal' target='_blank' className='text-brandWhite font-semibold p-1 bg-primary rounded-full'> <FaGithub className='text-brandWhite w-5 h-5 p-1' /></Link>
-        <Link to='https://www.instagram.com/ashish._chanchal/' target='_blank' className='text-brandWhite font-semiboldn p-1 bg-primary rounded-full'><FaInstagram className='text-brandWhite w-5 h-5 p-1' /></Link>
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isRetro
+          ? 'bg-[#181512] border-b-2 border-[#5a5247] font-mono shadow-md'
+          : isEditorial
+          ? 'bg-[#09090b]/95 border-b border-white/15 backdrop-blur-xl'
+          : isBento
+          ? 'bg-zinc-950/70 border-b border-white/8 backdrop-blur-2xl'
+          : isMinimal
+          ? 'bg-zinc-950/80 border-b border-zinc-800/80 backdrop-blur-md'
+          : 'bg-[#0a0a0a] border-b-2 border-white'
+      }`}
+    >
+      {/* Retro 1980s-90s OS Titlebar */}
+      {isRetro && (
+        <div className="bg-[#2a2520] border-b border-[#5a5247] px-4 py-0.5 flex items-center justify-between text-[11px] font-mono text-zinc-300">
+          <div className="flex items-center gap-2">
+            <span className="text-accent font-bold">[■]</span>
+            <span className="font-bold text-white tracking-wider">ASHISH_WORKSTATION // v1.984</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-3 text-[10px] text-zinc-400">
+            <span>MEM: 640KB OK</span>
+            <span className="text-accent">COM1: 9600 BAUD</span>
+            <span className="text-white font-bold">[▲][▼][X]</span>
+          </div>
+        </div>
+      )}
 
+      {/* Editorial Top Masthead Dateline */}
+      {isEditorial && (
+        <div className="bg-[#0e0e12] border-b border-white/10 px-4 py-1 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+          <div className="flex items-center gap-2">
+            <span className="text-accent font-serif italic text-xs">The Engineering Gazette</span>
+            <span className="text-zinc-600">//</span>
+            <span>VOL. XXIV · NO. 01</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-4 text-zinc-400">
+            <span>NOIDA // NEW DELHI // GLOBAL DISPATCH</span>
+            <span className="text-accent font-semibold">ISSUE: 2026 EDITION</span>
+          </div>
+        </div>
+      )}
 
+      {/* Brutalist Top Terminal Bar (only in brutalist mode) */}
+      {!isMinimal && !isBento && !isEditorial && !isRetro && (
+        <div className="bg-[#141414] border-b border-[#262626] px-4 py-1 flex items-center justify-between text-[11px] font-mono text-[#888888]">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#00FF66] inline-block animate-pulse"></span>
+            <span className="text-white font-bold">ASHISH_OS // SYS_STATUS: OPTIMAL</span>
+          </div>
+          <div className="hidden sm:flex items-center gap-4">
+            <span className="text-accent font-bold">LOCATION: INDIA [IST]</span>
+            <span>BUILD: v2.4.0</span>
+          </div>
+        </div>
+      )}
 
-      </div>
-      <div className="flex justify-between items-center max-w-7xl mx-auto">
-        {/* Logo */}
+      {/* Main Navigation Bar */}
+      <nav className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Brand Logo & Name */}
         <Link
-          to={"/"}
+          to="/"
           onClick={() => setSelectedItem(0)}
-          className="flex items-center cursor-pointer"
+          className="flex items-center gap-3 group"
         >
-          <img src="/Logo.png" alt="Logo" className="w-1/4 mr-2" />
-
+          <Logo size="md" />
         </Link>
 
-        {/* Hamburger Menu Icon for Mobile */}
-        <div className="lg:hidden">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMenu}
-            className="text-white focus:outline-none"
+        {/* Desktop Navigation Links */}
+        <div
+          className={`hidden lg:flex items-center gap-1.5 ${
+            isRetro
+              ? 'bg-[#221e1a] p-1 border border-[#4a4237] shadow-inner font-mono'
+              : isEditorial
+              ? 'px-3 py-1 border-x border-white/10 space-x-1'
+              : isBento
+              ? 'bg-white/5 p-1.5 rounded-full border border-white/10 backdrop-blur-md'
+              : isMinimal
+              ? 'bg-zinc-900/80 p-1.5 rounded-full border border-zinc-800/80'
+              : ''
+          }`}
+        >
+          {NavItems.map((item) => {
+            const isActive = selectedItem === item.id;
+            return (
+              <Link
+                key={item.id}
+                to={item.link}
+                onClick={() => setSelectedItem(item.id)}
+                className={`transition-all ${
+                  isRetro
+                    ? `px-3.5 py-1 text-xs font-mono font-bold tracking-wider ${
+                        isActive
+                          ? 'bg-accent text-black shadow-sm'
+                          : 'text-zinc-300 hover:text-white hover:bg-[#322c25]'
+                      }`
+                    : isEditorial
+                    ? `px-3.5 py-1.5 text-xs tracking-wider uppercase transition-all ${
+                        isActive
+                          ? 'text-white font-serif font-bold italic border-b-2 border-accent pb-1'
+                          : 'text-zinc-400 hover:text-white hover:border-b-2 hover:border-zinc-500 pb-1 font-serif'
+                      }`
+                    : isBento
+                    ? `font-mono text-xs px-4 py-1.5 rounded-full transition-all ${
+                        isActive
+                          ? 'bg-white/15 text-white font-bold border border-white/20 shadow-sm backdrop-blur-sm'
+                          : 'text-zinc-300 hover:text-white hover:bg-white/10'
+                      }`
+                    : isMinimal
+                    ? `font-mono text-xs px-4 py-1.5 rounded-full transition-all ${
+                        isActive
+                          ? 'bg-zinc-800 text-white font-bold border border-zinc-700 shadow-sm'
+                          : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+                      }`
+                    : `font-mono text-xs px-3.5 py-1.5 border-2 brutal-btn ${
+                        isActive
+                          ? 'bg-accent text-black border-black font-black shadow-[2px_2px_0px_0px_#ffffff]'
+                          : 'bg-[#141414] text-white border-[#333333] hover:border-white hover:bg-[#1f1f1f]'
+                      }`
+                }`}
+              >
+                {!isMinimal && !isBento && !isEditorial && !isRetro && <span className="text-[#888888] mr-1">[{item.code}]</span>}
+                {isRetro && <span className="text-zinc-500 mr-1">&gt;</span>}
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Right actions: Theme Switcher + Socials + CV */}
+        <div className="hidden sm:flex items-center gap-3">
+          <ThemeSwitcher />
+
+          <div
+            className={`flex items-center gap-1 ${
+              isEditorial
+                ? 'p-1 border border-white/10 rounded-md bg-white/3'
+                : isBento
+                ? 'bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md'
+                : isMinimal
+                ? 'bg-zinc-900/80 p-1 rounded-full border border-zinc-800'
+                : 'bg-[#141414] p-1 border border-[#333]'
+            }`}
           >
-            {isOpen ? (
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </motion.button>
+            <a
+              href="https://www.linkedin.com/in/ashishchanchal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`p-1.5 text-zinc-300 hover:text-white transition-colors ${
+                isBento || isMinimal ? 'rounded-full hover:bg-white/10' : isEditorial ? 'hover:text-accent' : 'hover:text-accent'
+              }`}
+              title="LinkedIn"
+            >
+              <FaLinkedinIn className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="https://github.com/ashish-chanchal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`p-1.5 text-zinc-300 hover:text-white transition-colors ${
+                isBento || isMinimal ? 'rounded-full hover:bg-white/10' : isEditorial ? 'hover:text-accent' : 'hover:text-accent'
+              }`}
+              title="GitHub"
+            >
+              <FaGithub className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="https://www.instagram.com/ashish._chanchal/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`p-1.5 text-zinc-300 hover:text-white transition-colors ${
+                isBento || isMinimal ? 'rounded-full hover:bg-white/10' : isEditorial ? 'hover:text-accentSec' : 'hover:text-accentSec'
+              }`}
+              title="Instagram"
+            >
+              <FaInstagram className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <Button
+            text="Get CV"
+            link="https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link"
+            variant={isEditorial ? 'white' : 'cyan'}
+            size="sm"
+            external
+          />
         </div>
 
-        {/* Desktop Links */}
-        <div className="hidden lg:flex space-x-8">
-          {NavItems.map((item) => (
-            <Link key={item.id} onClick={() => setSelectedItem(item.id)} to={item.link} className={`hover:text-white cursor-pointer font-semibold  ${selectedItem === item.id ? 'text-white' : 'text-gray-600'}`}>
-              <span className='text-secondary'>#</span>
-              {item.name}
-
-            </Link>
-          ))}
-
-
+        {/* Mobile Actions: Theme Switcher + Hamburger */}
+        <div className="lg:hidden flex items-center gap-2">
+          <ThemeSwitcher compact />
+          <Button
+            text="CV"
+            link="https://drive.google.com/file/d/1J094VFPjzW8Qh58rRbR5xPn7d31lMk5x/view?usp=drive_link"
+            variant="cyan"
+            size="sm"
+            external
+          />
+          <button
+            onClick={toggleMenu}
+            className={`p-2 text-white font-mono text-xs font-bold transition-all ${
+              isEditorial
+                ? 'rounded-md border border-zinc-700 bg-zinc-900'
+                : isMinimal
+                ? 'rounded-full border border-zinc-800 bg-zinc-900'
+                : isBento
+                ? 'rounded-full border border-white/10 bg-white/5 backdrop-blur-md'
+                : 'border-2 border-white bg-[#141414]'
+            }`}
+            aria-label="Toggle navigation menu"
+          >
+            {isOpen ? '✕' : '☰'}
+          </button>
         </div>
+      </nav>
 
-      </div>
-
-      {/* Mobile Menu */}
+      {/* Mobile Drawer Menu */}
       {isOpen && (
-        <motion.div
-          initial={{ height: 0 }}
-          animate={{ height: 'auto' }}
-          transition={{ duration: 0.5 }}
-          className="lg:hidden bg-gray-900 text-white p-4 space-y-2"
+        <div
+          className={`lg:hidden p-4 space-y-2 border-t ${
+            isMinimal
+              ? 'bg-zinc-950/95 border-zinc-800 backdrop-blur-xl'
+              : 'bg-[#0c0c0c] border-white'
+          }`}
         >
           {NavItems.map((item) => (
-            <Link key={item.id} onClick={() => {
-              setSelectedItem(item.id)
-              toggleMenu()
-            }} to={item.link} className={`block hover:text-secondary cursor-pointer font-semibold ${selectedItem === item.id ? 'text-secondary' : ''}`}>
-              <span className='text-secondary'>#</span>
+            <Link
+              key={item.id}
+              to={item.link}
+              onClick={() => {
+                setSelectedItem(item.id);
+                toggleMenu();
+              }}
+              className={`block font-mono text-sm px-4 py-2.5 transition-all ${
+                isMinimal
+                  ? `rounded-xl ${
+                      selectedItem === item.id
+                        ? 'bg-zinc-800 text-white font-bold border border-zinc-700'
+                        : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                    }`
+                  : `border-2 ${
+                      selectedItem === item.id
+                        ? 'bg-accent text-black border-black font-black'
+                        : 'bg-[#181818] text-white border-[#333333]'
+                    }`
+              }`}
+            >
+              {!isMinimal && <span className="text-[#888888] mr-2">[{item.code}]</span>}
               {item.name}
-
             </Link>
           ))}
 
-        </motion.div>
+          <div className="pt-3 border-t border-zinc-800 flex items-center justify-between">
+            <span className="font-mono text-xs text-zinc-500">CONNECT:</span>
+            <div className="flex gap-2">
+              <a
+                href="https://www.linkedin.com/in/ashishchanchal/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 text-zinc-300 hover:text-white ${
+                  isMinimal ? 'rounded-lg bg-zinc-900 border border-zinc-800' : 'bg-[#181818] border border-white'
+                }`}
+              >
+                <FaLinkedinIn className="w-4 h-4" />
+              </a>
+              <a
+                href="https://github.com/ashish-chanchal"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 text-zinc-300 hover:text-white ${
+                  isMinimal ? 'rounded-lg bg-zinc-900 border border-zinc-800' : 'bg-[#181818] border border-white'
+                }`}
+              >
+                <FaGithub className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/ashish._chanchal/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 text-zinc-300 hover:text-white ${
+                  isMinimal ? 'rounded-lg bg-zinc-900 border border-zinc-800' : 'bg-[#181818] border border-white'
+                }`}
+              >
+                <FaInstagram className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
       )}
-    </nav>
+    </header>
   );
 };
 

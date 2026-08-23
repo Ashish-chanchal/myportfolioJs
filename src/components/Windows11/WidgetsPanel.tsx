@@ -12,7 +12,7 @@ export const WidgetsPanel: React.FC<WidgetsPanelProps> = ({ isOpen, onClose }) =
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="absolute top-0 left-0 bottom-12 w-[90vw] max-w-sm win11-mica border-r border-white/10 p-5 flex flex-col justify-between z-[9999] shadow-2xl animate-cinematic-zoom select-none overflow-y-auto win11-scroll text-xs"
+      className="fixed top-0 left-0 bottom-12 w-[90vw] max-w-sm win11-mica border-r border-white/10 p-5 flex flex-col justify-between z-[99999] shadow-2xl animate-win11-open select-none overflow-y-auto win11-scroll text-xs"
     >
       <div className="space-y-4">
         {/* Header */}

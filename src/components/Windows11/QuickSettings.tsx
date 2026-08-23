@@ -57,7 +57,7 @@ export const QuickSettings: React.FC<QuickSettingsProps> = ({ isOpen, onClose })
   return (
     <div
       onClick={(e) => e.stopPropagation()}
-      className="absolute bottom-14 right-4 w-80 win11-mica rounded-xl p-4 flex flex-col gap-4 z-[9999] shadow-2xl animate-cinematic-zoom select-none text-xs"
+      className="fixed bottom-14 right-4 w-80 win11-mica rounded-2xl p-4 flex flex-col gap-4 z-[99999] shadow-2xl animate-win11-open select-none text-xs border border-white/20"
     >
       {/* Quick Toggle Tiles */}
       <div className="grid grid-cols-3 gap-2">

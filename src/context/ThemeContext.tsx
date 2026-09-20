@@ -108,9 +108,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [themeId, setThemeId] = useState<string>(() => {
     try {
       const saved = localStorage.getItem('ashish-portfolio-theme');
-      return saved && THEMES.some((t) => t.id === saved) ? saved : 'cyber-ice';
+      return saved && THEMES.some((t) => t.id === saved) ? saved : 'ember-flame';
     } catch {
-      return 'cyber-ice';
+      return 'ember-flame';
     }
   });
 
@@ -119,9 +119,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
       return savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial' || savedMode === 'retro'
         ? (savedMode as DesignMode)
-        : 'retro';
+        : 'bento';
     } catch {
-      return 'retro';
+      return 'bento';
     }
   });
 

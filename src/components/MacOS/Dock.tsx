@@ -1,6 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { MACOS_ICONS } from './icons';
 
+import { osSound } from '../shared/audioEffects';
+
 export interface DockAppItem {
   id: string;
   name: string;
@@ -10,9 +12,9 @@ export interface DockAppItem {
 
 interface DockProps {
   openApps: string[];
-  activeAppId: string | null;
+  activeAppId?: string | null;
   onOpenApp: (appId: string) => void;
-  onToggleMinimize: (appId: string) => void;
+  onToggleMinimize?: (appId: string) => void;
   onOpenLaunchpad: () => void;
 }
 
@@ -24,9 +26,7 @@ const SPREAD_RADIUS = 2.75;   // Influence radius in number of item slots
 
 export const Dock: React.FC<DockProps> = ({
   openApps,
-  activeAppId,
   onOpenApp,
-  onToggleMinimize,
   onOpenLaunchpad,
 }) => {
   const [bouncingAppId, setBouncingAppId] = useState<string | null>(null);
@@ -66,14 +66,16 @@ export const Dock: React.FC<DockProps> = ({
       return;
     }
 
-    setBouncingAppId(app.id);
-    setTimeout(() => setBouncingAppId(null), 1400);
-
-    if (openApps.includes(app.id) && activeAppId === app.id) {
-      onToggleMinimize(app.id);
-    } else {
-      onOpenApp(app.id);
+    if (app.id === 'trash') {
+      osSound.playMacTrash();
     }
+
+    setBouncingAppId(app.id);
+    setTimeout(() => setBouncingAppId(null), 1200);
+
+    // Native macOS Dock behavior: Clicking an app always opens or focuses/un-minimizes its window.
+    // It does NOT toggle minimize, avoiding the issue where an active app gets hidden and requires repeated clicks.
+    onOpenApp(app.id);
   };
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -152,7 +154,13 @@ export const Dock: React.FC<DockProps> = ({
 
               {/* Physical Floating Icon */}
               <button
-                onClick={() => handleAppClick(app)}
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                  handleAppClick(app);
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
                 style={{
                   width: `${iconSize}px`,
                   height: `${iconSize}px`,
@@ -168,7 +176,8 @@ export const Dock: React.FC<DockProps> = ({
                 <img
                   src={app.icon}
                   alt={app.name}
-                  className="w-full h-full object-contain filter drop-shadow-xl pointer-events-none"
+                  className="w-full h-full object-contain filter drop-shadow-xl pointer-events-none select-none"
+                  draggable={false}
                 />
               </button>
 
@@ -216,7 +225,13 @@ export const Dock: React.FC<DockProps> = ({
               )}
 
               <button
-                onClick={() => handleAppClick(app)}
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                  handleAppClick(app);
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
                 style={{
                   width: `${iconSize}px`,
                   height: `${iconSize}px`,
@@ -230,7 +245,8 @@ export const Dock: React.FC<DockProps> = ({
                 <img
                   src={app.icon}
                   alt={app.name}
-                  className="w-full h-full object-contain filter drop-shadow-xl pointer-events-none"
+                  className="w-full h-full object-contain filter drop-shadow-xl pointer-events-none select-none"
+                  draggable={false}
                 />
               </button>
 

@@ -35,11 +35,17 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
     y: 50 + Math.floor(Math.random() * 40),
   });
   const [isDragging, setIsDragging] = useState(false);
+  const [showTileMenu, setShowTileMenu] = useState(false);
+  const [tileState, setTileState] = useState<'left-half' | 'right-half' | null>(null);
+  const tileTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragStartRef = useRef({ x: 0, y: 0, posX: 0, posY: 0 });
 
   const handleMouseDown = (e: React.MouseEvent) => {
     onFocus();
-    if (winConfig.maximized) return;
+    if (winConfig.maximized || tileState) {
+      if (tileState) setTileState(null);
+      return;
+    }
     setIsDragging(true);
     dragStartRef.current = {
       x: e.clientX,
@@ -93,6 +99,22 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
               height: 'calc(100vh - 92px)',
               borderRadius: 0,
             }
+          : tileState === 'left-half'
+          ? {
+              top: 28,
+              left: 0,
+              width: '50vw',
+              height: 'calc(100vh - 92px)',
+              borderRadius: '0 16px 16px 0',
+            }
+          : tileState === 'right-half'
+          ? {
+              top: 28,
+              left: '50vw',
+              width: '50vw',
+              height: 'calc(100vh - 92px)',
+              borderRadius: '16px 0 0 16px',
+            }
           : {
               top: `${Math.max(32, pos.y)}px`,
               left: `${Math.max(16, pos.x)}px`,
@@ -144,21 +166,86 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
             <FaMinus className="text-[#593e00] text-[7px] opacity-0 group-hover:opacity-100" />
           </button>
 
-          {/* Maximize / Fullscreen */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onMaximize();
+          {/* Maximize / Zoom / Tile Window Anchor */}
+          <div
+            className="relative"
+            onMouseEnter={() => {
+              if (tileTimeoutRef.current) clearTimeout(tileTimeoutRef.current);
+              setShowTileMenu(true);
             }}
-            className="macos-traffic-btn macos-traffic-maximize"
-            title="Zoom / Fullscreen"
+            onMouseLeave={() => {
+              tileTimeoutRef.current = setTimeout(() => setShowTileMenu(false), 300);
+            }}
           >
-            {winConfig.maximized ? (
-              <FaCompress className="text-[#004d0d] text-[6px] opacity-0 group-hover:opacity-100" />
-            ) : (
-              <FaExpand className="text-[#004d0d] text-[6px] opacity-0 group-hover:opacity-100" />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowTileMenu(false);
+                setTileState(null);
+                onMaximize();
+              }}
+              className="macos-traffic-btn macos-traffic-maximize"
+              title="Zoom / Fullscreen (Hover to Tile)"
+            >
+              {winConfig.maximized || tileState ? (
+                <FaCompress className="text-[#004d0d] text-[6px] opacity-0 group-hover:opacity-100" />
+              ) : (
+                <FaExpand className="text-[#004d0d] text-[6px] opacity-0 group-hover:opacity-100" />
+              )}
+            </button>
+
+            {/* Official macOS Sequoia Window Tiling Popover */}
+            {showTileMenu && (
+              <div
+                className="absolute top-6 left-0 w-52 bg-[#1e1e24]/95 border border-white/20 rounded-xl p-2 shadow-2xl backdrop-blur-3xl z-[999999] animate-macos-slide-down text-white"
+                onMouseEnter={() => {
+                  if (tileTimeoutRef.current) clearTimeout(tileTimeoutRef.current);
+                }}
+                onMouseLeave={() => setShowTileMenu(false)}
+              >
+                <div className="text-[10px] font-semibold text-zinc-400 px-2 py-1 uppercase tracking-wider border-b border-white/10">
+                  Move & Resize
+                </div>
+                <div className="py-1 space-y-0.5 text-xs">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowTileMenu(false);
+                      setTileState('left-half');
+                    }}
+                    className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-blue-600 flex items-center justify-between transition-colors"
+                  >
+                    <span>Tile Window to Left</span>
+                    <span className="text-[10px] text-zinc-400 font-mono">⌃⌥←</span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowTileMenu(false);
+                      setTileState('right-half');
+                    }}
+                    className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-blue-600 flex items-center justify-between transition-colors"
+                  >
+                    <span>Tile Window to Right</span>
+                    <span className="text-[10px] text-zinc-400 font-mono">⌃⌥→</span>
+                  </button>
+                  <div className="h-px bg-white/10 my-1" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowTileMenu(false);
+                      setTileState(null);
+                      if (!winConfig.maximized) onMaximize();
+                    }}
+                    className="w-full text-left px-2.5 py-1.5 rounded-lg hover:bg-blue-600 flex items-center justify-between transition-colors"
+                  >
+                    <span>Fill Screen</span>
+                    <span className="text-[10px] text-zinc-400 font-mono">⌃⌥F</span>
+                  </button>
+                </div>
+              </div>
             )}
-          </button>
+          </div>
         </div>
 
         {/* Window Title */}

@@ -214,12 +214,125 @@ export const MacTerminalApp: React.FC = () => {
         setInput('');
         return;
 
+      case 'man':
+        const manTarget = args.trim().toLowerCase();
+        if (!manTarget) {
+          newHistory.push({
+            id: `out-${Date.now()}`,
+            type: 'output',
+            content: (
+              <div className="text-zinc-400 space-y-1">
+                <div>What manual page do you want?</div>
+                <div>Usage: <span className="text-cyan-400 font-bold">man &lt;command&gt;</span> (e.g. <span className="text-white font-mono">man neofetch</span>, <span className="text-white font-mono">man projects</span>, <span className="text-white font-mono">man skills</span>, <span className="text-white font-mono">man whoami</span>)</div>
+              </div>
+            ),
+          });
+        } else if (manTarget === 'neofetch' || manTarget === 'fastfetch') {
+          newHistory.push({
+            id: `out-${Date.now()}`,
+            type: 'output',
+            content: (
+              <div className="font-mono text-xs space-y-2 border-l-2 border-cyan-400 pl-3 py-1">
+                <div className="text-cyan-300 font-bold">NEOFETCH(1) · General Commands Manual · Ashish Darwin</div>
+                <div><span className="text-white font-semibold">NAME:</span> neofetch — render workstation hardware, Apple Silicon telemetry, memory and kernel metrics.</div>
+                <div><span className="text-white font-semibold">SYNOPSIS:</span> <span className="text-cyan-400">neofetch</span> [--ascii]</div>
+                <div><span className="text-white font-semibold">DESCRIPTION:</span> Displays real-time host info for Apple M3 Max, Liquid Retina XDR screen, Darwin 24.1.0 and zsh shell environment.</div>
+              </div>
+            ),
+          });
+        } else if (manTarget === 'projects') {
+          newHistory.push({
+            id: `out-${Date.now()}`,
+            type: 'output',
+            content: (
+              <div className="font-mono text-xs space-y-2 border-l-2 border-purple-400 pl-3 py-1">
+                <div className="text-purple-300 font-bold">PROJECTS(1) · Portfolio Systems Reference</div>
+                <div><span className="text-white font-semibold">NAME:</span> projects — index of flagship AI, full-stack, and microservice engineering artifacts.</div>
+                <div><span className="text-white font-semibold">ENTRIES:</span></div>
+                <div className="pl-3 space-y-1 text-zinc-300">
+                  <div>· <span className="text-white font-bold">TODOAI</span>: MCP Protocol Agent Orchestrator with Gemini Flash Cognition.</div>
+                  <div>· <span className="text-white font-bold">Sociantra</span>: Autonomous Voice & Social AutoPilot Engine.</div>
+                  <div>· <span className="text-white font-bold">VibePulse</span>: Web Audio API Streamer with real-time spectrum analysis.</div>
+                  <div>· <span className="text-white font-bold">CineVerse</span>: Cinema streaming OTT platform with trailer previews.</div>
+                </div>
+              </div>
+            ),
+          });
+        } else if (manTarget === 'skills') {
+          newHistory.push({
+            id: `out-${Date.now()}`,
+            type: 'output',
+            content: (
+              <div className="font-mono text-xs space-y-2 border-l-2 border-emerald-400 pl-3 py-1">
+                <div className="text-emerald-300 font-bold">SKILLS(1) · Technical Architecture Competencies</div>
+                <div><span className="text-white font-semibold">NAME:</span> skills — catalog of core languages, distributed systems frameworks, and AI toolsets.</div>
+                <div><span className="text-white font-semibold">COVERAGE:</span> TypeScript, Python, NestJS, gRPC, React 19, Docker, Azure DevOps, MCP.</div>
+              </div>
+            ),
+          });
+        } else if (manTarget === 'whoami') {
+          newHistory.push({
+            id: `out-${Date.now()}`,
+            type: 'output',
+            content: (
+              <div className="font-mono text-xs space-y-2 border-l-2 border-amber-400 pl-3 py-1">
+                <div className="text-amber-300 font-bold">WHOAMI(1) · User Identity Manual</div>
+                <div><span className="text-white font-semibold">NAME:</span> whoami — print effective user profile and architectural role.</div>
+                <div><span className="text-white font-semibold">IDENTITY:</span> Ashish Chanchal, Software Developer & AI Systems Engineer (Noida/Delhi).</div>
+              </div>
+            ),
+          });
+        } else {
+          newHistory.push({
+            id: `out-${Date.now()}`,
+            type: 'output',
+            content: `No manual entry for ${manTarget}. Try "man neofetch", "man projects", "man skills", or "man whoami".`,
+          });
+        }
+        break;
+
+      case 'top':
+      case 'htop':
+        newHistory.push({
+          id: `out-${Date.now()}`,
+          type: 'output',
+          content: (
+            <div className="font-mono text-xs space-y-1 text-zinc-300">
+              <div className="text-cyan-400 font-bold">Processes: 342 total, 2 running, 340 sleeping, 1294 threads</div>
+              <div>Load Avg: 1.42, 1.25, 0.98 · CPU usage: 4.8% user, 2.1% sys, 93.1% idle</div>
+              <div>PhysMem: 18.4GB used, 45.6GB free · Disk: 580GB / 2TB used</div>
+              <div className="text-white font-bold pt-1 border-b border-white/10 pb-0.5">PID    COMMAND      %CPU   TIME     MEM    USER</div>
+              <div className="text-emerald-400">1024   todoai_agent  4.2   12:40.1  210M   ashish</div>
+              <div className="text-blue-400">2048   sociantra_ai  3.1   08:15.4  340M   ashish</div>
+              <div>4096   zsh           0.4   00:02.1  18M    ashish</div>
+              <div>8192   window_mgr    1.2   04:32.0  145M   ashish</div>
+            </div>
+          ),
+        });
+        break;
+
+      case 'uptime':
+        newHistory.push({
+          id: `out-${Date.now()}`,
+          type: 'output',
+          content: '23:19  up 14 days,  6:42, 2 users, load averages: 1.42 1.25 0.98',
+        });
+        break;
+
+      case 'echo':
+        newHistory.push({
+          id: `out-${Date.now()}`,
+          type: 'output',
+          content: args || '',
+        });
+        break;
+
       case 'pwd':
         newHistory.push({ id: `out-${Date.now()}`, type: 'output', content: '/Users/ashish' });
         break;
 
       case 'uname':
-        newHistory.push({ id: `out-${Date.now()}`, type: 'output', content: 'Darwin Ashishs-MacBook-Pro.local 24.1.0 Darwin Kernel Version 24.1.0' });
+        newHistory.push({ id: `out-${Date.now()}`, type: 'output', content: 'Darwin Ashishs-MacBook-Pro.local 24.1.0 Darwin Kernel Version 24.1.0: Apple M3 Max' });
         break;
 
       case 'date':

@@ -30,8 +30,10 @@ export const QuickSettings: React.FC<QuickSettingsProps> = ({ isOpen, onClose })
 
   const handleToggleNightLight = () => {
     setNightLight((v) => {
-      localStorage.setItem('win11_night_light', String(!v));
-      return !v;
+      const next = !v;
+      localStorage.setItem('win11_night_light', String(next));
+      window.dispatchEvent(new Event('storage'));
+      return next;
     });
   };
 
@@ -50,6 +52,7 @@ export const QuickSettings: React.FC<QuickSettingsProps> = ({ isOpen, onClose })
   const handleBrightnessChange = (newVal: number) => {
     setBrightness(newVal);
     localStorage.setItem('win11_brightness', String(newVal));
+    window.dispatchEvent(new Event('storage'));
   };
 
   if (!isOpen) return null;

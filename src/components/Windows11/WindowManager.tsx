@@ -46,6 +46,9 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
 
   const [pos, setPos] = useState(getInitialPos);
   const [isDragging, setIsDragging] = useState(false);
+  const [showSnapMenu, setShowSnapMenu] = useState(false);
+  const [snapLayout, setSnapLayout] = useState<'left-half' | 'right-half' | 'left-two-thirds' | 'right-one-third' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | null>(null);
+  const snapTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragStartRef = useRef<{ startX: number; startY: number; posX: number; posY: number }>({
     startX: 0,
     startY: 0,
@@ -54,7 +57,10 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
   });
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (winConfig.maximized) return;
+    if (winConfig.maximized || snapLayout) {
+      if (snapLayout) setSnapLayout(null);
+      return;
+    }
     onFocus();
     setIsDragging(true);
     dragStartRef.current = {
@@ -63,6 +69,11 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
       posX: pos.x,
       posY: pos.y,
     };
+  };
+
+  const handleApplySnap = (layout: 'left-half' | 'right-half' | 'left-two-thirds' | 'right-one-third' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right') => {
+    setShowSnapMenu(false);
+    setSnapLayout(layout);
   };
 
   useEffect(() => {
@@ -116,6 +127,70 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
               height: 'calc(100vh - 48px)',
               borderRadius: 0,
             }
+          : snapLayout === 'left-half'
+          ? {
+              top: 0,
+              left: 0,
+              width: '50vw',
+              height: 'calc(100vh - 48px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'right-half'
+          ? {
+              top: 0,
+              left: '50vw',
+              width: '50vw',
+              height: 'calc(100vh - 48px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'left-two-thirds'
+          ? {
+              top: 0,
+              left: 0,
+              width: '66.666vw',
+              height: 'calc(100vh - 48px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'right-one-third'
+          ? {
+              top: 0,
+              left: '66.666vw',
+              width: '33.333vw',
+              height: 'calc(100vh - 48px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'top-left'
+          ? {
+              top: 0,
+              left: 0,
+              width: '50vw',
+              height: 'calc(50vh - 24px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'top-right'
+          ? {
+              top: 0,
+              left: '50vw',
+              width: '50vw',
+              height: 'calc(50vh - 24px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'bottom-left'
+          ? {
+              top: 'calc(50vh - 24px)',
+              left: 0,
+              width: '50vw',
+              height: 'calc(50vh - 24px)',
+              borderRadius: 0,
+            }
+          : snapLayout === 'bottom-right'
+          ? {
+              top: 'calc(50vh - 24px)',
+              left: '50vw',
+              width: '50vw',
+              height: 'calc(50vh - 24px)',
+              borderRadius: 0,
+            }
           : {
               top: `${Math.max(16, pos.y)}px`,
               left: `${Math.max(10, pos.x)}px`,
@@ -141,8 +216,8 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
           <span className="truncate">{winConfig.title}</span>
         </div>
 
-        {/* Windows 11 Window Action Buttons */}
-        <div className="flex items-center h-full -mr-3" onClick={(e) => e.stopPropagation()}>
+        {/* Windows 11 Window Action Buttons & Snap Flyout */}
+        <div className="flex items-center h-full -mr-3 relative" onClick={(e) => e.stopPropagation()}>
           {/* Minimize */}
           <button
             onClick={onMinimize}
@@ -152,14 +227,95 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
             <FaMinus className="w-2.5 h-2.5" />
           </button>
 
-          {/* Maximize / Restore */}
-          <button
-            onClick={onMaximize}
-            className="h-full px-3.5 hover:bg-white/10 text-zinc-400 hover:text-white flex items-center justify-center transition-colors"
-            title={winConfig.maximized ? 'Restore' : 'Maximize'}
+          {/* Maximize / Restore / Snap Layout Anchor */}
+          <div
+            className="relative h-full"
+            onMouseEnter={() => {
+              if (snapTimeoutRef.current) clearTimeout(snapTimeoutRef.current);
+              setShowSnapMenu(true);
+            }}
+            onMouseLeave={() => {
+              snapTimeoutRef.current = setTimeout(() => setShowSnapMenu(false), 300);
+            }}
           >
-            {winConfig.maximized ? <FaCompressAlt className="w-2.5 h-2.5" /> : <FaRegSquare className="w-2.5 h-2.5" />}
-          </button>
+            <button
+              onClick={() => {
+                setShowSnapMenu(false);
+                setSnapLayout(null);
+                onMaximize();
+              }}
+              className="h-full px-3.5 hover:bg-white/10 text-zinc-400 hover:text-white flex items-center justify-center transition-colors"
+              title={winConfig.maximized || snapLayout ? 'Restore' : 'Maximize (Hover for Snap Layouts)'}
+            >
+              {winConfig.maximized || snapLayout ? <FaCompressAlt className="w-2.5 h-2.5" /> : <FaRegSquare className="w-2.5 h-2.5" />}
+            </button>
+
+            {/* Official Windows 11 Snap Assist Layout Popover */}
+            {showSnapMenu && (
+              <div
+                className="absolute top-10 right-0 w-64 bg-[#1e1e24]/95 border border-white/20 rounded-xl p-3 shadow-2xl backdrop-blur-2xl z-[999999] animate-win11-menu"
+                onMouseEnter={() => {
+                  if (snapTimeoutRef.current) clearTimeout(snapTimeoutRef.current);
+                }}
+                onMouseLeave={() => setShowSnapMenu(false)}
+              >
+                <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">Snap layouts</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {/* 50/50 Split */}
+                  <div className="bg-black/40 p-1.5 rounded-lg border border-white/10 flex gap-1 h-14">
+                    <button
+                      onClick={() => handleApplySnap('left-half')}
+                      className="flex-1 bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Snap Left Half"
+                    />
+                    <button
+                      onClick={() => handleApplySnap('right-half')}
+                      className="flex-1 bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Snap Right Half"
+                    />
+                  </div>
+
+                  {/* 2/3 and 1/3 Split */}
+                  <div className="bg-black/40 p-1.5 rounded-lg border border-white/10 flex gap-1 h-14">
+                    <button
+                      onClick={() => handleApplySnap('left-two-thirds')}
+                      className="w-2/3 bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Snap Left 66%"
+                    />
+                    <button
+                      onClick={() => handleApplySnap('right-one-third')}
+                      className="w-1/3 bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Snap Right 33%"
+                    />
+                  </div>
+
+                  {/* 4 Quadrants */}
+                  <div className="bg-black/40 p-1.5 rounded-lg border border-white/10 grid grid-cols-2 gap-1 h-14 col-span-2">
+                    <button
+                      onClick={() => handleApplySnap('top-left')}
+                      className="bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Top Left"
+                    />
+                    <button
+                      onClick={() => handleApplySnap('top-right')}
+                      className="bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Top Right"
+                    />
+                    <button
+                      onClick={() => handleApplySnap('bottom-left')}
+                      className="bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Bottom Left"
+                    />
+                    <button
+                      onClick={() => handleApplySnap('bottom-right')}
+                      className="bg-white/10 hover:bg-blue-500/50 rounded transition-all border border-white/15"
+                      title="Bottom Right"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Close */}
           <button

@@ -179,6 +179,50 @@ export const Spotlight: React.FC<SpotlightProps> = ({ isOpen, onClose, onOpenApp
         onClose();
       },
     },
+    {
+      id: 'mail',
+      title: 'Mail',
+      category: 'Applications',
+      subtitle: 'Compose & read messages — akchanchal2002@gmail.com',
+      icon: MACOS_ICONS.mail,
+      action: () => {
+        onOpenApp('mail');
+        onClose();
+      },
+    },
+    {
+      id: 'calendar',
+      title: 'Calendar',
+      category: 'Applications',
+      subtitle: 'Schedule, events & roadmap tracking',
+      icon: MACOS_ICONS.calendar,
+      action: () => {
+        onOpenApp('calendar');
+        onClose();
+      },
+    },
+    {
+      id: 'maps',
+      title: 'Maps',
+      category: 'Applications',
+      subtitle: 'Base of operations & geolocation coordinates',
+      icon: MACOS_ICONS.maps,
+      action: () => {
+        onOpenApp('maps');
+        onClose();
+      },
+    },
+    {
+      id: 'podcasts',
+      title: 'Podcasts',
+      category: 'Applications',
+      subtitle: 'Engineering podcasts, audio streams & discussions',
+      icon: MACOS_ICONS.podcasts,
+      action: () => {
+        onOpenApp('podcasts');
+        onClose();
+      },
+    },
 
     // Projects
     {

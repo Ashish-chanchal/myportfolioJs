@@ -34,6 +34,8 @@ export const Taskbar: React.FC<TaskbarProps> = ({
   isWidgetsOpen,
 }) => {
   const [time, setTime] = useState(new Date());
+  const [hoveredAppId, setHoveredAppId] = useState<string | null>(null);
+  const previewTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -96,34 +98,77 @@ export const Taskbar: React.FC<TaskbarProps> = ({
           <img src={WIN11_ICONS.search} alt="Search" className="w-5 h-5 object-contain" />
         </button>
 
-        {/* Pinned / Open Apps */}
+        {/* Pinned / Open Apps with Windows 11 Live Hover Previews */}
         {PINNED_ITEMS.map((app) => {
           const isOpen = openApps.includes(app.id);
           const isActive = activeAppId === app.id;
+          const isHovered = hoveredAppId === app.id;
 
           return (
-            <button
+            <div
               key={app.id}
-              onClick={() => onToggleApp(app.id)}
-              className={`relative p-1.5 rounded-md transition-all win11-icon-btn ${
-                isActive
-                  ? 'bg-white/20 shadow-inner'
-                  : isOpen
-                  ? 'bg-white/10'
-                  : 'hover:bg-white/10'
-              }`}
-              title={app.name}
+              className="relative"
+              onMouseEnter={() => {
+                if (previewTimeoutRef.current) clearTimeout(previewTimeoutRef.current);
+                setHoveredAppId(app.id);
+              }}
+              onMouseLeave={() => {
+                previewTimeoutRef.current = setTimeout(() => setHoveredAppId(null), 250);
+              }}
             >
-              <img src={app.icon} alt={app.name} className="w-6 h-6 object-contain drop-shadow" />
-              {/* Running Pill Indicator */}
-              {isOpen && (
+              {/* Windows 11 Thumbnail Preview Card */}
+              {isHovered && isOpen && (
                 <div
-                  className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-1 rounded-full transition-all ${
-                    isActive ? 'w-4 bg-blue-400' : 'w-1.5 bg-zinc-400'
-                  }`}
-                />
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleApp(app.id);
+                    setHoveredAppId(null);
+                  }}
+                  className="absolute bottom-14 left-1/2 -translate-x-1/2 w-48 bg-[#202028]/95 border border-white/20 rounded-xl p-2.5 shadow-2xl backdrop-blur-2xl z-[999999] animate-win11-menu flex flex-col gap-1.5 cursor-pointer hover:border-blue-400/50 transition-all text-left"
+                >
+                  <div className="flex items-center justify-between border-b border-white/10 pb-1">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <img src={app.icon} alt={app.name} className="w-3.5 h-3.5 object-contain" />
+                      <span className="text-[11px] font-medium text-white truncate">{app.name}</span>
+                    </div>
+                  </div>
+                  {/* Mini Window Preview Canvas Mock */}
+                  <div className="h-24 rounded-lg bg-[#141418] border border-white/10 p-2 flex flex-col justify-between overflow-hidden shadow-inner relative group">
+                    <div className="h-2 w-16 bg-white/15 rounded" />
+                    <div className="space-y-1">
+                      <div className="h-1.5 w-full bg-white/10 rounded" />
+                      <div className="h-1.5 w-3/4 bg-white/10 rounded" />
+                      <div className="h-1.5 w-1/2 bg-blue-500/30 rounded" />
+                    </div>
+                    <div className="text-[9px] text-zinc-400 font-mono text-center opacity-70">
+                      Click to bring to front
+                    </div>
+                  </div>
+                </div>
               )}
-            </button>
+
+              <button
+                onClick={() => onToggleApp(app.id)}
+                className={`relative p-1.5 rounded-md transition-all win11-icon-btn ${
+                  isActive
+                    ? 'bg-white/20 shadow-inner'
+                    : isOpen
+                    ? 'bg-white/10'
+                    : 'hover:bg-white/10'
+                }`}
+                title={!isOpen ? app.name : undefined}
+              >
+                <img src={app.icon} alt={app.name} className="w-6 h-6 object-contain drop-shadow" />
+                {/* Running Pill Indicator */}
+                {isOpen && (
+                  <div
+                    className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-1 rounded-full transition-all ${
+                      isActive ? 'w-4 bg-blue-400' : 'w-1.5 bg-zinc-400'
+                    }`}
+                  />
+                )}
+              </button>
+            </div>
           );
         })}
       </div>

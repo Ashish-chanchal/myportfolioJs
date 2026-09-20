@@ -42,6 +42,25 @@ export const MacFinderApp: React.FC<MacFinderAppProps> = ({ onOpenApp: _onOpenAp
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
   const [quickLookOpen, setQuickLookOpen] = useState(false);
 
+  // macOS Native Spacebar Quick Look Listener
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.key === ' ') {
+        const activeTag = (document.activeElement?.tagName || '').toLowerCase();
+        if (activeTag !== 'input' && activeTag !== 'textarea') {
+          e.preventDefault();
+          if (selectedFile) {
+            setQuickLookOpen((prev) => !prev);
+          }
+        }
+      } else if (e.key === 'Escape' && quickLookOpen) {
+        setQuickLookOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedFile, quickLookOpen]);
+
   const FOLDER_DATA: Record<string, FileItem[]> = {
     Applications: [
       {

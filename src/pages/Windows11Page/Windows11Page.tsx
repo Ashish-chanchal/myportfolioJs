@@ -40,6 +40,7 @@ import CameraApp from '../../components/Windows11/Apps/CameraApp';
 import BootScreen from '../../components/Windows11/BootScreen';
 import DesktopOnlyGate from '../../components/shared/DesktopOnlyGate';
 import LockScreen from '../../components/Windows11/LockScreen';
+import { osSound } from '../../components/shared/audioEffects';
 
 export const Windows11Page: React.FC = () => {
   const navigate = useNavigate();
@@ -169,6 +170,7 @@ export const Windows11Page: React.FC = () => {
   };
 
   const openApp = (appId: string) => {
+    osSound.playWin11Open();
     if (!openApps.includes(appId)) {
       setOpenApps((prev) => [...prev, appId]);
     }
@@ -176,6 +178,7 @@ export const Windows11Page: React.FC = () => {
   };
 
   const closeApp = (appId: string) => {
+    osSound.playWin11Minimize();
     if (appId === 'camera') {
       if ((window as any).__activeCameraStream) {
         try {
@@ -206,17 +209,20 @@ export const Windows11Page: React.FC = () => {
     if (!current) return;
 
     if (activeAppId === appId && !current.minimized) {
+      osSound.playWin11Minimize();
       setWindowsState((prev) => ({
         ...prev,
         [appId]: { ...prev[appId], minimized: true },
       }));
       setActiveAppId(null);
     } else {
+      osSound.playWin11Open();
       focusApp(appId);
     }
   };
 
   const toggleMaximize = (appId: string) => {
+    osSound.playWin11Snap();
     setWindowsState((prev) => ({
       ...prev,
       [appId]: { ...prev[appId], maximized: !prev[appId]?.maximized },
@@ -595,6 +601,27 @@ export const Windows11Page: React.FC = () => {
     return <LockScreen wallpaper={wallpaper} onLogin={handleLogin} />;
   }
 
+  // Live QuickSettings Visual Filter States
+  const [screenBrightness, setScreenBrightness] = useState<number>(() => {
+    return Number(localStorage.getItem('win11_brightness')) || 90;
+  });
+  const [isNightLight, setIsNightLight] = useState<boolean>(() => {
+    return localStorage.getItem('win11_night_light') === 'true';
+  });
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setScreenBrightness(Number(localStorage.getItem('win11_brightness')) || 90);
+      setIsNightLight(localStorage.getItem('win11_night_light') === 'true');
+    };
+    window.addEventListener('storage', handleStorageChange);
+    const interval = setInterval(handleStorageChange, 1000);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div
       onClick={closeAllFlyouts}
@@ -604,6 +631,7 @@ export const Windows11Page: React.FC = () => {
         backgroundImage: `url("${wallpaper}")`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        filter: `brightness(${Math.max(0.4, screenBrightness / 100)}) ${isNightLight ? 'sepia(0.25) hue-rotate(-15deg)' : ''}`,
       }}
     >
       <Helmet>
@@ -631,6 +659,11 @@ export const Windows11Page: React.FC = () => {
               e.stopPropagation();
               setSelectedDesktopIcon(item.id);
               setContextMenu({ x: 0, y: 0, visible: false, targetIcon: null });
+              if (item.action) {
+                item.action();
+              } else {
+                openApp(item.id);
+              }
             }}
             onDoubleClick={(e) => {
               e.stopPropagation();

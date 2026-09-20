@@ -13,6 +13,7 @@ import MacLockScreen from '../../components/MacOS/MacLockScreen';
 import MacBootScreen from '../../components/MacOS/MacBootScreen';
 import MacWindowManager, { MacWindowConfig } from '../../components/MacOS/MacWindowManager';
 import DesktopOnlyGate from '../../components/shared/DesktopOnlyGate';
+import { osSound } from '../../components/shared/audioEffects';
 
 // App Components
 import MacFinderApp from '../../components/MacOS/Apps/MacFinderApp';
@@ -28,6 +29,10 @@ import MacMusicApp from '../../components/MacOS/Apps/MacMusicApp';
 import MacCalculatorApp from '../../components/MacOS/Apps/MacCalculatorApp';
 import MacPhotoBoothApp from '../../components/MacOS/Apps/MacPhotoBoothApp';
 import MacTrashApp from '../../components/MacOS/Apps/MacTrashApp';
+import MacMailApp from '../../components/MacOS/Apps/MacMailApp';
+import MacCalendarApp from '../../components/MacOS/Apps/MacCalendarApp';
+import MacMapsApp from '../../components/MacOS/Apps/MacMapsApp';
+import MacPodcastsApp from '../../components/MacOS/Apps/MacPodcastsApp';
 
 interface WindowState {
   minimized: boolean;
@@ -57,6 +62,10 @@ const MAC_APPS_META: Record<string, { title: string; defaultWidth: number; defau
   calculator: { title: 'Calculator', defaultWidth: 320, defaultHeight: 460 },
   photobooth: { title: 'Photo Booth', defaultWidth: 700, defaultHeight: 520 },
   trash: { title: 'Trash', defaultWidth: 640, defaultHeight: 420 },
+  mail: { title: 'Mail', defaultWidth: 860, defaultHeight: 540 },
+  calendar: { title: 'Calendar', defaultWidth: 860, defaultHeight: 540 },
+  maps: { title: 'Maps', defaultWidth: 880, defaultHeight: 560 },
+  podcasts: { title: 'Podcasts', defaultWidth: 840, defaultHeight: 540 },
 };
 
 export const MacOSPage: React.FC = () => {
@@ -161,6 +170,7 @@ export const MacOSPage: React.FC = () => {
 
   // Open App
   const openApp = useCallback((appId: string) => {
+    osSound.playMacClick();
     if (!openApps.includes(appId)) {
       setOpenApps((prev) => [...prev, appId]);
     }
@@ -169,6 +179,7 @@ export const MacOSPage: React.FC = () => {
 
   // Close App
   const closeApp = useCallback((appId: string) => {
+    osSound.playMacClick();
     // If photobooth is closed, aggressively terminate hardware camera streams and reload
     if (appId === 'photobooth') {
       try {
@@ -207,12 +218,14 @@ export const MacOSPage: React.FC = () => {
     if (!current) return;
 
     if (activeAppId === appId && !current.minimized) {
+      osSound.playMacClick();
       setWindowsState((prev) => ({
         ...prev,
         [appId]: { ...prev[appId], minimized: true },
       }));
       setActiveAppId(null);
     } else {
+      osSound.playMacClick();
       setWindowsState((prev) => ({
         ...prev,
         [appId]: { ...prev[appId], minimized: false },
@@ -223,6 +236,7 @@ export const MacOSPage: React.FC = () => {
 
   // Maximize Window
   const toggleMaximize = useCallback((appId: string) => {
+    osSound.playMacClick();
     setWindowsState((prev) => ({
       ...prev,
       [appId]: { ...prev[appId], maximized: !prev[appId]?.maximized },
@@ -237,7 +251,10 @@ export const MacOSPage: React.FC = () => {
       // Cmd + Space => Toggle Spotlight
       if (isCmdOrCtrl && e.code === 'Space') {
         e.preventDefault();
-        setIsSpotlightOpen((prev) => !prev);
+        setIsSpotlightOpen((prev) => {
+          if (!prev) osSound.playMacGlassPing();
+          return !prev;
+        });
         return;
       }
 
@@ -256,9 +273,10 @@ export const MacOSPage: React.FC = () => {
         return;
       }
 
-      // Cmd + Shift + 4 => Screenshot Flash
-      if (isCmdOrCtrl && e.shiftKey && (e.key === '4' || e.key === '$')) {
+      // Cmd + Shift + 4 or 3 => Screenshot Flash + Realistic Camera Shutter Sound
+      if (isCmdOrCtrl && e.shiftKey && (e.key === '4' || e.key === '3' || e.code === 'Digit4' || e.code === 'Digit3')) {
         e.preventDefault();
+        osSound.playMacCameraShutter();
         setScreenFlash(true);
         setTimeout(() => setScreenFlash(false), 200);
         return;
@@ -396,6 +414,14 @@ export const MacOSPage: React.FC = () => {
         return <MacPhotoBoothApp />;
       case 'trash':
         return <MacTrashApp />;
+      case 'mail':
+        return <MacMailApp />;
+      case 'calendar':
+        return <MacCalendarApp />;
+      case 'maps':
+        return <MacMapsApp />;
+      case 'podcasts':
+        return <MacPodcastsApp />;
       default:
         return null;
     }
@@ -494,12 +520,57 @@ export const MacOSPage: React.FC = () => {
       defaultWidth: 720,
       defaultHeight: 460,
     },
+    mail: {
+      id: 'mail',
+      title: 'Mail',
+      icon: <img src={MACOS_ICONS.mail} alt="Mail" className="w-4 h-4 object-contain" />,
+      defaultWidth: 860,
+      defaultHeight: 540,
+    },
+    calendar: {
+      id: 'calendar',
+      title: 'Calendar',
+      icon: <img src={MACOS_ICONS.calendar} alt="Calendar" className="w-4 h-4 object-contain" />,
+      defaultWidth: 860,
+      defaultHeight: 540,
+    },
+    maps: {
+      id: 'maps',
+      title: 'Maps',
+      icon: <img src={MACOS_ICONS.maps} alt="Maps" className="w-4 h-4 object-contain" />,
+      defaultWidth: 880,
+      defaultHeight: 560,
+    },
+    podcasts: {
+      id: 'podcasts',
+      title: 'Podcasts',
+      icon: <img src={MACOS_ICONS.podcasts} alt="Podcasts" className="w-4 h-4 object-contain" />,
+      defaultWidth: 840,
+      defaultHeight: 540,
+    },
   };
 
   const getActiveAppTitle = () => {
     if (!activeAppId) return 'Finder';
     return APP_CONFIGS[activeAppId]?.title || 'Finder';
   };
+
+  // Live Control Center Display Filter
+  const [macBrightness, setMacBrightness] = useState<number>(() => {
+    return Number(localStorage.getItem('macos_brightness')) || 90;
+  });
+
+  useEffect(() => {
+    const handleStorage = () => {
+      setMacBrightness(Number(localStorage.getItem('macos_brightness')) || 90);
+    };
+    window.addEventListener('storage', handleStorage);
+    const interval = setInterval(handleStorage, 1000);
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div
@@ -508,6 +579,7 @@ export const MacOSPage: React.FC = () => {
       className="macos-root fixed inset-0 w-screen h-screen overflow-hidden select-none bg-cover bg-center transition-all duration-700"
       style={{
         backgroundImage: `url(${wallpaper})`,
+        filter: `brightness(${Math.max(0.4, macBrightness / 100)})`,
       }}
     >
       {/* Desktop Only / Screen Size Gate */}
@@ -533,24 +605,29 @@ export const MacOSPage: React.FC = () => {
       />
 
       {/* Desktop Icons Grid */}
-      <div className="absolute top-10 right-4 flex flex-col gap-5 z-10">
+      <div className="absolute top-10 right-4 flex flex-col gap-5 z-20 pointer-events-auto">
         {DESKTOP_ICONS.map((icon) => (
           <div
             key={icon.id}
-            onDoubleClick={() => {
+            onMouseDown={(e) => {
+              e.stopPropagation();
               if (icon.url) {
                 openUrlInSafari(icon.url);
               } else {
                 openApp(icon.appId);
               }
             }}
-            className="flex flex-col items-center gap-1 w-20 p-1.5 rounded-xl hover:bg-white/15 cursor-pointer transition-all group"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="flex flex-col items-center gap-1 w-20 p-1.5 rounded-xl hover:bg-white/20 active:bg-white/30 cursor-pointer transition-all group select-none"
           >
             <div className="w-12 h-12 flex items-center justify-center">
               <img
                 src={icon.icon}
                 alt={icon.name}
-                className="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform pointer-events-none"
+                className="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 group-active:scale-95 transition-transform pointer-events-none select-none"
+                draggable={false}
               />
             </div>
             <span className="text-[11px] font-medium text-white text-center leading-tight tracking-tight px-1.5 py-0.5 rounded group-hover:bg-blue-600 drop-shadow truncate w-full">

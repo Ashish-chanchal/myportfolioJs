@@ -133,7 +133,14 @@ export const ControlCenter: React.FC<ControlCenterProps> = ({ isOpen, onClose: _
             min="10"
             max="100"
             value={brightness}
-            onChange={(e) => setBrightness(Number(e.target.value))}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              setBrightness(val);
+              try {
+                localStorage.setItem('macos_brightness', String(val));
+                window.dispatchEvent(new Event('storage'));
+              } catch {}
+            }}
             className="w-full h-7 rounded-xl appearance-none bg-white/15 cursor-pointer accent-white pl-8"
           />
         </div>

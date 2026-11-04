@@ -183,13 +183,13 @@ const About: React.FC<{
           /* ── Bento layout ── */
           <div className="grid grid-cols-12 gap-4 mt-2">
             {/* Bio card — wide left (8 cols) */}
-            <div className="col-span-12 lg:col-span-8 bento-tile p-6 sm:p-8 flex flex-col gap-5">
+            <div className="col-span-12 lg:col-span-7 bento-tile p-6 sm:p-10 flex flex-col justify-between gap-8">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-white tracking-tight mb-4">
+                <h3 className="text-3xl sm:text-4xl font-heading font-bold text-white tracking-tight leading-[1.05] mb-6">
                   Building scalable systems <br />
                   <span className="text-accent">from foundational code to AI.</span>
                 </h3>
-                <div className="space-y-3 text-sm text-zinc-400 leading-relaxed font-sans">
+                <div className="space-y-4 text-[15px] sm:text-base text-zinc-400 leading-relaxed font-sans">
                   {description && description.length > 0 ? (
                     description.map((desc) => (
                       <p key={desc.id} className="border-l-2 border-accent/30 pl-4">
@@ -221,23 +221,22 @@ const About: React.FC<{
               )}
             </div>
 
-            {/* Tenet header pill — right top (4 cols) */}
-            <div className="col-span-12 lg:col-span-4 bento-tile p-5 flex items-center justify-between">
-              <span className="font-heading font-semibold text-white text-sm">Core Engineering Tenets</span>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/25 font-mono font-bold">V2.0</span>
-            </div>
-
-            {/* 3 principle tiles — each 4 cols */}
-            {PRINCIPLES.map((p) => (
-              <div key={p.code} className="col-span-12 sm:col-span-6 lg:col-span-4 bento-tile p-5 flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-accent">[{p.code}]</span>
-                  <h4 className="font-heading font-semibold text-white text-sm tracking-tight">{p.title}</h4>
-                </div>
-                <div className="h-px bg-gradient-to-r from-accent/20 to-transparent" />
-                <p className="text-xs text-zinc-400 font-sans leading-relaxed">{p.desc}</p>
+            {/* Tenets — stacked right column */}
+            <div className="col-span-12 lg:col-span-5 flex flex-col gap-3.5 md:gap-4">
+              <div className="flex items-center justify-between px-1">
+                <span className="bx-eyebrow">Core engineering tenets</span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent/15 text-accent border border-accent/25 font-mono font-bold">V2.0</span>
               </div>
-            ))}
+              {PRINCIPLES.map((p) => (
+                <div key={p.code} className="bento-tile p-5 sm:p-6 flex flex-col gap-2.5 flex-1">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-7 min-w-7 px-2 items-center justify-center rounded-full bg-accent text-black text-[11px] font-mono font-bold">{p.code}</span>
+                    <h4 className="font-heading font-semibold text-white text-base tracking-tight">{p.title}</h4>
+                  </div>
+                  <p className="text-sm text-zinc-400 font-sans leading-relaxed">{p.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           /* ── Classic layout (minimalist / brutalist) ── */

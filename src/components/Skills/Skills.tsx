@@ -71,10 +71,10 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
             : isEditorial
             ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'
             : isBento
-            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+            ? 'grid-cols-12 gap-3.5 md:gap-4'
             : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
         }`}>
-          {techData.map((tech) => (
+          {techData.map((tech, ti) => (
             isRetro ? (
               /* ── Retro: Vintage ROM Expansion Module ── */
               <div key={tech.id} className="retro-window p-1 font-mono flex flex-col justify-between">
@@ -122,19 +122,20 @@ const Skills: React.FC<{ showimg?: boolean; waypointIndex?: string }> = ({ waypo
                 </div>
               </div>
             ) : isBento ? (
-              <div key={tech.id} className="bento-tile p-5 flex flex-col gap-3">
-                {/* Category header */}
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: tech.accent }} />
-                  <span className="font-mono text-xs font-bold text-white tracking-wide uppercase">{tech.category}</span>
+              <div key={tech.id} className={`bento-tile p-5 sm:p-6 flex flex-col gap-5 col-span-12 sm:col-span-6 ${['lg:col-span-5','lg:col-span-4','lg:col-span-3','lg:col-span-3','lg:col-span-5','lg:col-span-4','lg:col-span-12'][ti % 7]}`}>
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-2.5 font-heading font-semibold text-base text-white tracking-tight">
+                    <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: tech.accent }} />
+                    {tech.category}
+                  </span>
+                  <span className="font-mono text-[11px] text-zinc-500">{String(tech.technologies.length).padStart(2, '0')}</span>
                 </div>
-                {/* Tech pills */}
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {tech.technologies.map((t, i) => (
                     <span
                       key={i}
-                      className="text-[11px] font-mono px-2.5 py-0.5 rounded-full text-zinc-300 border border-white/10"
-                      style={{ backgroundColor: `${tech.accent}12` }}
+                      className="text-xs font-mono px-3 py-1.5 rounded-xl text-zinc-200 border border-white/10"
+                      style={{ backgroundColor: `${tech.accent}14` }}
                     >
                       {t}
                     </span>

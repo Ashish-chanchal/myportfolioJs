@@ -76,26 +76,26 @@ const Heading: React.FC<HeadingProps> = ({ text, tag, index }) => {
   }
 
   if (isBento) {
+    const nice = text === text.toUpperCase() ? text.charAt(0) + text.slice(1).toLowerCase() : text;
+    const num = (index || 'WAYPOINT_00').replace(/\D/g, '').padStart(2, '0');
     return (
-      <div className="flex flex-col gap-2 mb-8">
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold bg-white/8 border border-white/12 text-white backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-            {index ? index.replace('//', '').replace('WAYPOINT_', 'SECTION ') : 'SECTION'}
-          </span>
-          {tag && (
-            <span className="text-zinc-400 font-mono text-xs uppercase tracking-wider">
-              {tag.replace('//', '').trim()}
+      <div className="flex items-end justify-between gap-6 mb-10 md:mb-12">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center justify-center h-7 min-w-7 px-2 rounded-full text-[11px] font-mono font-bold bg-accent text-black">
+              {num}
             </span>
-          )}
-        </div>
-
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white tracking-tight">
-            {text}
+            {tag && (
+              <span className="text-zinc-400 font-mono text-xs uppercase tracking-[0.14em]">
+                {tag.replace('//', '').trim()}
+              </span>
+            )}
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-white tracking-tight">
+            {nice}
           </h2>
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent hidden sm:block max-w-xs"></div>
         </div>
+        <div className="hidden md:block flex-1 h-px mb-3 bg-gradient-to-r from-white/15 to-transparent max-w-md" />
       </div>
     );
   }

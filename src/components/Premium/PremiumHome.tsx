@@ -129,8 +129,7 @@ const PremiumHome = ({ projects, experience }: { projects: PremiumProject[]; exp
 
       // hero intro
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-      tl.from('.pm-hello', { y: 20, opacity: 0, duration: 0.7 })
-        .from('.pm-hero .pm-wi', { yPercent: 120, rotate: 5, duration: 1.1, stagger: 0.07 }, '-=0.4')
+      tl.from('.pm-hero .pm-wi', { yPercent: 120, rotate: 5, duration: 1.1, stagger: 0.07 })
         .from('.pm-hero .pm-pill', { backgroundSize: '0% 100%', duration: 0.8, stagger: 0.15, ease: 'power3.inOut' }, '-=0.5')
         .from(['.pm-lead', '.pm-hero .pm-cta > *'], { y: 24, opacity: 0, duration: 0.7, stagger: 0.08 }, '-=0.7')
         .from('.pm-sticker', { scale: 0, rotate: -40, duration: 0.9, ease: 'back.out(2.2)', stagger: 0.1 }, '-=0.8');
@@ -239,7 +238,6 @@ const PremiumHome = ({ projects, experience }: { projects: PremiumProject[]; exp
           ))}
         </div>
         <div className="pm-wrap">
-          <span className="pm-hello"><span className="pm-dot" />Open to work · Noida, India</span>
           <h1 className="pm-h1">
             <Words text="Hey, I make" />
             <Pill c={PEACH}>fast,</Pill>

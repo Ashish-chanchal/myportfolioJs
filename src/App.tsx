@@ -1,5 +1,5 @@
 import Navbar from "./components/navBar/NavBar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import WorksPage from "./pages/WorksPage/WorksPage";
@@ -14,15 +14,26 @@ import PremiumNav from "./components/Premium/PremiumNav";
 import PremiumFooter from "./components/Premium/PremiumFooter";
 import "./components/Premium/premium.css";
 import { useTheme } from "./context/ThemeContext";
+import ModeMotion from "./components/shared/ModeMotion";
 
 function AppContent({ selectedItem, setSelectedItem }: { selectedItem: number; setSelectedItem: React.Dispatch<React.SetStateAction<number>> }) {
   const location = useLocation();
   const { designMode } = useTheme();
   const isPremium = designMode === 'premium';
+  // A design switch rebuilds the whole page and replays its entrance animations,
+  // so start from the top instead of landing mid-animation halfway down.
+  const lastMode = useRef(designMode);
+  useEffect(() => {
+    if (lastMode.current !== designMode) {
+      lastMode.current = designMode;
+      window.scrollTo(0, 0);
+    }
+  }, [designMode]);
   const isOSMode = location.pathname === "/windows11" || location.pathname === "/macos";
 
   return (
     <div className={isPremium ? "min-h-screen" : "bg-[#0a0a0a] min-h-screen text-white"}>
+      {!isOSMode && !isPremium && <ModeMotion />}
       {!isOSMode && (isPremium ? <PremiumNav /> : <Navbar setSelectedItem={setSelectedItem} selectedItem={selectedItem} />)}
       <Routes>
         <Route path="/" element={<HomePage setSelectedItem={setSelectedItem} />} />

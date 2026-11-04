@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import PremiumThemeMenu from './PremiumThemeMenu';
+import ThemeSwitcher from '../shared/ThemeSwitcher';
 
 const LINKS = [
   { to: '/', label: 'Home' },
@@ -30,7 +30,7 @@ const PremiumNav = () => {
           ))}
         </nav>
         <div className="pm-nav-right">
-          <PremiumThemeMenu />
+          <ThemeSwitcher compact />
           <Link to="/contact-me" className="pm-btn is-ink is-sm">Say hi</Link>
         </div>
       </div>

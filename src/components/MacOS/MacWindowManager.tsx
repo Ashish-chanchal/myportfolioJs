@@ -34,7 +34,10 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
     x: 80 + Math.floor(Math.random() * 80),
     y: 50 + Math.floor(Math.random() * 40),
   });
+  const [size, setSize] = useState({ w: winConfig.defaultWidth || 860, h: winConfig.defaultHeight || 540 });
   const [isDragging, setIsDragging] = useState(false);
+  const [resizeDir, setResizeDir] = useState<string | null>(null);
+  const resizeRef = useRef({ x: 0, y: 0, w: 0, h: 0, px: 0, py: 0 });
   const [showTileMenu, setShowTileMenu] = useState(false);
   const [tileState, setTileState] = useState<'left-half' | 'right-half' | null>(null);
   const tileTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -79,6 +82,48 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
     };
   }, [isDragging]);
 
+  useEffect(() => {
+    if (!resizeDir) return;
+    const MIN_W = 320;
+    const MIN_H = 220;
+    const move = (e: MouseEvent) => {
+      const r = resizeRef.current;
+      const dx = e.clientX - r.x;
+      const dy = e.clientY - r.y;
+      let w = r.w;
+      let h = r.h;
+      let px = r.px;
+      let py = r.py;
+      if (resizeDir.includes('e')) w = Math.max(MIN_W, r.w + dx);
+      if (resizeDir.includes('s')) h = Math.max(MIN_H, r.h + dy);
+      if (resizeDir.includes('w')) {
+        w = Math.max(MIN_W, r.w - dx);
+        px = r.px + (r.w - w);
+      }
+      if (resizeDir.includes('n')) {
+        h = Math.max(MIN_H, r.h - dy);
+        py = Math.max(32, r.py + (r.h - h));
+      }
+      setSize({ w, h });
+      setPos({ x: px, y: py });
+    };
+    const up = () => setResizeDir(null);
+    document.addEventListener('mousemove', move);
+    document.addEventListener('mouseup', up);
+    return () => {
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('mouseup', up);
+    };
+  }, [resizeDir]);
+
+  const startResize = (dir: string) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onFocus();
+    resizeRef.current = { x: e.clientX, y: e.clientY, w: size.w, h: size.h, px: pos.x, py: pos.y };
+    setResizeDir(dir);
+  };
+
   if (winConfig.minimized) return null;
 
   const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -88,7 +133,7 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
       onClick={onFocus}
       style={{
         zIndex: winConfig.zIndex,
-        transition: isDragging ? 'none' : 'width 0.22s cubic-bezier(0.16, 1, 0.3, 1), height 0.22s cubic-bezier(0.16, 1, 0.3, 1), top 0.22s cubic-bezier(0.16, 1, 0.3, 1), left 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: isDragging || resizeDir ? 'none' : 'width 0.22s cubic-bezier(0.16, 1, 0.3, 1), height 0.22s cubic-bezier(0.16, 1, 0.3, 1), top 0.22s cubic-bezier(0.16, 1, 0.3, 1), left 0.22s cubic-bezier(0.16, 1, 0.3, 1)',
         ...(winConfig.maximized || isSmallScreen
           ? {
               top: 28,
@@ -118,30 +163,34 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
           : {
               top: `${Math.max(32, pos.y)}px`,
               left: `${Math.max(16, pos.x)}px`,
-              width: `${winConfig.defaultWidth || 860}px`,
-              height: `${winConfig.defaultHeight || 540}px`,
+              width: `${size.w}px`,
+              height: `${size.h}px`,
               maxWidth: 'calc(100vw - 32px)',
               maxHeight: 'calc(100vh - 100px)',
             }),
       }}
-      className={`absolute flex flex-col select-none rounded-2xl overflow-hidden border animate-macos-scale-in ${
-        isActive
-          ? 'macos-glass-dark shadow-2xl border-white/20'
-          : 'bg-[#181820]/90 border-white/10 shadow-xl opacity-95'
-      }`}
+      className={`macos-window absolute flex flex-col select-none overflow-hidden animate-macos-scale-in ${isActive ? 'is-active' : 'is-inactive'}`}
     >
+      {!winConfig.maximized && !tileState && !isSmallScreen && (
+        <>
+          <div onMouseDown={startResize('n')} className="absolute top-0 left-3 right-3 h-1.5 cursor-ns-resize z-30" />
+          <div onMouseDown={startResize('s')} className="absolute bottom-0 left-3 right-3 h-1.5 cursor-ns-resize z-30" />
+          <div onMouseDown={startResize('w')} className="absolute left-0 top-3 bottom-3 w-1.5 cursor-ew-resize z-30" />
+          <div onMouseDown={startResize('e')} className="absolute right-0 top-3 bottom-3 w-1.5 cursor-ew-resize z-30" />
+          <div onMouseDown={startResize('nw')} className="absolute top-0 left-0 w-3 h-3 cursor-nwse-resize z-30" />
+          <div onMouseDown={startResize('ne')} className="absolute top-0 right-0 w-3 h-3 cursor-nesw-resize z-30" />
+          <div onMouseDown={startResize('sw')} className="absolute bottom-0 left-0 w-3 h-3 cursor-nesw-resize z-30" />
+          <div onMouseDown={startResize('se')} className="absolute bottom-0 right-0 w-3 h-3 cursor-nwse-resize z-30" />
+        </>
+      )}
       {/* macOS Window Header Toolbar */}
       <div
         onMouseDown={handleMouseDown}
         onDoubleClick={onMaximize}
-        className={`h-10 px-3.5 flex items-center justify-between border-b cursor-default transition-colors ${
-          isActive
-            ? 'bg-gradient-to-b from-white/10 to-white/5 border-white/10 text-white'
-            : 'bg-black/30 border-white/5 text-zinc-400'
-        }`}
+        className="macos-titlebar h-[38px] px-3.5 flex items-center justify-between cursor-default"
       >
         {/* Traffic Light Buttons */}
-        <div className="flex items-center gap-2 group">
+        <div className="macos-tl flex items-center gap-2 group">
           {/* Close */}
           <button
             onClick={(e) => {
@@ -249,7 +298,7 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
         </div>
 
         {/* Window Title */}
-        <div className="flex items-center gap-2 text-xs font-medium tracking-tight truncate max-w-[60%]">
+        <div className="macos-wintitle flex items-center gap-2 truncate max-w-[60%]">
           {winConfig.icon && <span className="flex-shrink-0">{winConfig.icon}</span>}
           <span className="truncate">{winConfig.title}</span>
         </div>
@@ -259,7 +308,7 @@ export const MacWindowManager: React.FC<MacWindowManagerProps> = ({
       </div>
 
       {/* Window Body Content */}
-      <div className="flex-1 min-h-0 bg-[#121218]/95 overflow-hidden flex flex-col text-white">
+      <div className="macos-winbody flex-1 min-h-0 overflow-hidden flex flex-col text-white">
         {winConfig.content}
       </div>
     </div>

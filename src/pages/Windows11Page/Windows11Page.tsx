@@ -593,14 +593,6 @@ export const Windows11Page: React.FC = () => {
     },
   ];
 
-  if (bootState === 'booting') {
-    return <BootScreen onBootComplete={() => setBootState('locked')} />;
-  }
-
-  if (bootState === 'locked') {
-    return <LockScreen wallpaper={wallpaper} onLogin={handleLogin} />;
-  }
-
   // Live QuickSettings Visual Filter States
   const [screenBrightness, setScreenBrightness] = useState<number>(() => {
     return Number(localStorage.getItem('win11_brightness')) || 90;
@@ -621,6 +613,14 @@ export const Windows11Page: React.FC = () => {
       clearInterval(interval);
     };
   }, []);
+
+  if (bootState === 'booting') {
+    return <BootScreen onBootComplete={() => setBootState('locked')} />;
+  }
+
+  if (bootState === 'locked') {
+    return <LockScreen wallpaper={wallpaper} onLogin={handleLogin} />;
+  }
 
   return (
     <div

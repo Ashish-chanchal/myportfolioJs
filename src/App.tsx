@@ -1,5 +1,5 @@
 import Navbar from "./components/navBar/NavBar";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import WorksPage from "./pages/WorksPage/WorksPage";
@@ -30,6 +30,18 @@ function AppContent({ selectedItem, setSelectedItem }: { selectedItem: number; s
     }
   }, [designMode]);
   const isOSMode = location.pathname === "/windows11" || location.pathname === "/macos";
+
+  // The simulated desktops are their own world: keep every portfolio design's
+  // global CSS (borders, backgrounds, text colours) from leaking into them.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle('os-mode', isOSMode);
+    root.setAttribute('data-design-mode', isOSMode ? 'os' : designMode);
+    return () => {
+      root.classList.remove('os-mode');
+      root.setAttribute('data-design-mode', designMode);
+    };
+  }, [isOSMode, designMode]);
 
   return (
     <div className={isPremium ? "min-h-screen" : "bg-[#0a0a0a] min-h-screen text-white"}>

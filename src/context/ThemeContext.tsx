@@ -101,6 +101,9 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+/** The simulated OS pages opt out of portfolio design CSS (see App.tsx). */
+const modeAttr = (mode: DesignMode) => (document.documentElement.classList.contains('os-mode') ? 'os' : mode);
+
 const applyThemeVariables = (theme: ThemeConfig) => {
   const root = document.documentElement;
   root.style.setProperty('--accent-primary', theme.primary);
@@ -126,7 +129,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [designMode, setDesignModeState] = useState<DesignMode>(() => {
     try {
-      const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
+      const savedMode = localStorage.getItem('ashish-portfolio-design-mode-v2');
       return savedMode === 'premium' || savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial' || savedMode === 'retro'
         ? (savedMode as DesignMode)
         : 'premium';
@@ -143,10 +146,10 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useLayoutEffect(() => {
     applyThemeVariables(currentTheme);
-    document.documentElement.setAttribute('data-design-mode', designMode);
+    document.documentElement.setAttribute('data-design-mode', modeAttr(designMode));
     try {
       localStorage.setItem('ashish-portfolio-theme', currentTheme.id);
-      localStorage.setItem('ashish-portfolio-design-mode', designMode);
+      localStorage.setItem('ashish-portfolio-design-mode-v2', designMode);
     } catch {
       // ignore
     }
@@ -154,7 +157,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   useEffect(() => {
     applyThemeVariables(currentTheme);
-    document.documentElement.setAttribute('data-design-mode', designMode);
+    document.documentElement.setAttribute('data-design-mode', modeAttr(designMode));
   }, [currentTheme, designMode]);
 
   // Switching is instant: no overlay, no colour fade.
@@ -169,9 +172,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const setDesignMode = (mode: DesignMode) => {
     if (mode === designMode) return;
     setDesignModeState(mode);
-    document.documentElement.setAttribute('data-design-mode', mode);
+    document.documentElement.setAttribute('data-design-mode', modeAttr(mode));
     try {
-      localStorage.setItem('ashish-portfolio-design-mode', mode);
+      localStorage.setItem('ashish-portfolio-design-mode-v2', mode);
     } catch {
       // ignore
     }

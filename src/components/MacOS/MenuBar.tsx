@@ -12,6 +12,63 @@ import {
 } from 'react-icons/fa';
 import { MACOS_ICONS } from './icons';
 
+
+type MenuItem = '-' | { label: string; key?: string; disabled?: boolean; act?: 'new' | 'search' | 'about' | 'settings' | 'app'; app?: string };
+const MENU_ITEMS: Record<string, MenuItem[]> = {
+  File: [
+    { label: 'New {app} Window', key: '⌘N', act: 'new' },
+    { label: 'New Tab', key: '⌘T', disabled: true },
+    { label: 'Open…', key: '⌘O', disabled: true },
+    '-',
+    { label: 'Close Window', key: '⌘W', disabled: true },
+    { label: 'Save', key: '⌘S', disabled: true },
+    '-',
+    { label: 'Print…', key: '⌘P', disabled: true },
+  ],
+  Edit: [
+    { label: 'Undo', key: '⌘Z', disabled: true },
+    { label: 'Redo', key: '⇧⌘Z', disabled: true },
+    '-',
+    { label: 'Cut', key: '⌘X', disabled: true },
+    { label: 'Copy', key: '⌘C', disabled: true },
+    { label: 'Paste', key: '⌘V', disabled: true },
+    { label: 'Select All', key: '⌘A', disabled: true },
+    '-',
+    { label: 'Emoji & Symbols', key: '⌃⌘Space', disabled: true },
+  ],
+  View: [
+    { label: 'as Icons', key: '⌘1' },
+    { label: 'as List', key: '⌘2' },
+    { label: 'as Columns', key: '⌘3' },
+    '-',
+    { label: 'Show Sidebar', key: '⌥⌘S' },
+    { label: 'Enter Full Screen', key: '⌃⌘F' },
+  ],
+  Go: [
+    { label: 'Back', key: '⌘[', disabled: true },
+    { label: 'Forward', key: '⌘]', disabled: true },
+    '-',
+    { label: 'Applications', key: '⇧⌘A', act: 'app', app: 'finder' },
+    { label: 'Documents', key: '⇧⌘O', act: 'app', app: 'finder' },
+    { label: 'Downloads', key: '⌥⌘L', act: 'app', app: 'finder' },
+  ],
+  Window: [
+    { label: 'Minimize', key: '⌘M' },
+    { label: 'Zoom' },
+    { label: 'Tile Window to Left of Screen' },
+    { label: 'Tile Window to Right of Screen' },
+    '-',
+    { label: 'Bring All to Front' },
+  ],
+  Help: [
+    { label: 'Search', act: 'search', key: '⌘?' },
+    '-',
+    { label: '{app} Help' },
+    { label: 'About This Mac', act: 'about' },
+    { label: 'System Settings…', act: 'settings' },
+  ],
+};
+
 interface MenuBarProps {
   activeAppTitle: string;
   activeAppId: string | null;
@@ -116,7 +173,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           </button>
 
           {appleMenuOpen && (
-            <div className="absolute left-0 top-7 w-56 bg-[#1e1e24]/95 border border-white/15 rounded-xl shadow-2xl p-1 text-xs backdrop-blur-3xl animate-macos-slide-down z-50">
+            <div className="macos-menu absolute left-0 top-7 w-56 bg-[#1e1e24]/95 border border-white/15 rounded-xl shadow-2xl p-1 text-xs backdrop-blur-3xl animate-macos-slide-down z-50">
               <button
                 onClick={() => {
                   onOpenAboutModal();
@@ -217,33 +274,29 @@ export const MenuBar: React.FC<MenuBarProps> = ({
               </button>
 
               {activeMenuDropdown === menu && (
-                <div className="absolute left-0 top-6 w-48 bg-[#1e1e24]/95 border border-white/15 rounded-xl shadow-2xl p-1 text-xs backdrop-blur-3xl animate-macos-slide-down z-50">
-                  <div className="px-3 py-1.5 text-zinc-400 font-mono text-[10px] border-b border-white/5">
-                    {appName} // {menu}
-                  </div>
-                  <button
-                    onClick={() => setActiveMenuDropdown(null)}
-                    className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-blue-600 flex items-center justify-between"
-                  >
-                    <span>New Window</span>
-                    <span className="text-[10px] text-white/50">⌘N</span>
-                  </button>
-                  <button
-                    onClick={() => setActiveMenuDropdown(null)}
-                    className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-blue-600 flex items-center justify-between"
-                  >
-                    <span>Quick Search</span>
-                    <span className="text-[10px] text-white/50">⌘F</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      onOpenAboutModal();
-                      setActiveMenuDropdown(null);
-                    }}
-                    className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-blue-600 flex items-center justify-between"
-                  >
-                    <span>Documentation</span>
-                  </button>
+                <div className="macos-menu absolute left-0 top-6 w-56 bg-[#1e1e24]/95 border border-white/15 rounded-xl shadow-2xl p-1 text-xs backdrop-blur-3xl animate-macos-slide-down z-50">
+                  {(MENU_ITEMS[menu] || []).map((it, i) =>
+                    it === '-' ? (
+                      <div key={i} className="h-px bg-white/10 my-1" />
+                    ) : (
+                      <button
+                        key={i}
+                        disabled={it.disabled}
+                        onClick={() => {
+                          setActiveMenuDropdown(null);
+                          if (it.act === 'new') onOpenApp(activeAppId || 'finder');
+                          else if (it.act === 'search') onToggleSpotlight();
+                          else if (it.act === 'about') onOpenAboutModal();
+                          else if (it.act === 'settings') onOpenApp('settings');
+                          else if (it.act === 'app' && it.app) onOpenApp(it.app);
+                        }}
+                        className={`w-full text-left px-3 py-1.5 rounded-lg flex items-center justify-between ${it.disabled ? 'opacity-40 cursor-default hover:!bg-transparent' : 'hover:bg-blue-600'}`}
+                      >
+                        <span>{it.label.replace('{app}', appName)}</span>
+                        {it.key && <span className="text-[11px] text-white/50 tracking-wide">{it.key}</span>}
+                      </button>
+                    )
+                  )}
                 </div>
               )}
             </div>

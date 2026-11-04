@@ -70,6 +70,8 @@ const MAC_APPS_META: Record<string, { title: string; defaultWidth: number; defau
 
 export const MacOSPage: React.FC = () => {
   const navigate = useNavigate();
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const [banner, setBanner] = useState<null | { app: string; title: string; body: string }>(null);
 
   // Persisted Wallpaper
   const [wallpaper, setWallpaper] = useState<string>(() => {
@@ -572,9 +574,21 @@ export const MacOSPage: React.FC = () => {
     };
   }, []);
 
+  // Native-style notification banner shortly after reaching the desktop
+  useEffect(() => {
+    if (bootState !== 'desktop') return;
+    const show = window.setTimeout(() => setBanner({ app: 'messages', title: 'Messages', body: 'Hi Ashish — loved your portfolio. Free for a quick chat this week?' }), 7000);
+    return () => window.clearTimeout(show);
+  }, [bootState]);
+  useEffect(() => {
+    if (!banner) return;
+    const hide = window.setTimeout(() => setBanner(null), 6500);
+    return () => window.clearTimeout(hide);
+  }, [banner]);
+
   return (
     <div
-      onClick={closeContextMenu}
+      onClick={() => { closeContextMenu(); setSelectedIcon(null); }}
       onContextMenu={handleContextMenu}
       className="macos-root fixed inset-0 w-screen h-screen overflow-hidden select-none bg-cover bg-center transition-all duration-700"
       style={{
@@ -604,12 +618,32 @@ export const MacOSPage: React.FC = () => {
         onExit={handleExit}
       />
 
+      {banner && (
+        <button
+          onClick={(e) => { e.stopPropagation(); openApp(banner.app); setBanner(null); }}
+          className="macos-banner fixed top-9 right-3 z-[400] w-[344px] text-left flex items-start gap-3 p-3 rounded-[18px] animate-macos-slide-down"
+        >
+          <img src={MACOS_ICONS.messages} alt="" className="w-9 h-9 rounded-lg flex-shrink-0" draggable={false} />
+          <span className="flex-1 min-w-0">
+            <span className="flex items-center justify-between">
+              <b className="text-[13px] text-white">{banner.title}</b>
+              <span className="text-[11px] text-white/50">now</span>
+            </span>
+            <span className="block text-[13px] leading-snug text-white/85 mt-0.5">{banner.body}</span>
+          </span>
+        </button>
+      )}
+
       {/* Desktop Icons Grid */}
-      <div className="absolute top-10 right-4 flex flex-col gap-5 z-20 pointer-events-auto">
+      <div className="absolute top-9 right-3 bottom-[96px] flex flex-col flex-wrap-reverse content-start gap-1.5 z-20 pointer-events-auto">
         {DESKTOP_ICONS.map((icon) => (
           <div
             key={icon.id}
             onMouseDown={(e) => {
+              e.stopPropagation();
+              setSelectedIcon(icon.id);
+            }}
+            onDoubleClick={(e) => {
               e.stopPropagation();
               if (icon.url) {
                 openUrlInSafari(icon.url);
@@ -620,18 +654,21 @@ export const MacOSPage: React.FC = () => {
             onClick={(e) => {
               e.stopPropagation();
             }}
-            className="flex flex-col items-center gap-1 w-20 p-1.5 rounded-xl hover:bg-white/20 active:bg-white/30 cursor-pointer transition-all group select-none"
+            className="flex flex-col items-center gap-1 w-[104px] p-1 cursor-default group select-none"
           >
-            <div className="w-12 h-12 flex items-center justify-center">
+            <div className={`w-[60px] h-[60px] p-1.5 rounded-lg flex items-center justify-center ${selectedIcon === icon.id ? 'bg-white/25' : ''}`}>
               <img
                 src={icon.icon}
                 alt={icon.name}
-                className="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 group-active:scale-95 transition-transform pointer-events-none select-none"
+                className="w-full h-full object-contain filter drop-shadow-md pointer-events-none select-none"
                 draggable={false}
               />
             </div>
-            <span className="text-[11px] font-medium text-white text-center leading-tight tracking-tight px-1.5 py-0.5 rounded group-hover:bg-blue-600 drop-shadow truncate w-full">
-              {icon.name}
+            <span
+              className={`text-[12px] font-medium text-white text-center leading-[1.2] px-1.5 py-[1px] rounded-[4px] max-w-full line-clamp-2 [overflow-wrap:break-word] [word-break:normal] ${selectedIcon === icon.id ? 'bg-[#0a60ff]' : ''}`}
+              style={selectedIcon === icon.id ? undefined : { textShadow: '0 1px 3px rgba(0,0,0,.85), 0 0 1px rgba(0,0,0,.6)' }}
+            >
+              {icon.name.length > 22 ? `${icon.name.slice(0, 12)}…${icon.name.slice(-8)}` : icon.name}
             </span>
           </div>
         ))}

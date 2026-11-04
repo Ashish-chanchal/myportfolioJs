@@ -45,6 +45,9 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
   };
 
   const [pos, setPos] = useState(getInitialPos);
+  const [size, setSize] = useState({ w: winConfig.defaultWidth || 820, h: winConfig.defaultHeight || 540 });
+  const [resizeDir, setResizeDir] = useState<string | null>(null);
+  const resizeRef = useRef({ x: 0, y: 0, w: 0, h: 0, px: 0, py: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [showSnapMenu, setShowSnapMenu] = useState(false);
   const [snapLayout, setSnapLayout] = useState<'left-half' | 'right-half' | 'left-two-thirds' | 'right-one-third' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | null>(null);
@@ -107,6 +110,37 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
     };
   }, [isDragging]);
 
+  useEffect(() => {
+    if (!resizeDir) return;
+    const move = (e: MouseEvent) => {
+      const r = resizeRef.current;
+      const dx = e.clientX - r.x;
+      const dy = e.clientY - r.y;
+      let w = r.w;
+      let h = r.h;
+      let px = r.px;
+      let py = r.py;
+      if (resizeDir.includes('e')) w = Math.max(340, r.w + dx);
+      if (resizeDir.includes('s')) h = Math.max(240, r.h + dy);
+      if (resizeDir.includes('w')) { w = Math.max(340, r.w - dx); px = r.px + (r.w - w); }
+      if (resizeDir.includes('n')) { h = Math.max(240, r.h - dy); py = Math.max(0, r.py + (r.h - h)); }
+      setSize({ w, h });
+      setPos({ x: px, y: py });
+    };
+    const up = () => setResizeDir(null);
+    document.addEventListener('mousemove', move);
+    document.addEventListener('mouseup', up);
+    return () => { document.removeEventListener('mousemove', move); document.removeEventListener('mouseup', up); };
+  }, [resizeDir]);
+
+  const startResize = (dir: string) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onFocus();
+    resizeRef.current = { x: e.clientX, y: e.clientY, w: size.w, h: size.h, px: pos.x, py: pos.y };
+    setResizeDir(dir);
+  };
+
   if (winConfig.minimized) return null;
 
   const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 768;
@@ -116,7 +150,7 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
       onClick={onFocus}
       style={{
         zIndex: winConfig.zIndex,
-        transition: isDragging ? 'none' : 'width 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), height 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), top 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), left 0.2s cubic-bezier(0.1, 0.9, 0.2, 1)',
+        transition: isDragging || resizeDir ? 'none' : 'width 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), height 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), top 0.2s cubic-bezier(0.1, 0.9, 0.2, 1), left 0.2s cubic-bezier(0.1, 0.9, 0.2, 1)',
         ...(winConfig.maximized || isSmallScreen
           ? {
               top: 0,
@@ -194,8 +228,8 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
           : {
               top: `${Math.max(16, pos.y)}px`,
               left: `${Math.max(10, pos.x)}px`,
-              width: `${winConfig.defaultWidth || 820}px`,
-              height: `${winConfig.defaultHeight || 540}px`,
+              width: `${size.w}px`,
+              height: `${size.h}px`,
               maxWidth: 'calc(100vw - 32px)',
               maxHeight: 'calc(100vh - 72px)',
             }),
@@ -204,11 +238,23 @@ export const WindowManager: React.FC<WindowManagerProps> = ({
         isDragging ? 'shadow-2xl opacity-95' : 'shadow-2xl'
       }`}
     >
+      {!winConfig.maximized && !snapLayout && !isSmallScreen && (
+        <>
+          <div onMouseDown={startResize('n')} className="absolute -top-1 left-2 right-2 h-2 cursor-ns-resize z-30" />
+          <div onMouseDown={startResize('s')} className="absolute -bottom-1 left-2 right-2 h-2 cursor-ns-resize z-30" />
+          <div onMouseDown={startResize('w')} className="absolute -left-1 top-2 bottom-2 w-2 cursor-ew-resize z-30" />
+          <div onMouseDown={startResize('e')} className="absolute -right-1 top-2 bottom-2 w-2 cursor-ew-resize z-30" />
+          <div onMouseDown={startResize('nw')} className="absolute -top-1 -left-1 w-3 h-3 cursor-nwse-resize z-30" />
+          <div onMouseDown={startResize('ne')} className="absolute -top-1 -right-1 w-3 h-3 cursor-nesw-resize z-30" />
+          <div onMouseDown={startResize('sw')} className="absolute -bottom-1 -left-1 w-3 h-3 cursor-nesw-resize z-30" />
+          <div onMouseDown={startResize('se')} className="absolute -bottom-1 -right-1 w-3 h-3 cursor-nwse-resize z-30" />
+        </>
+      )}
       {/* Window Titlebar */}
       <div
         onMouseDown={handleMouseDown}
         onDoubleClick={onMaximize}
-        className="h-10 px-3 bg-[#1e1e24]/95 border-b border-white/10 flex items-center justify-between cursor-move flex-shrink-0"
+        className="h-10 px-3 bg-[#1e1e24]/95 border-b border-white/10 flex items-center justify-between cursor-default flex-shrink-0"
       >
         {/* Title and Icon */}
         <div className="flex items-center gap-2.5 text-white text-xs font-semibold truncate pointer-events-none">

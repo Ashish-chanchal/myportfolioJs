@@ -34,6 +34,7 @@ export const Taskbar: React.FC<TaskbarProps> = ({
   isWidgetsOpen,
 }) => {
   const [time, setTime] = useState(new Date());
+  const [ctx, setCtx] = useState<{ x: number } | null>(null);
   const [hoveredAppId, setHoveredAppId] = useState<string | null>(null);
   const previewTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -58,7 +59,8 @@ export const Taskbar: React.FC<TaskbarProps> = ({
 
   return (
     <div
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => { e.stopPropagation(); setCtx(null); }}
+      onContextMenu={(e) => { e.preventDefault(); e.stopPropagation(); setCtx({ x: Math.min(e.clientX, window.innerWidth - 230) }); }}
       className="fixed bottom-0 inset-x-0 h-12 win11-taskbar z-[99998] flex items-center justify-between px-3 select-none text-xs text-white shadow-2xl"
     >
       {/* Left: Weather Widget Pill */}
@@ -213,6 +215,26 @@ export const Taskbar: React.FC<TaskbarProps> = ({
           title="Show Desktop"
         />
       </div>
+      {ctx && (
+        <div
+          className="fixed bottom-14 w-[210px] p-1.5 rounded-lg text-[13px] text-white z-[99999]"
+          style={{ left: ctx.x, background: 'rgba(32,32,36,.92)', backdropFilter: 'blur(30px)', border: '1px solid rgba(255,255,255,.1)', boxShadow: '0 8px 32px rgba(0,0,0,.5)' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {[
+            { label: 'Task Manager', act: () => onToggleApp('taskManager') },
+            { label: 'Taskbar settings', act: () => onToggleApp('settings') },
+          ].map((it) => (
+            <button
+              key={it.label}
+              onClick={() => { it.act(); setCtx(null); }}
+              className="w-full text-left px-3 py-2 rounded-md hover:bg-white/10"
+            >
+              {it.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

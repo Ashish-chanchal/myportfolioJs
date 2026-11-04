@@ -169,3 +169,24 @@
 .animate-macos-slide-down {
   animation: macosSlideDown 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* ── Native-style window chrome (Sequoia dark) ── */
+.macos-window { border-radius: 12px; background: #1e1e22; }
+.macos-window.is-active { box-shadow: 0 0 0 0.5px rgba(255,255,255,.22), 0 0 0 1px rgba(0,0,0,.55), 0 24px 70px -8px rgba(0,0,0,.6), 0 8px 24px rgba(0,0,0,.35); }
+.macos-window.is-inactive { box-shadow: 0 0 0 0.5px rgba(255,255,255,.12), 0 0 0 1px rgba(0,0,0,.5), 0 10px 32px -6px rgba(0,0,0,.45); }
+.macos-titlebar { background: #2a2a2f; border-bottom: 1px solid rgba(0,0,0,.45); color: rgba(255,255,255,.88); }
+.macos-window.is-inactive .macos-titlebar { background: #232327; color: rgba(255,255,255,.38); }
+.macos-wintitle { font: 600 13px/1 -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif; letter-spacing: -0.005em; }
+.macos-winbody { background: #1c1c20; }
+.macos-window.is-inactive .macos-tl .macos-traffic-btn { background-color: #4b4b50; border-color: #3d3d42; }
+.macos-window.is-inactive .macos-tl:hover .macos-traffic-close { background-color: #ff5f56; border-color: #e0443e; }
+.macos-window.is-inactive .macos-tl:hover .macos-traffic-minimize { background-color: #ffbd2e; border-color: #dea123; }
+.macos-window.is-inactive .macos-tl:hover .macos-traffic-maximize { background-color: #27c93f; border-color: #1aab29; }
+
+/* ── Native-style menus (menu bar + Apple menu) ── */
+.macos-menu { min-width: 220px; padding: 5px !important; border-radius: 10px !important; background: rgba(38,38,44,.82) !important; backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); border: 0.5px solid rgba(255,255,255,.18) !important; box-shadow: 0 0 0 .5px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45) !important; }
+.macos-menu button { border-radius: 5px !important; padding: 3px 10px !important; font-size: 13px !important; line-height: 20px; }
+.macos-menu button:hover { background: #0a60ff !important; color: #fff; }
+.macos-menu .h-px { margin: 5px 8px !important; background: rgba(255,255,255,.14) !important; }
+
+.macos-banner { background: rgba(44,44,50,.78); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); border: .5px solid rgba(255,255,255,.2); box-shadow: 0 0 0 .5px rgba(0,0,0,.5), 0 14px 40px rgba(0,0,0,.45); cursor: default; }

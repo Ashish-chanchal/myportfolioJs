@@ -7,6 +7,8 @@ import Skills from '../../components/Skills/Skills';
 import About from '../../components/About/About';
 import Contact from '../../components/Contact/Contact';
 import JourneyHud from '../../components/shared/JourneyHud';
+import PremiumHome from '../../components/Premium/PremiumHome';
+import { useTheme } from '../../context/ThemeContext';
 import todoaiImg from '../../assets/projects/todoai.png';
 import sociantraImg from '../../assets/projects/sociantra.png';
 import cineverseImg from '../../assets/projects/cineverse.png';
@@ -154,8 +156,8 @@ const FeaturedProjectsData = [
 const ExperienceData = [
   {
     id: 1,
-    tech: 'STUDIO SONRAI',
-    title: 'SOFTWARE DEVELOPER | SEP 2025 – PRESENT',
+    tech: 'Studio Sonrai',
+    title: 'Software Developer · Sep 2025 – Present',
     period: 'MAY 2025 – PRESENT',
     location: 'Noida, Uttar Pradesh, India',
     type: 'Industry' as const,
@@ -169,8 +171,8 @@ const ExperienceData = [
   },
   {
     id: 2,
-    tech: 'ALPHADROID / HEYALPHA',
-    title: 'SOFTWARE ENGINEER | NOV 2024 – SEP 2025',
+    tech: 'Alphadroid / HeyAlpha',
+    title: 'Software Engineer · Nov 2024 – Sep 2025',
     period: 'NOV 2024 – MAY 2025',
     location: 'Noida, Uttar Pradesh, India',
     type: 'Industry' as const,
@@ -185,7 +187,7 @@ const ExperienceData = [
   {
     id: 3,
     tech: 'INMAS, DRDO',
-    title: 'RESEARCH INTERN | APR 2024 – AUG 2024',
+    title: 'Research Intern · Apr 2024 – Aug 2024',
     period: 'APR 2024 – AUG 2024',
     location: 'Delhi, India',
     type: 'Research' as const,
@@ -200,9 +202,21 @@ const ExperienceData = [
 const HomePage: React.FC<{
   setSelectedItem: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ setSelectedItem }) => {
+  const { designMode } = useTheme();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (designMode === 'premium') {
+    return (
+      <main className="relative">
+        <Helmet>
+          <title>Ashish Chanchal // Software Developer & AI Systems Engineer</title>
+        </Helmet>
+        <PremiumHome projects={FeaturedProjectsData} experience={ExperienceData} />
+      </main>
+    );
+  }
 
   return (
     <main className="relative">
@@ -223,14 +237,14 @@ const HomePage: React.FC<{
       {/* Experience Section */}
       <Experience
         ExperienceData={ExperienceData}
-        title="EXPEDITIONS & MILESTONES"
+        title="Experience & milestones"
         waypointIndex="WAYPOINT_01"
       />
 
       {/* Featured Projects Grid */}
       <Projects
         ProjectsData={FeaturedProjectsData}
-        heading="FEATURED ARTIFACTS"
+        heading="Featured work"
         setSelectedItem={setSelectedItem}
         waypointIndex="WAYPOINT_02"
         tag="// PRODUCTION BUILDS & SYSTEMS"

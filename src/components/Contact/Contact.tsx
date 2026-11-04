@@ -38,7 +38,7 @@ const SOCIALS = [
 const Contact = () => {
   const [copied, setCopied] = useState(false);
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';
@@ -261,7 +261,7 @@ const Contact = () => {
           <div className="grid grid-cols-12 gap-4 mt-2">
 
             {/* Main CTA tile — 8 cols */}
-            <div className="col-span-12 lg:col-span-8 bento-tile p-6 sm:p-8 flex flex-col gap-5">
+            <div className="col-span-12 lg:col-span-8 bento-tile p-6 sm:p-10 flex flex-col gap-6">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#00FF66] animate-pulse inline-block" />
                 <span className="font-mono text-xs text-emerald-400 font-semibold uppercase tracking-wider">
@@ -271,7 +271,7 @@ const Contact = () => {
               </div>
 
               <div>
-                <h3 className="text-2xl sm:text-3xl font-heading font-semibold text-white tracking-tight mb-3">
+                <h3 className="text-3xl sm:text-5xl font-heading font-bold text-white tracking-tight leading-[1.02] mb-4">
                   Let's collaborate on <br />
                   <span className="text-accent">software & AI systems.</span>
                 </h3>

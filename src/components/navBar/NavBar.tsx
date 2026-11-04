@@ -21,7 +21,7 @@ const NavItems = [
 const Navbar: React.FC<NavbarProps> = ({ setSelectedItem, selectedItem }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';

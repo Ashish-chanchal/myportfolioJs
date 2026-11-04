@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import HeadingSec from '../../components/shared/HeadingSec';
 import { Helmet } from 'react-helmet-async';
+import PremiumPrivacy from '../../components/Premium/PremiumPrivacy';
 import { useTheme } from '../../context/ThemeContext';
 
 const PrivacyPolicy: React.FC = () => {
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,6 +63,8 @@ const PrivacyPolicy: React.FC = () => {
       ),
     },
   ];
+
+  if (designMode === 'premium') return <><Helmet><title>Privacy Policy // Ashish Chanchal</title></Helmet><PremiumPrivacy sections={sections} /></>;
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen pb-24">

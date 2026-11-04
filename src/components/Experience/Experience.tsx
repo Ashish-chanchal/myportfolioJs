@@ -255,7 +255,7 @@ const TimelineExperienceCard: React.FC<{ data: ExperienceDataProps; index: numbe
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
 
   return (
     <div className="relative pl-6 sm:pl-10 pb-12 last:pb-0">

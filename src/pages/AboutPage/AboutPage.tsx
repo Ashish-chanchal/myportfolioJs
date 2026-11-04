@@ -5,6 +5,7 @@ import Skills from '../../components/Skills/Skills';
 import FunFacts from '../../components/Funfacts/FunFacts';
 import Button from '../../components/shared/Button';
 import { useTheme } from '../../context/ThemeContext';
+import PremiumAbout from '../../components/Premium/PremiumAbout';
 
 const facts = [
   { id: 1, facts: 'Winter enthusiast > Summer heat anytime' },
@@ -44,12 +45,14 @@ const AboutPage: React.FC<{
   setSelectedItem?: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ setSelectedItem }) => {
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (designMode === 'premium') return <><Helmet><title>About // Ashish Chanchal - Software Developer & AI Engineer</title></Helmet><PremiumAbout milestones={MILESTONES} facts={facts} /></>;
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen pb-20">

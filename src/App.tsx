@@ -10,15 +10,21 @@ import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import Windows11Page from "./pages/Windows11Page/Windows11Page";
 import MacOSPage from "./pages/MacOSPage/MacOSPage";
 import { ThemeProvider } from "./context/ThemeContext";
+import PremiumNav from "./components/Premium/PremiumNav";
+import PremiumFooter from "./components/Premium/PremiumFooter";
+import "./components/Premium/premium.css";
+import { useTheme } from "./context/ThemeContext";
 import ThemeTransitionOverlay from "./components/shared/ThemeTransitionOverlay";
 
 function AppContent({ selectedItem, setSelectedItem }: { selectedItem: number; setSelectedItem: React.Dispatch<React.SetStateAction<number>> }) {
   const location = useLocation();
+  const { designMode } = useTheme();
+  const isPremium = designMode === 'premium';
   const isOSMode = location.pathname === "/windows11" || location.pathname === "/macos";
 
   return (
-    <div className="bg-[#0a0a0a] min-h-screen text-white">
-      {!isOSMode && <Navbar setSelectedItem={setSelectedItem} selectedItem={selectedItem} />}
+    <div className={isPremium ? "min-h-screen" : "bg-[#0a0a0a] min-h-screen text-white"}>
+      {!isOSMode && (isPremium ? <PremiumNav /> : <Navbar setSelectedItem={setSelectedItem} selectedItem={selectedItem} />)}
       <Routes>
         <Route path="/" element={<HomePage setSelectedItem={setSelectedItem} />} />
         <Route path="/works" element={<WorksPage />} />
@@ -28,7 +34,7 @@ function AppContent({ selectedItem, setSelectedItem }: { selectedItem: number; s
         <Route path="/windows11" element={<Windows11Page />} />
         <Route path="/macos" element={<MacOSPage />} />
       </Routes>
-      {!isOSMode && <Footer />}
+      {!isOSMode && (isPremium ? <PremiumFooter /> : <Footer />)}
     </div>
   );
 }

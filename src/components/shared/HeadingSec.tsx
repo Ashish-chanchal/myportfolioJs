@@ -9,7 +9,7 @@ interface HeadingSecProps {
 
 const HeadingSec: React.FC<HeadingSecProps> = ({ title, description, waypoint }) => {
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';

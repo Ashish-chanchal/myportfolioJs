@@ -26,7 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   external = false,
 }) => {
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
 
   const handleClick = () => {
     if (setSelectedItem && id !== undefined) {

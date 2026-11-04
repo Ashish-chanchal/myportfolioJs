@@ -3,11 +3,16 @@ import { Helmet } from 'react-helmet-async';
 import HeadingSec from '../../components/shared/HeadingSec';
 import Contact from '../../components/Contact/Contact';
 import Socials from '../../components/Socials/Socials';
+import PremiumContact from '../../components/Premium/PremiumContact';
+import { useTheme } from '../../context/ThemeContext';
 
 const ContactPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { designMode } = useTheme();
+  if (designMode === 'premium') return <><Helmet><title>Contact // Ashish Chanchal</title></Helmet><PremiumContact /></>;
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen pb-20">

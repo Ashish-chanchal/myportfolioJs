@@ -32,7 +32,7 @@ const About: React.FC<{
   waypointIndex?: string;
 }> = ({ setSelectedItem, description, waypointIndex }) => {
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';

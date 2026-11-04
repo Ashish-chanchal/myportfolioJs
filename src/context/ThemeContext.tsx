@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useLayoutEffect } from 'react';
 
-export type DesignMode = 'brutalist' | 'minimalist' | 'bento' | 'editorial' | 'retro';
+export type DesignMode = 'premium' | 'brutalist' | 'minimalist' | 'bento' | 'editorial' | 'retro';
 
 export interface ThemeConfig {
   id: string;
@@ -10,6 +10,8 @@ export interface ThemeConfig {
   secondary: string;
   tertiary: string;
   description: string;
+  /** Playful mode block colours: peach, mint, lilac, butter, sky */
+  pastels: [string, string, string, string, string];
 }
 
 export const THEMES: ThemeConfig[] = [
@@ -21,6 +23,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#C778DD',
     tertiary: '#00FF66',
     description: 'Electric ice cyan with cyber lilac accents',
+    pastels: ['#cdf3f7', '#e6dcff', '#d6f5e3', '#e3eeff', '#d4ecff'],
   },
   {
     id: 'matrix-terminal',
@@ -30,6 +33,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#00F0FF',
     tertiary: '#FFFFFF',
     description: 'High-voltage matrix terminal emerald',
+    pastels: ['#d3f5e0', '#e6f7c8', '#cdeff0', '#f3f7c9', '#dff2e6'],
   },
   {
     id: 'synth-orchid',
@@ -39,6 +43,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#00F0FF',
     tertiary: '#00FF66',
     description: 'Cyberpunk lilac orchid & cyan highlights',
+    pastels: ['#ecd9f7', '#f9d6ea', '#d9dcff', '#f6dcf2', '#e2d3ff'],
   },
   {
     id: 'ember-flame',
@@ -48,6 +53,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#FF3366',
     tertiary: '#00F0FF',
     description: 'Industrial blazing tangerine & hot crimson',
+    pastels: ['#ffd9c9', '#cdeedd', '#e2d9ff', '#fff0b8', '#d4e8ff'],
   },
   {
     id: 'mono-stark',
@@ -57,6 +63,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#A3A3A3',
     tertiary: '#00FF66',
     description: 'Ultra-clean stark black & white brutalism',
+    pastels: ['#ececea', '#dedcd8', '#f4f2ee', '#d6d4cf', '#e6e3de'],
   },
   {
     id: 'amber-gold',
@@ -66,6 +73,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#00F0FF',
     tertiary: '#00FF66',
     description: 'Warm industrial amber & vintage telemetry',
+    pastels: ['#ffe7b0', '#ffd9a0', '#fff1c4', '#fbe0c0', '#f7e9b8'],
   },
   {
     id: 'vintage-sepia',
@@ -75,6 +83,7 @@ export const THEMES: ThemeConfig[] = [
     secondary: '#56B6C2',
     tertiary: '#98C379',
     description: 'Nostalgic 1980s computer CRT & parchment tones',
+    pastels: ['#ead9bd', '#d9e2c4', '#e8cfbf', '#efe1b5', '#d8dcc9'],
   },
 ];
 
@@ -97,6 +106,7 @@ const applyThemeVariables = (theme: ThemeConfig) => {
   root.style.setProperty('--accent-primary', theme.primary);
   root.style.setProperty('--accent-secondary', theme.secondary);
   root.style.setProperty('--accent-tertiary', theme.tertiary);
+  ['peach', 'mint', 'lilac', 'butter', 'sky'].forEach((n, i) => root.style.setProperty(`--pm-${n}`, theme.pastels[i]));
   if (document.body) {
     document.body.style.setProperty('--accent-primary', theme.primary);
     document.body.style.setProperty('--accent-secondary', theme.secondary);
@@ -117,11 +127,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [designMode, setDesignModeState] = useState<DesignMode>(() => {
     try {
       const savedMode = localStorage.getItem('ashish-portfolio-design-mode');
-      return savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial' || savedMode === 'retro'
+      return savedMode === 'premium' || savedMode === 'brutalist' || savedMode === 'minimalist' || savedMode === 'bento' || savedMode === 'editorial' || savedMode === 'retro'
         ? (savedMode as DesignMode)
-        : 'bento';
+        : 'premium';
     } catch {
-      return 'bento';
+      return 'premium';
     }
   });
 
@@ -187,7 +197,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Cycle: minimalist → brutalist → bento → editorial → retro → minimalist
   const toggleDesignMode = () => {
-    const cycle: DesignMode[] = ['minimalist', 'brutalist', 'bento', 'editorial', 'retro'];
+    const cycle: DesignMode[] = ['premium', 'minimalist', 'brutalist', 'bento', 'editorial', 'retro'];
     const nextIndex = (cycle.indexOf(designMode) + 1) % cycle.length;
     setDesignMode(cycle[nextIndex]);
   };

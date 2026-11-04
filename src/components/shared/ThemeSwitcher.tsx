@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
-import { FaPalette, FaCheck, FaFeatherAlt, FaSquare, FaTh, FaBookOpen, FaTv } from 'react-icons/fa';
+import { FaPalette, FaCheck, FaFeatherAlt, FaSquare, FaTh, FaBookOpen, FaTv, FaGem } from 'react-icons/fa';
 
 export const ThemeSwitcher: React.FC<{ compact?: boolean }> = ({ compact = false }) => {
   const { currentTheme, setTheme, themes, designMode, setDesignMode } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';
@@ -22,7 +22,9 @@ export const ThemeSwitcher: React.FC<{ compact?: boolean }> = ({ compact = false
   }, []);
 
   const modeLabel =
-    designMode === 'minimalist'
+    designMode === 'premium'
+      ? 'PLAYFUL'
+      : designMode === 'minimalist'
       ? 'MINIMAL'
       : designMode === 'brutalist'
       ? 'BRUTAL'
@@ -108,7 +110,20 @@ export const ThemeSwitcher: React.FC<{ compact?: boolean }> = ({ compact = false
               </span>
             </div>
 
-            <div className="grid grid-cols-5 gap-1 p-1 bg-zinc-900/90 rounded-xl border border-zinc-800">
+            <div className="grid grid-cols-6 gap-1 p-1 bg-zinc-900/90 rounded-xl border border-zinc-800">
+              <button
+                type="button"
+                onClick={() => setDesignMode('premium')}
+                className={`py-1.5 px-1 rounded-lg text-[9px] font-mono font-medium flex flex-col items-center justify-center gap-1 transition-all duration-200 active:scale-95 hover:scale-105 ${
+                  designMode === 'premium'
+                    ? 'bg-accent text-black font-bold shadow-sm'
+                    : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
+                }`}
+              >
+                <FaGem className="w-2.5 h-2.5" />
+                <span>PLAYFUL</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => setDesignMode('minimalist')}

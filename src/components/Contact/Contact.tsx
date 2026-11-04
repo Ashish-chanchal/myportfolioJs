@@ -38,7 +38,7 @@ const SOCIALS = [
 const Contact = () => {
   const [copied, setCopied] = useState(false);
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';

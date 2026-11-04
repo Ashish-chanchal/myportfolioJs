@@ -155,7 +155,7 @@ export const ThemeTransitionOverlay: React.FC = () => {
       {/* ══════════════════════════════════════════════════════
            2. MINIMALIST SCENE: A24 / ARTHOUSE CELESTIAL ECLIPSE
       ══════════════════════════════════════════════════════ */}
-      {transitionMode === 'minimalist' && (
+      {(transitionMode === 'minimalist' || transitionMode === 'premium') && (
         <div className="absolute inset-0 bg-[#050507] flex flex-col items-center justify-center p-6 text-center">
           {/* Expanding Ethereal Luminous Core */}
           <div

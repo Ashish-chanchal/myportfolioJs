@@ -9,7 +9,7 @@ interface BoxProps {
 
 const Box: React.FC<BoxProps> = ({ category, technologies, accentColor }) => {
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
 
   if (isMinimal) {
     return (

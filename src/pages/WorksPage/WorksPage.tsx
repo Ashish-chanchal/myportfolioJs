@@ -9,6 +9,7 @@ import estypeshopImg from '../../assets/projects/estypeshop.png';
 import vibepulseImg from '../../assets/projects/vibepulse.png';
 import sixteenImg from '../../assets/projects/sixteenclothing.png';
 import { useTheme } from '../../context/ThemeContext';
+import PremiumWorks from '../../components/Premium/PremiumWorks';
 
 const AllProjects = [
   {
@@ -221,7 +222,7 @@ const WorksPage: React.FC = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const { designMode } = useTheme();
-  const isMinimal = designMode === 'minimalist';
+  const isMinimal = designMode === 'minimalist' || designMode === 'premium';
   const isBento = designMode === 'bento';
   const isEditorial = designMode === 'editorial';
   const isRetro = designMode === 'retro';
@@ -238,6 +239,8 @@ const WorksPage: React.FC = () => {
       project.category.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  if (designMode === 'premium') return <><Helmet><title>Works Archive // Ashish Chanchal</title></Helmet><PremiumWorks projects={AllProjects} /></>;
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen pb-20">

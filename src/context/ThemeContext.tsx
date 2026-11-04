@@ -135,10 +135,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   });
 
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [transitionMode, setTransitionMode] = useState<DesignMode>(designMode);
   const currentTheme = THEMES.find((t) => t.id === themeId) || THEMES[0];
-  const [transitionTheme, setTransitionTheme] = useState<ThemeConfig>(currentTheme);
+  // Transition overlay is retired; these stay in the context shape for compatibility.
+  const isTransitioning = false;
+  const transitionMode = designMode;
+  const transitionTheme = currentTheme;
 
   useLayoutEffect(() => {
     applyThemeVariables(currentTheme);
@@ -156,43 +157,24 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     document.documentElement.setAttribute('data-design-mode', designMode);
   }, [currentTheme, designMode]);
 
+  // Switching is instant: no overlay, no colour fade.
   const setTheme = (id: string) => {
     const found = THEMES.find((t) => t.id === id);
     if (found && found.id !== themeId) {
-      setTransitionTheme(found);
-      setTransitionMode(designMode);
-      setIsTransitioning(true);
-      
-      setTimeout(() => {
-        applyThemeVariables(found);
-        setThemeId(id);
-      }, 450);
-
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, 1200);
+      applyThemeVariables(found);
+      setThemeId(id);
     }
   };
 
   const setDesignMode = (mode: DesignMode) => {
     if (mode === designMode) return;
-    setTransitionMode(mode);
-    setTransitionTheme(currentTheme);
-    setIsTransitioning(true);
-
-    setTimeout(() => {
-      setDesignModeState(mode);
-      document.documentElement.setAttribute('data-design-mode', mode);
-      try {
-        localStorage.setItem('ashish-portfolio-design-mode', mode);
-      } catch {
-        // ignore
-      }
-    }, 450);
-
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 1200);
+    setDesignModeState(mode);
+    document.documentElement.setAttribute('data-design-mode', mode);
+    try {
+      localStorage.setItem('ashish-portfolio-design-mode', mode);
+    } catch {
+      // ignore
+    }
   };
 
   // Cycle: minimalist → brutalist → bento → editorial → retro → minimalist

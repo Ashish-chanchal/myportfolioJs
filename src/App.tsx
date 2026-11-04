@@ -14,7 +14,6 @@ import PremiumNav from "./components/Premium/PremiumNav";
 import PremiumFooter from "./components/Premium/PremiumFooter";
 import "./components/Premium/premium.css";
 import { useTheme } from "./context/ThemeContext";
-import ThemeTransitionOverlay from "./components/shared/ThemeTransitionOverlay";
 
 function AppContent({ selectedItem, setSelectedItem }: { selectedItem: number; setSelectedItem: React.Dispatch<React.SetStateAction<number>> }) {
   const location = useLocation();
@@ -47,7 +46,6 @@ function App() {
 
   return (
     <ThemeProvider>
-      <ThemeTransitionOverlay />
       <BrowserRouter>
         <AppContent selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
       </BrowserRouter>
